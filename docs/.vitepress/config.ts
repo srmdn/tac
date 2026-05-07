@@ -2,47 +2,70 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'Tac',
-  description: 'Documentation for Tac',
+  description: 'The Agent Stack — technical compendium for Agentic AI',
   lang: 'en-US',
-  
+  base: '/tac/',
+
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/tac-icon.svg' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/tac/tac-icon.svg' }],
     ['meta', { name: 'theme-color', content: '#0a0e1a' }],
+    ['meta', { property: 'og:title', content: 'Tac — The Agent Stack' }],
+    ['meta', { property: 'og:description', content: 'Technical compendium for Agentic AI: tokens, inference, caching, serving, frameworks, and orchestration.' }],
   ],
 
   themeConfig: {
     logo: '/tac-icon.svg',
-    
+    siteTitle: 'Tac',
+
     nav: [
-      { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'API', link: '/api/reference' },
-      { text: 'Examples', link: '/examples/basic-usage' },
+      { text: 'Stack', link: '/stack/' },
+      { text: 'Topics', link: '/topics/tokens-and-cost' },
+      { text: 'About', link: '/about' },
     ],
 
     sidebar: {
-      '/guide/': [
+      '/stack/': [
         {
-          text: 'Getting Started',
+          text: 'The Stack',
           items: [
-            { text: 'Introduction', link: '/guide/getting-started' },
-            { text: 'Configuration', link: '/guide/configuration' },
-            { text: 'Best Practices', link: '/guide/best-practices' },
+            { text: 'Overview', link: '/stack/' },
+            { text: 'Foundation Models', link: '/stack/foundation-models' },
+            { text: 'Infrastructure', link: '/stack/infrastructure' },
+            { text: 'Agent Runtime', link: '/stack/agent-runtime' },
+            { text: 'Applications', link: '/stack/applications' },
           ]
         }
       ],
-      '/api/': [
+      '/topics/': [
         {
-          text: 'API Reference',
+          text: 'Foundations',
           items: [
-            { text: 'Overview', link: '/api/reference' },
+            { text: 'Tokens & Cost', link: '/topics/tokens-and-cost' },
+            { text: 'Context Windows', link: '/topics/context-windows' },
+            { text: 'Sampling', link: '/topics/sampling' },
           ]
-        }
-      ],
-      '/examples/': [
+        },
         {
-          text: 'Examples',
+          text: 'Infrastructure',
           items: [
-            { text: 'Basic Usage', link: '/examples/basic-usage' },
+            { text: 'LLM Serving', link: '/topics/llm-serving' },
+            { text: 'Prompt Caching', link: '/topics/prompt-caching' },
+            { text: 'Latency', link: '/topics/latency' },
+            { text: 'KV Cache & Quantization', link: '/topics/kv-cache-quantization' },
+            { text: 'Rate Limits & Concurrency', link: '/topics/rate-limits' },
+          ]
+        },
+        {
+          text: 'Architecture',
+          items: [
+            { text: 'MoE Architecture', link: '/topics/moe-architecture' },
+          ]
+        },
+        {
+          text: 'Agents',
+          items: [
+            { text: 'Agent Frameworks', link: '/topics/agent-frameworks' },
+            { text: 'Orchestration', link: '/topics/orchestration' },
           ]
         }
       ]
@@ -54,7 +77,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2025-present Said Ramadhan'
+      copyright: 'Copyright \u00a9 2025-present Said Ramadhan'
     },
 
     search: {
@@ -64,6 +87,10 @@ export default defineConfig({
     outline: {
       level: [2, 3],
       label: 'On this page'
+    },
+
+    editLink: {
+      pattern: 'https://github.com/srmdn/tac/edit/main/docs/:path'
     }
   },
 
