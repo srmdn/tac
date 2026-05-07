@@ -5,9 +5,6 @@ hero:
   name: Tac
   text: The Agent Stack
   tagline: Technical compendium for Agentic AI. From token economics to multi-agent orchestration.
-  image:
-    src: /tac-icon.svg
-    alt: Tac
   actions:
     - theme: brand
       text: Explore the Stack

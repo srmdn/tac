@@ -1,52 +1,114 @@
 /* =========================================================
-   Tac Design System
-   Deep Navy + Soft Glow
+   Tac Design System — Warm Obsidian
+   Dark: deep charcoal + amber/gold accent + serif headings
+   Light: warm cream + ink brown + amber accent
    ========================================================= */
 
 /* ---- Google Fonts ------------------------------------------------------ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ---- Root Tokens ------------------------------------------------------- */
+/* ============================================================
+   DARK MODE (default)
+   ============================================================ */
 :root {
   /* Backgrounds */
-  --tac-bg: #0a0e1a;
-  --tac-bg-deep: #070a14;
-  --tac-surface: #131c31;
-  --tac-surface-hover: #1a2744;
-  --tac-surface-elevated: #1e293b;
+  --tac-bg: #1a1714;
+  --tac-bg-deep: #12110e;
+  --tac-surface: #242018;
+  --tac-surface-hover: #2e2820;
+  --tac-surface-elevated: #352f26;
 
   /* Text */
-  --tac-text: #e2e8f0;
-  --tac-text-bright: #f1f5f9;
-  --tac-text-muted: #64748b;
-  --tac-text-dim: #475569;
+  --tac-text: #fef3c7;
+  --tac-text-bright: #fffbeb;
+  --tac-text-muted: #a89470;
+  --tac-text-dim: #7a6b52;
 
-  /* Accent */
-  --tac-accent: #38bdf8;
-  --tac-accent-soft: #7dd3fc;
-  --tac-accent-dim: #0ea5e9;
-  --tac-accent-glow: rgba(56, 189, 248, 0.15);
-  --tac-accent-glow-strong: rgba(56, 189, 248, 0.25);
+  /* Accent (amber/gold) */
+  --tac-accent: #f59e0b;
+  --tac-accent-soft: #fbbf24;
+  --tac-accent-dim: #d97706;
+  --tac-accent-glow: rgba(245, 158, 11, 0.15);
+  --tac-accent-glow-strong: rgba(245, 158, 11, 0.25);
 
   /* Borders */
-  --tac-border: rgba(148, 163, 184, 0.1);
-  --tac-border-hover: rgba(148, 163, 184, 0.2);
+  --tac-border: rgba(168, 148, 112, 0.12);
+  --tac-border-hover: rgba(168, 148, 112, 0.25);
 
   /* Status */
-  --tac-success: #34d399;
+  --tac-success: #4ade80;
   --tac-warning: #fbbf24;
   --tac-danger: #f87171;
   --tac-info: #60a5fa;
 
   /* Typography */
   --tac-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --tac-font-serif: 'IBM Plex Serif', 'Georgia', serif;
   --tac-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Spacing scale (VitePress override) */
+  /* Code block bg */
+  --tac-code-bg: #1e1b16;
+  --tac-code-inline-bg: #2a2520;
+  --tac-code-inline-text: #fbbf24;
+
+  /* Hero gradient */
+  --tac-hero-grad-start: #1a1714;
+  --tac-hero-grad-end: #12110e;
+
+  /* VP overrides */
   --vp-nav-height: 64px;
+  --vp-c-brand: var(--tac-accent);
+  --vp-c-brand-light: var(--tac-accent-soft);
+  --vp-c-brand-dark: var(--tac-accent-dim);
 }
 
-/* ---- Base Overrides ---------------------------------------------------- */
+/* ============================================================
+   LIGHT MODE
+   ============================================================ */
+html.light {
+  /* Backgrounds */
+  --tac-bg: #faf8f3;
+  --tac-bg-deep: #f5f0e8;
+  --tac-surface: #ffffff;
+  --tac-surface-hover: #f9f6ef;
+  --tac-surface-elevated: #f0ead8;
+
+  /* Text */
+  --tac-text: #3d3225;
+  --tac-text-bright: #1c1810;
+  --tac-text-muted: #6b5e4a;
+  --tac-text-dim: #9a8b72;
+
+  /* Accent (amber stays, slightly richer for contrast on light) */
+  --tac-accent: #d97706;
+  --tac-accent-soft: #f59e0b;
+  --tac-accent-dim: #b45309;
+  --tac-accent-glow: rgba(217, 119, 6, 0.1);
+  --tac-accent-glow-strong: rgba(217, 119, 6, 0.18);
+
+  /* Borders */
+  --tac-border: rgba(60, 50, 35, 0.1);
+  --tac-border-hover: rgba(60, 50, 35, 0.2);
+
+  /* Status */
+  --tac-success: #16a34a;
+  --tac-warning: #d97706;
+  --tac-danger: #dc2626;
+  --tac-info: #2563eb;
+
+  /* Code */
+  --tac-code-bg: #f5f0e8;
+  --tac-code-inline-bg: #ede7d9;
+  --tac-code-inline-text: #b45309;
+
+  /* Hero */
+  --tac-hero-grad-start: #faf8f3;
+  --tac-hero-grad-end: #f5f0e8;
+}
+
+/* ============================================================
+   BASE OVERRIDES
+   ============================================================ */
 html {
   font-family: var(--tac-font-sans);
   background: var(--tac-bg);
@@ -57,9 +119,13 @@ body {
   background: var(--tac-bg);
   color: var(--tac-text);
   font-feature-settings: 'cv01', 'ss03';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ---- Layout ------------------------------------------------------------ */
+/* ============================================================
+   LAYOUT
+   ============================================================ */
 .VPDoc,
 .VPHome,
 .VPPage {
@@ -70,12 +136,18 @@ body {
   background: var(--tac-bg) !important;
 }
 
-/* ---- Navigation -------------------------------------------------------- */
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 .VPNav {
-  background: rgba(10, 14, 26, 0.85) !important;
+  background: rgba(26, 23, 20, 0.85) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--tac-border);
+}
+
+html.light .VPNav {
+  background: rgba(250, 248, 243, 0.85) !important;
 }
 
 .VPNavBar {
@@ -86,6 +158,7 @@ body {
   color: var(--tac-text-bright) !important;
   font-weight: 600;
   letter-spacing: -0.02em;
+  font-family: var(--tac-font-serif);
 }
 
 .VPNavBarMenuLink {
@@ -103,7 +176,18 @@ body {
   color: var(--tac-accent-soft) !important;
 }
 
-/* ---- Sidebar ----------------------------------------------------------- */
+/* Dark/light toggle button */
+.VPSwitchAppearance {
+  border-color: var(--tac-border) !important;
+}
+
+.VPSwitchAppearance .check {
+  background: var(--tac-surface) !important;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
 .VPSidebar {
   background: var(--tac-bg-deep) !important;
   border-right: 1px solid var(--tac-border);
@@ -128,19 +212,24 @@ body {
   background: var(--tac-surface);
 }
 
-/* ---- Content Typography ------------------------------------------------ */
+/* ============================================================
+   CONTENT TYPOGRAPHY
+   ============================================================ */
+/* H1: serif, like a book chapter title */
 .VPDoc h1 {
   color: var(--tac-text-bright);
+  font-family: var(--tac-font-serif);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-size: 2.5rem;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .VPDoc h2 {
   color: var(--tac-text);
+  font-family: var(--tac-font-serif);
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   border-top: 1px solid var(--tac-border);
   padding-top: 1.5rem;
   margin-top: 2.5rem;
@@ -148,8 +237,18 @@ body {
 
 .VPDoc h3 {
   color: var(--tac-text);
+  font-family: var(--tac-font-serif);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
+}
+
+.VPDoc h4 {
+  color: var(--tac-text-muted);
+  font-family: var(--tac-font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .VPDoc p {
@@ -170,16 +269,27 @@ body {
   text-shadow: 0 0 12px var(--tac-accent-glow);
 }
 
-/* ---- Code Blocks ------------------------------------------------------- */
+html.light .VPDoc a:hover {
+  text-shadow: none;
+}
+
+/* Strong text = serif by default for that book feel */
+.VPDoc strong {
+  color: var(--tac-text-bright);
+}
+
+/* ============================================================
+   CODE BLOCKS
+   ============================================================ */
 .vp-code {
-  background: var(--tac-surface) !important;
-  border-radius: 10px;
+  background: var(--tac-code-bg) !important;
+  border-radius: 8px;
   border: 1px solid var(--tac-border);
 }
 
 div[class*='language-'] {
-  background: var(--tac-surface) !important;
-  border-radius: 10px;
+  background: var(--tac-code-bg) !important;
+  border-radius: 8px;
   border: 1px solid var(--tac-border);
   position: relative;
 }
@@ -192,7 +302,7 @@ div[class*='language-']::before {
   right: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--tac-accent-glow-strong), transparent);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 code {
@@ -201,17 +311,19 @@ code {
 }
 
 :not(pre) > code {
-  background: var(--tac-surface);
-  color: var(--tac-accent-soft);
-  padding: 0.2em 0.4em;
+  background: var(--tac-code-inline-bg);
+  color: var(--tac-code-inline-text);
+  padding: 0.2em 0.45em;
   border-radius: 4px;
   border: 1px solid var(--tac-border);
   font-weight: 500;
 }
 
-/* ---- Callouts / Admonitions -------------------------------------------- */
+/* ============================================================
+   CALLOUTS / ADMONITIONS
+   ============================================================ */
 .custom-block {
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid var(--tac-border);
   background: var(--tac-surface);
   padding: 1rem 1.25rem;
@@ -240,6 +352,7 @@ code {
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 0.5rem;
+  font-family: var(--tac-font-serif);
 }
 
 .custom-block.info .custom-block-title { color: var(--tac-info); }
@@ -253,7 +366,9 @@ code {
   font-size: 14px;
 }
 
-/* ---- Tables ------------------------------------------------------------ */
+/* ============================================================
+   TABLES
+   ============================================================ */
 .VPDoc table {
   width: 100%;
   border-collapse: collapse;
@@ -265,9 +380,10 @@ code {
   background: var(--tac-surface);
   color: var(--tac-text-bright);
   font-weight: 600;
+  font-family: var(--tac-font-serif);
   text-align: left;
   padding: 0.75rem 1rem;
-  border-bottom: 2px solid var(--tac-border);
+  border-bottom: 2px solid var(--tac-accent-glow-strong);
 }
 
 .VPDoc td {
@@ -280,7 +396,9 @@ code {
   background: var(--tac-surface-hover);
 }
 
-/* ---- Buttons ----------------------------------------------------------- */
+/* ============================================================
+   BUTTONS
+   ============================================================ */
 .VPButton {
   border-radius: 8px !important;
   font-weight: 600 !important;
@@ -311,22 +429,39 @@ code {
   border-color: var(--tac-border-hover) !important;
 }
 
-/* ---- Home / Hero ------------------------------------------------------- */
+/* ============================================================
+   HOME / HERO
+   ============================================================ */
 .VPHomeHero {
-  background: linear-gradient(180deg, var(--tac-bg) 0%, var(--tac-bg-deep) 100%);
+  background: linear-gradient(180deg, var(--tac-hero-grad-start) 0%, var(--tac-hero-grad-end) 100%);
   position: relative;
   overflow: hidden;
 }
 
-.VPHomeHero::before {
+/* Warm amber radial glow in hero — dark mode only */
+html:not(.light) .VPHomeHero::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -20%;
-  width: 600px;
-  height: 600px;
+  top: -40%;
+  left: 10%;
+  width: 500px;
+  height: 500px;
   background: radial-gradient(circle, var(--tac-accent-glow-strong) 0%, transparent 70%);
   filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Light mode: subtle warm glow */
+html.light .VPHomeHero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 70%);
+  filter: blur(60px);
   pointer-events: none;
   z-index: 0;
 }
@@ -334,6 +469,7 @@ code {
 .VPHomeHero .name,
 .VPHomeHero .text {
   color: var(--tac-text-bright) !important;
+  font-family: var(--tac-font-serif);
   font-weight: 700;
   letter-spacing: -0.03em;
   position: relative;
@@ -348,7 +484,31 @@ code {
   z-index: 1;
 }
 
-/* ---- Footer ------------------------------------------------------------ */
+/* Feature cards on home */
+.VPHome .VPFeature {
+  border-radius: 10px;
+  border: 1px solid var(--tac-border);
+  background: var(--tac-surface);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.VPHome .VPFeature:hover {
+  border-color: var(--tac-accent-glow-strong);
+  box-shadow: 0 0 20px var(--tac-accent-glow);
+}
+
+.VPFeature .title {
+  color: var(--tac-text-bright) !important;
+  font-family: var(--tac-font-serif) !important;
+}
+
+.VPFeature .details {
+  color: var(--tac-text-muted) !important;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
 .VPFooter {
   background: var(--tac-bg-deep) !important;
   border-top: 1px solid var(--tac-border);
@@ -360,7 +520,9 @@ code {
   font-size: 13px;
 }
 
-/* ---- Search ------------------------------------------------------------ */
+/* ============================================================
+   SEARCH
+   ============================================================ */
 .VPLocalSearchBox .shell {
   background: var(--tac-surface) !important;
   border: 1px solid var(--tac-border) !important;
@@ -373,7 +535,60 @@ code {
   font-family: var(--tac-font-sans);
 }
 
-/* ---- Scrollbar --------------------------------------------------------- */
+/* Search result items */
+.VPLocalSearchBox .result-item {
+  border-bottom: 1px solid var(--tac-border) !important;
+}
+
+/* ============================================================
+   DOC FOOTER (prev/next links)
+   ============================================================ */
+.VPDocFooter .pager-link {
+  border-color: var(--tac-border) !important;
+  color: var(--tac-text) !important;
+}
+
+.VPDocFooter .pager-link:hover {
+  border-color: var(--tac-accent) !important;
+  color: var(--tac-accent) !important;
+}
+
+.VPDocFooter .pager-link .desc {
+  color: var(--tac-text-muted) !important;
+}
+
+/* ============================================================
+   TABLE OF CONTENTS (aside)
+   ============================================================ */
+.VPDocAside {
+  background: transparent !important;
+}
+
+.VPDocAside .outline-link {
+  color: var(--tac-text-dim) !important;
+  font-size: 13px;
+  transition: color 0.2s ease;
+  line-height: 1.8;
+}
+
+.VPDocAside .outline-link:hover {
+  color: var(--tac-accent) !important;
+}
+
+.VPDocAside .outline-link.active {
+  color: var(--tac-accent-soft) !important;
+}
+
+/* ============================================================
+   CARBON ADS / BADGES (clean up clutter)
+   ============================================================ */
+.VPCarbonAds {
+  border-color: var(--tac-border) !important;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -392,41 +607,194 @@ code {
   background: var(--tac-text-dim);
 }
 
-/* ---- Selection --------------------------------------------------------- */
+/* ============================================================
+   SELECTION
+   ============================================================ */
 ::selection {
   background: var(--tac-accent-glow-strong);
   color: var(--tac-text-bright);
 }
 
-/* ---- Mobile / Responsive ----------------------------------------------- */
+html.light ::selection {
+  background: rgba(217, 119, 6, 0.2);
+  color: var(--tac-text-bright);
+}
+
+/* ============================================================
+   RESPONSIVE / MOBILE
+   ============================================================ */
 @media (max-width: 768px) {
   .VPDoc h1 {
     font-size: 2rem;
   }
 
+  .VPDoc h2 {
+    font-size: 1.4rem;
+  }
+
+  .VPDoc p {
+    font-size: 14px;
+  }
+
+  /* Hero glow scales down */
   .VPHomeHero::before {
-    width: 300px;
-    height: 300px;
-    filter: blur(60px);
-    opacity: 0.6;
+    width: 250px;
+    height: 250px;
+    filter: blur(50px);
+    opacity: 0.5;
+  }
+
+  /* Tables scroll horizontally */
+  .VPDoc table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tighter sidebar items */
+  .VPSidebarItem .text {
+    font-size: 13px;
   }
 }
 
-/* ---- TOC (Table of Contents) ------------------------------------------- */
-.VPDocAside {
-  background: transparent !important;
+@media (max-width: 480px) {
+  .VPDoc h1 {
+    font-size: 1.6rem;
+  }
+
+  .VPDoc h2 {
+    font-size: 1.2rem;
+  }
 }
 
-.VPDocAside .outline-link {
-  color: var(--tac-text-dim) !important;
-  font-size: 13px;
-  transition: color 0.2s ease;
+/* ============================================================
+   VITEPRESS LIGHT MODE OVERRIDES
+   Ensure the toggle actually recolors VitePress internals.
+   ============================================================ */
+
+/* --- Light mode: VitePress internal vars --- */
+html.light {
+  --vp-c-bg: var(--tac-bg);
+  --vp-c-bg-soft: var(--tac-surface);
+  --vp-c-bg-mute: var(--tac-surface-hover);
+  --vp-c-bg-alt: var(--tac-bg-deep);
+
+  --vp-c-text-1: var(--tac-text-bright);
+  --vp-c-text-2: var(--tac-text);
+  --vp-c-text-3: var(--tac-text-muted);
+  --vp-c-text-4: var(--tac-text-dim);
+
+  --vp-c-brand: var(--tac-accent);
+  --vp-c-brand-light: var(--tac-accent-soft);
+  --vp-c-brand-lighter: var(--tac-accent-glow);
+  --vp-c-brand-dark: var(--tac-accent-dim);
+  --vp-c-brand-dimmer: var(--tac-accent-glow-strong);
+
+  --vp-c-border: var(--tac-border);
+  --vp-c-border-hard: var(--tac-border-hover);
+
+  --vp-c-divider: var(--tac-border);
+
+  --vp-c-gutter: var(--tac-border);
+  --vp-c-sponsor: var(--tac-accent);
+
+  --vp-button-brand-bg: var(--tac-accent);
+  --vp-button-brand-text: var(--tac-bg-deep);
+  --vp-button-brand-hover-bg: var(--tac-accent-soft);
+  --vp-button-brand-hover-text: var(--tac-bg-deep);
+
+  --vp-button-alt-bg: var(--tac-surface);
+  --vp-button-alt-text: var(--tac-text);
+  --vp-button-alt-border: var(--tac-border);
+  --vp-button-alt-hover-bg: var(--tac-surface-hover);
+  --vp-button-alt-hover-text: var(--tac-text);
+  --vp-button-alt-hover-border: var(--tac-border-hover);
+
+  --vp-custom-block-info-bg: var(--tac-surface);
+  --vp-custom-block-info-border: var(--tac-info);
+  --vp-custom-block-info-text: var(--tac-text);
+
+  --vp-custom-block-tip-bg: var(--tac-surface);
+  --vp-custom-block-tip-border: var(--tac-success);
+  --vp-custom-block-tip-text: var(--tac-text);
+
+  --vp-custom-block-warning-bg: var(--tac-surface);
+  --vp-custom-block-warning-border: var(--tac-warning);
+  --vp-custom-block-warning-text: var(--tac-text);
+
+  --vp-custom-block-danger-bg: var(--tac-surface);
+  --vp-custom-block-danger-border: var(--tac-danger);
+  --vp-custom-block-danger-text: var(--tac-text);
 }
 
-.VPDocAside .outline-link:hover {
-  color: var(--tac-accent) !important;
+/* --- Dark mode: repeat VitePress internal var overrides --- */
+html:not(.light) {
+  --vp-c-bg: var(--tac-bg);
+  --vp-c-bg-soft: var(--tac-surface);
+  --vp-c-bg-mute: var(--tac-surface-hover);
+  --vp-c-bg-alt: var(--tac-bg-deep);
+
+  --vp-c-text-1: var(--tac-text-bright);
+  --vp-c-text-2: var(--tac-text);
+  --vp-c-text-3: var(--tac-text-muted);
+  --vp-c-text-4: var(--tac-text-dim);
+
+  --vp-c-brand: var(--tac-accent);
+  --vp-c-brand-light: var(--tac-accent-soft);
+  --vp-c-brand-lighter: var(--tac-accent-glow);
+  --vp-c-brand-dark: var(--tac-accent-dim);
+  --vp-c-brand-dimmer: var(--tac-accent-glow-strong);
+
+  --vp-c-border: var(--tac-border);
+  --vp-c-border-hard: var(--tac-border-hover);
+
+  --vp-c-divider: var(--tac-border);
+
+  --vp-c-gutter: var(--tac-border);
+  --vp-c-sponsor: var(--tac-accent);
+
+  --vp-button-brand-bg: var(--tac-accent);
+  --vp-button-brand-text: var(--tac-bg-deep);
+  --vp-button-brand-hover-bg: var(--tac-accent-soft);
+  --vp-button-brand-hover-text: var(--tac-bg-deep);
+
+  --vp-button-alt-bg: var(--tac-surface);
+  --vp-button-alt-text: var(--tac-text);
+  --vp-button-alt-border: var(--tac-border);
+  --vp-button-alt-hover-bg: var(--tac-surface-hover);
+  --vp-button-alt-hover-text: var(--tac-text);
+  --vp-button-alt-hover-border: var(--tac-border-hover);
+
+  --vp-custom-block-info-bg: var(--tac-surface);
+  --vp-custom-block-info-border: var(--tac-info);
+  --vp-custom-block-info-text: var(--tac-text);
+
+  --vp-custom-block-tip-bg: var(--tac-surface);
+  --vp-custom-block-tip-border: var(--tac-success);
+  --vp-custom-block-tip-text: var(--tac-text);
+
+  --vp-custom-block-warning-bg: var(--tac-surface);
+  --vp-custom-block-warning-border: var(--tac-warning);
+  --vp-custom-block-warning-text: var(--tac-text);
+
+  --vp-custom-block-danger-bg: var(--tac-surface);
+  --vp-custom-block-danger-border: var(--tac-danger);
+  --vp-custom-block-danger-text: var(--tac-text);
 }
 
-.VPDocAside .outline-link.active {
-  color: var(--tac-accent-soft) !important;
+/* ============================================================
+   PRINT (hidden nav/sidebar, clean text)
+   ============================================================ */
+@media print {
+  .VPNav, .VPSidebar, .VPDocAside, .VPDocFooter {
+    display: none !important;
+  }
+  .VPDoc {
+    max-width: 100% !important;
+  }
+  body {
+    background: white;
+    color: #1a1a1a;
+  }
 }

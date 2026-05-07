@@ -6,9 +6,12 @@ export default defineConfig({
   lang: 'en-US',
   base: '/tac/',
 
+  appearance: true, // show light/dark toggle
+
   head: [
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/tac/tac-icon.svg' }],
-    ['meta', { name: 'theme-color', content: '#0a0e1a' }],
+    ['meta', { name: 'theme-color', content: '#1a1714' }],           // dark
+    ['meta', { name: 'theme-color', content: '#faf8f3', media: '(prefers-color-scheme: light)' }], // light
     ['meta', { property: 'og:title', content: 'Tac — The Agent Stack' }],
     ['meta', { property: 'og:description', content: 'Technical compendium for Agentic AI: tokens, inference, caching, serving, frameworks, and orchestration.' }],
   ],
@@ -77,7 +80,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright \u00a9 2025-present Said Ramadhan'
+      copyright: 'Copyright © 2025-present Said Ramadhan'
     },
 
     search: {

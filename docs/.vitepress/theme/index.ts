@@ -5,6 +5,8 @@ import './custom.css'
 export default {
   extends: DefaultTheme,
   enhanceApp({ app, router, siteData }) {
-    // Custom enhancements if needed
+    // Warm Obsidian theme - light/dark toggle handled by VitePress
+    // VitePress auto-adds .light / html:not(.light) class
+    // Our custom.css handles both via those selectors
   }
 } as Theme
