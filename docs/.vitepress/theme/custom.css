@@ -1,16 +1,110 @@
 /* =========================================================
    Tac Design System — Warm Obsidian
-   Dark: deep charcoal + amber/gold accent + serif headings
-   Light: warm cream + ink brown + amber accent
+   Light (default): warm cream + ink brown + amber accent
+   Dark (html.dark): deep charcoal + amber/gold + serif headings
    ========================================================= */
 
 /* ---- Google Fonts ------------------------------------------------------ */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ============================================================
-   DARK MODE (default)
+   LIGHT MODE (default — VitePress no .dark class)
    ============================================================ */
 :root {
+  /* Backgrounds */
+  --tac-bg: #faf8f3;
+  --tac-bg-deep: #f5f0e8;
+  --tac-surface: #ffffff;
+  --tac-surface-hover: #f9f6ef;
+  --tac-surface-elevated: #f0ead8;
+
+  /* Text */
+  --tac-text: #3d3225;
+  --tac-text-bright: #1c1810;
+  --tac-text-muted: #6b5e4a;
+  --tac-text-dim: #9a8b72;
+
+  /* Accent (amber — richer for contrast on light) */
+  --tac-accent: #b45309;
+  --tac-accent-soft: #d97706;
+  --tac-accent-dim: #92400e;
+  --tac-accent-glow: rgba(180, 83, 9, 0.08);
+  --tac-accent-glow-strong: rgba(180, 83, 9, 0.15);
+
+  /* Borders */
+  --tac-border: rgba(60, 50, 35, 0.1);
+  --tac-border-hover: rgba(60, 50, 35, 0.2);
+
+  /* Status */
+  --tac-success: #16a34a;
+  --tac-warning: #d97706;
+  --tac-danger: #dc2626;
+  --tac-info: #2563eb;
+
+  /* Typography */
+  --tac-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --tac-font-serif: 'IBM Plex Serif', 'Georgia', serif;
+  --tac-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Code */
+  --tac-code-bg: #f5f0e8;
+  --tac-code-inline-bg: #ede7d9;
+  --tac-code-inline-text: #b45309;
+
+  /* Hero */
+  --tac-hero-grad-start: #faf8f3;
+  --tac-hero-grad-end: #f5f0e8;
+
+  /* ---- VitePress internal overrides (light) ---- */
+  --vp-c-bg: var(--tac-bg);
+  --vp-c-bg-soft: var(--tac-surface);
+  --vp-c-bg-mute: var(--tac-surface-hover);
+  --vp-c-bg-alt: var(--tac-bg-deep);
+  --vp-c-text-1: var(--tac-text-bright);
+  --vp-c-text-2: var(--tac-text);
+  --vp-c-text-3: var(--tac-text-muted);
+  --vp-c-text-4: var(--tac-text-dim);
+  --vp-c-brand: var(--tac-accent);
+  --vp-c-brand-light: var(--tac-accent-soft);
+  --vp-c-brand-lighter: var(--tac-accent-glow);
+  --vp-c-brand-dark: var(--tac-accent-dim);
+  --vp-c-brand-dimmer: var(--tac-accent-glow-strong);
+  --vp-c-border: var(--tac-border);
+  --vp-c-divider: var(--tac-border);
+  --vp-c-gutter: var(--tac-border);
+
+  --vp-button-brand-bg: var(--tac-accent);
+  --vp-button-brand-text: var(--tac-bg-deep);
+  --vp-button-brand-hover-bg: var(--tac-accent-soft);
+  --vp-button-brand-hover-text: var(--tac-bg-deep);
+
+  --vp-button-alt-bg: var(--tac-surface);
+  --vp-button-alt-text: var(--tac-text);
+  --vp-button-alt-border: var(--tac-border);
+  --vp-button-alt-hover-bg: var(--tac-surface-hover);
+  --vp-button-alt-hover-text: var(--tac-text);
+  --vp-button-alt-hover-border: var(--tac-border-hover);
+
+  --vp-custom-block-info-bg: var(--tac-surface);
+  --vp-custom-block-info-border: var(--tac-info);
+  --vp-custom-block-info-text: var(--tac-text);
+  --vp-custom-block-tip-bg: var(--tac-surface);
+  --vp-custom-block-tip-border: var(--tac-success);
+  --vp-custom-block-tip-text: var(--tac-text);
+  --vp-custom-block-warning-bg: var(--tac-surface);
+  --vp-custom-block-warning-border: var(--tac-warning);
+  --vp-custom-block-warning-text: var(--tac-text);
+  --vp-custom-block-danger-bg: var(--tac-surface);
+  --vp-custom-block-danger-border: var(--tac-danger);
+  --vp-custom-block-danger-text: var(--tac-text);
+
+  --vp-nav-height: 64px;
+}
+
+/* ============================================================
+   DARK MODE (html.dark — VitePress convention)
+   ============================================================ */
+html.dark {
   /* Backgrounds */
   --tac-bg: #1a1714;
   --tac-bg-deep: #12110e;
@@ -24,7 +118,7 @@
   --tac-text-muted: #a89470;
   --tac-text-dim: #7a6b52;
 
-  /* Accent (amber/gold) */
+  /* Accent (amber/gold — brighter for dark bg) */
   --tac-accent: #f59e0b;
   --tac-accent-soft: #fbbf24;
   --tac-accent-dim: #d97706;
@@ -41,69 +135,57 @@
   --tac-danger: #f87171;
   --tac-info: #60a5fa;
 
-  /* Typography */
-  --tac-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --tac-font-serif: 'IBM Plex Serif', 'Georgia', serif;
-  --tac-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-
-  /* Code block bg */
+  /* Code */
   --tac-code-bg: #1e1b16;
   --tac-code-inline-bg: #2a2520;
   --tac-code-inline-text: #fbbf24;
 
-  /* Hero gradient */
+  /* Hero */
   --tac-hero-grad-start: #1a1714;
   --tac-hero-grad-end: #12110e;
 
-  /* VP overrides */
-  --vp-nav-height: 64px;
+  /* ---- VitePress internal overrides (dark) ---- */
+  --vp-c-bg: var(--tac-bg);
+  --vp-c-bg-soft: var(--tac-surface);
+  --vp-c-bg-mute: var(--tac-surface-hover);
+  --vp-c-bg-alt: var(--tac-bg-deep);
+  --vp-c-text-1: var(--tac-text-bright);
+  --vp-c-text-2: var(--tac-text);
+  --vp-c-text-3: var(--tac-text-muted);
+  --vp-c-text-4: var(--tac-text-dim);
   --vp-c-brand: var(--tac-accent);
   --vp-c-brand-light: var(--tac-accent-soft);
+  --vp-c-brand-lighter: var(--tac-accent-glow);
   --vp-c-brand-dark: var(--tac-accent-dim);
-}
+  --vp-c-brand-dimmer: var(--tac-accent-glow-strong);
+  --vp-c-border: var(--tac-border);
+  --vp-c-divider: var(--tac-border);
+  --vp-c-gutter: var(--tac-border);
 
-/* ============================================================
-   LIGHT MODE
-   ============================================================ */
-html.light {
-  /* Backgrounds */
-  --tac-bg: #faf8f3;
-  --tac-bg-deep: #f5f0e8;
-  --tac-surface: #ffffff;
-  --tac-surface-hover: #f9f6ef;
-  --tac-surface-elevated: #f0ead8;
+  --vp-button-brand-bg: var(--tac-accent);
+  --vp-button-brand-text: var(--tac-bg-deep);
+  --vp-button-brand-hover-bg: var(--tac-accent-soft);
+  --vp-button-brand-hover-text: var(--tac-bg-deep);
 
-  /* Text */
-  --tac-text: #3d3225;
-  --tac-text-bright: #1c1810;
-  --tac-text-muted: #6b5e4a;
-  --tac-text-dim: #9a8b72;
+  --vp-button-alt-bg: var(--tac-surface);
+  --vp-button-alt-text: var(--tac-text);
+  --vp-button-alt-border: var(--tac-border);
+  --vp-button-alt-hover-bg: var(--tac-surface-hover);
+  --vp-button-alt-hover-text: var(--tac-text);
+  --vp-button-alt-hover-border: var(--tac-border-hover);
 
-  /* Accent (amber stays, slightly richer for contrast on light) */
-  --tac-accent: #d97706;
-  --tac-accent-soft: #f59e0b;
-  --tac-accent-dim: #b45309;
-  --tac-accent-glow: rgba(217, 119, 6, 0.1);
-  --tac-accent-glow-strong: rgba(217, 119, 6, 0.18);
-
-  /* Borders */
-  --tac-border: rgba(60, 50, 35, 0.1);
-  --tac-border-hover: rgba(60, 50, 35, 0.2);
-
-  /* Status */
-  --tac-success: #16a34a;
-  --tac-warning: #d97706;
-  --tac-danger: #dc2626;
-  --tac-info: #2563eb;
-
-  /* Code */
-  --tac-code-bg: #f5f0e8;
-  --tac-code-inline-bg: #ede7d9;
-  --tac-code-inline-text: #b45309;
-
-  /* Hero */
-  --tac-hero-grad-start: #faf8f3;
-  --tac-hero-grad-end: #f5f0e8;
+  --vp-custom-block-info-bg: var(--tac-surface);
+  --vp-custom-block-info-border: var(--tac-info);
+  --vp-custom-block-info-text: var(--tac-text);
+  --vp-custom-block-tip-bg: var(--tac-surface);
+  --vp-custom-block-tip-border: var(--tac-success);
+  --vp-custom-block-tip-text: var(--tac-text);
+  --vp-custom-block-warning-bg: var(--tac-surface);
+  --vp-custom-block-warning-border: var(--tac-warning);
+  --vp-custom-block-warning-text: var(--tac-text);
+  --vp-custom-block-danger-bg: var(--tac-surface);
+  --vp-custom-block-danger-border: var(--tac-danger);
+  --vp-custom-block-danger-text: var(--tac-text);
 }
 
 /* ============================================================
@@ -113,14 +195,14 @@ html {
   font-family: var(--tac-font-sans);
   background: var(--tac-bg);
   color: var(--tac-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--tac-bg);
   color: var(--tac-text);
   font-feature-settings: 'cv01', 'ss03';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ============================================================
@@ -140,14 +222,13 @@ body {
    NAVIGATION
    ============================================================ */
 .VPNav {
-  background: rgba(26, 23, 20, 0.85) !important;
+  background: var(--vp-c-bg-alt) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--tac-border);
-}
-
-html.light .VPNav {
-  background: rgba(250, 248, 243, 0.85) !important;
+  /* ensure nav is above content for flyout dropdowns */
+  position: relative;
+  z-index: 100;
 }
 
 .VPNavBar {
@@ -161,6 +242,7 @@ html.light .VPNav {
   font-family: var(--tac-font-serif);
 }
 
+/* Nav links */
 .VPNavBarMenuLink {
   color: var(--tac-text-muted) !important;
   font-weight: 500;
@@ -176,13 +258,43 @@ html.light .VPNav {
   color: var(--tac-accent-soft) !important;
 }
 
-/* Dark/light toggle button */
+/* Dark/light toggle switch */
 .VPSwitchAppearance {
   border-color: var(--tac-border) !important;
 }
 
 .VPSwitchAppearance .check {
   background: var(--tac-surface) !important;
+}
+
+/* Mobile "..." flyout menu */
+.VPNavBarExtra {
+  display: flex;
+}
+
+.VPFlyout .menu {
+  background: var(--tac-surface) !important;
+  border: 1px solid var(--tac-border) !important;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile nav screen (hamburger) */
+.VPNavScreen {
+  background: var(--tac-bg-deep) !important;
+}
+
+.VPNavScreenItem .item {
+  color: var(--tac-text-muted) !important;
+  font-size: 15px;
+}
+
+.VPNavScreenItem .item:hover {
+  color: var(--tac-accent) !important;
+}
+
+.VPNavScreenItem .item.active {
+  color: var(--tac-accent-soft) !important;
 }
 
 /* ============================================================
@@ -266,14 +378,12 @@ html.light .VPNav {
 
 .VPDoc a:hover {
   color: var(--tac-accent-soft);
+}
+
+html.dark .VPDoc a:hover {
   text-shadow: 0 0 12px var(--tac-accent-glow);
 }
 
-html.light .VPDoc a:hover {
-  text-shadow: none;
-}
-
-/* Strong text = serif by default for that book feel */
 .VPDoc strong {
   color: var(--tac-text-bright);
 }
@@ -294,7 +404,7 @@ div[class*='language-'] {
   position: relative;
 }
 
-div[class*='language-']::before {
+html.dark div[class*='language-']::before {
   content: '';
   position: absolute;
   top: 0;
@@ -349,10 +459,10 @@ code {
 
 .custom-block-title {
   color: var(--tac-text-bright);
+  font-family: var(--tac-font-serif);
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 0.5rem;
-  font-family: var(--tac-font-serif);
 }
 
 .custom-block.info .custom-block-title { color: var(--tac-info); }
@@ -379,8 +489,8 @@ code {
 .VPDoc th {
   background: var(--tac-surface);
   color: var(--tac-text-bright);
-  font-weight: 600;
   font-family: var(--tac-font-serif);
+  font-weight: 600;
   text-align: left;
   padding: 0.75rem 1rem;
   border-bottom: 2px solid var(--tac-accent-glow-strong);
@@ -409,13 +519,19 @@ code {
 .VPButton.brand {
   background: var(--tac-accent) !important;
   color: var(--tac-bg-deep) !important;
+}
+
+html.dark .VPButton.brand {
   box-shadow: 0 0 20px var(--tac-accent-glow);
 }
 
 .VPButton.brand:hover {
   background: var(--tac-accent-soft) !important;
-  box-shadow: 0 0 30px var(--tac-accent-glow-strong);
   transform: translateY(-1px);
+}
+
+html.dark .VPButton.brand:hover {
+  box-shadow: 0 0 30px var(--tac-accent-glow-strong);
 }
 
 .VPButton.alt {
@@ -438,8 +554,8 @@ code {
   overflow: hidden;
 }
 
-/* Warm amber radial glow in hero — dark mode only */
-html:not(.light) .VPHomeHero::before {
+/* Dark mode: warm amber radial glow */
+html.dark .VPHomeHero::before {
   content: '';
   position: absolute;
   top: -40%;
@@ -453,17 +569,22 @@ html:not(.light) .VPHomeHero::before {
 }
 
 /* Light mode: subtle warm glow */
-html.light .VPHomeHero::before {
+.VPHomeHero::before {
   content: '';
   position: absolute;
   top: -30%;
   right: -5%;
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(180, 83, 9, 0.06) 0%, transparent 70%);
   filter: blur(60px);
   pointer-events: none;
   z-index: 0;
+}
+
+/* Dark mode override: use the amber glow instead of light glow */
+html.dark .VPHomeHero::before {
+  background: radial-gradient(circle, var(--tac-accent-glow-strong) 0%, transparent 70%);
 }
 
 .VPHomeHero .name,
@@ -535,7 +656,6 @@ html.light .VPHomeHero::before {
   font-family: var(--tac-font-sans);
 }
 
-/* Search result items */
 .VPLocalSearchBox .result-item {
   border-bottom: 1px solid var(--tac-border) !important;
 }
@@ -580,13 +700,6 @@ html.light .VPHomeHero::before {
 }
 
 /* ============================================================
-   CARBON ADS / BADGES (clean up clutter)
-   ============================================================ */
-.VPCarbonAds {
-  border-color: var(--tac-border) !important;
-}
-
-/* ============================================================
    SCROLLBAR
    ============================================================ */
 ::-webkit-scrollbar {
@@ -615,11 +728,6 @@ html.light .VPHomeHero::before {
   color: var(--tac-text-bright);
 }
 
-html.light ::selection {
-  background: rgba(217, 119, 6, 0.2);
-  color: var(--tac-text-bright);
-}
-
 /* ============================================================
    RESPONSIVE / MOBILE
    ============================================================ */
@@ -637,7 +745,8 @@ html.light ::selection {
   }
 
   /* Hero glow scales down */
-  .VPHomeHero::before {
+  .VPHomeHero::before,
+  html.dark .VPHomeHero::before {
     width: 250px;
     height: 250px;
     filter: blur(50px);
@@ -669,122 +778,7 @@ html.light ::selection {
 }
 
 /* ============================================================
-   VITEPRESS LIGHT MODE OVERRIDES
-   Ensure the toggle actually recolors VitePress internals.
-   ============================================================ */
-
-/* --- Light mode: VitePress internal vars --- */
-html.light {
-  --vp-c-bg: var(--tac-bg);
-  --vp-c-bg-soft: var(--tac-surface);
-  --vp-c-bg-mute: var(--tac-surface-hover);
-  --vp-c-bg-alt: var(--tac-bg-deep);
-
-  --vp-c-text-1: var(--tac-text-bright);
-  --vp-c-text-2: var(--tac-text);
-  --vp-c-text-3: var(--tac-text-muted);
-  --vp-c-text-4: var(--tac-text-dim);
-
-  --vp-c-brand: var(--tac-accent);
-  --vp-c-brand-light: var(--tac-accent-soft);
-  --vp-c-brand-lighter: var(--tac-accent-glow);
-  --vp-c-brand-dark: var(--tac-accent-dim);
-  --vp-c-brand-dimmer: var(--tac-accent-glow-strong);
-
-  --vp-c-border: var(--tac-border);
-  --vp-c-border-hard: var(--tac-border-hover);
-
-  --vp-c-divider: var(--tac-border);
-
-  --vp-c-gutter: var(--tac-border);
-  --vp-c-sponsor: var(--tac-accent);
-
-  --vp-button-brand-bg: var(--tac-accent);
-  --vp-button-brand-text: var(--tac-bg-deep);
-  --vp-button-brand-hover-bg: var(--tac-accent-soft);
-  --vp-button-brand-hover-text: var(--tac-bg-deep);
-
-  --vp-button-alt-bg: var(--tac-surface);
-  --vp-button-alt-text: var(--tac-text);
-  --vp-button-alt-border: var(--tac-border);
-  --vp-button-alt-hover-bg: var(--tac-surface-hover);
-  --vp-button-alt-hover-text: var(--tac-text);
-  --vp-button-alt-hover-border: var(--tac-border-hover);
-
-  --vp-custom-block-info-bg: var(--tac-surface);
-  --vp-custom-block-info-border: var(--tac-info);
-  --vp-custom-block-info-text: var(--tac-text);
-
-  --vp-custom-block-tip-bg: var(--tac-surface);
-  --vp-custom-block-tip-border: var(--tac-success);
-  --vp-custom-block-tip-text: var(--tac-text);
-
-  --vp-custom-block-warning-bg: var(--tac-surface);
-  --vp-custom-block-warning-border: var(--tac-warning);
-  --vp-custom-block-warning-text: var(--tac-text);
-
-  --vp-custom-block-danger-bg: var(--tac-surface);
-  --vp-custom-block-danger-border: var(--tac-danger);
-  --vp-custom-block-danger-text: var(--tac-text);
-}
-
-/* --- Dark mode: repeat VitePress internal var overrides --- */
-html:not(.light) {
-  --vp-c-bg: var(--tac-bg);
-  --vp-c-bg-soft: var(--tac-surface);
-  --vp-c-bg-mute: var(--tac-surface-hover);
-  --vp-c-bg-alt: var(--tac-bg-deep);
-
-  --vp-c-text-1: var(--tac-text-bright);
-  --vp-c-text-2: var(--tac-text);
-  --vp-c-text-3: var(--tac-text-muted);
-  --vp-c-text-4: var(--tac-text-dim);
-
-  --vp-c-brand: var(--tac-accent);
-  --vp-c-brand-light: var(--tac-accent-soft);
-  --vp-c-brand-lighter: var(--tac-accent-glow);
-  --vp-c-brand-dark: var(--tac-accent-dim);
-  --vp-c-brand-dimmer: var(--tac-accent-glow-strong);
-
-  --vp-c-border: var(--tac-border);
-  --vp-c-border-hard: var(--tac-border-hover);
-
-  --vp-c-divider: var(--tac-border);
-
-  --vp-c-gutter: var(--tac-border);
-  --vp-c-sponsor: var(--tac-accent);
-
-  --vp-button-brand-bg: var(--tac-accent);
-  --vp-button-brand-text: var(--tac-bg-deep);
-  --vp-button-brand-hover-bg: var(--tac-accent-soft);
-  --vp-button-brand-hover-text: var(--tac-bg-deep);
-
-  --vp-button-alt-bg: var(--tac-surface);
-  --vp-button-alt-text: var(--tac-text);
-  --vp-button-alt-border: var(--tac-border);
-  --vp-button-alt-hover-bg: var(--tac-surface-hover);
-  --vp-button-alt-hover-text: var(--tac-text);
-  --vp-button-alt-hover-border: var(--tac-border-hover);
-
-  --vp-custom-block-info-bg: var(--tac-surface);
-  --vp-custom-block-info-border: var(--tac-info);
-  --vp-custom-block-info-text: var(--tac-text);
-
-  --vp-custom-block-tip-bg: var(--tac-surface);
-  --vp-custom-block-tip-border: var(--tac-success);
-  --vp-custom-block-tip-text: var(--tac-text);
-
-  --vp-custom-block-warning-bg: var(--tac-surface);
-  --vp-custom-block-warning-border: var(--tac-warning);
-  --vp-custom-block-warning-text: var(--tac-text);
-
-  --vp-custom-block-danger-bg: var(--tac-surface);
-  --vp-custom-block-danger-border: var(--tac-danger);
-  --vp-custom-block-danger-text: var(--tac-text);
-}
-
-/* ============================================================
-   PRINT (hidden nav/sidebar, clean text)
+   PRINT
    ============================================================ */
 @media print {
   .VPNav, .VPSidebar, .VPDocAside, .VPDocFooter {
