@@ -39,7 +39,7 @@
   --tac-success: #16a34a;
   --tac-warning: #d97706;
   --tac-danger: #dc2626;
-  --tac-info: #2563eb;
+  --tac-info: #b45309;
 
   /* Typography */
   --tac-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -134,7 +134,7 @@ html.dark {
   --tac-success: #4ade80;
   --tac-warning: #fbbf24;
   --tac-danger: #f87171;
-  --tac-info: #60a5fa;
+  --tac-info: #f59e0b;
 
   /* Code */
   --tac-code-bg: #1e1b16;
