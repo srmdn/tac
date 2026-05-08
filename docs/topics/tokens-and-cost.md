@@ -20,13 +20,14 @@ Tokenizers are trained predominantly on English text. Non-English text tokenizes
 |----------|-------------------------|-------------|
 | English | ~1.3 | baseline |
 | Spanish / French / German | ~1.4–1.6 | 1.1–1.2x |
+| Indonesian / Malay | ~1.5–2.0 | 1.2–1.5x |
 | Russian | ~2.0–3.0 | 1.5–2.3x |
 | Arabic | ~3.0–4.0 | 2.3–3.1x |
 | Chinese | ~1.5–2.0 per character | 2–4x by byte |
 | Japanese | ~2.0–3.0 per character | 2–4x by byte |
 | Hebrew | ~4.0–5.0 | up to 4x |
 
-If you're building for non-English users, account for this in your cost estimates. A system prompt that's 2K tokens in English can be 6K+ tokens in Arabic.
+If you're building for non-English users, account for this in your cost estimates. A system prompt that's 2K tokens in English can be 6K+ tokens in Arabic, or 3–4K in Indonesian due to agglutinative affixing.
 
 ### Token Counts for Common Content
 
