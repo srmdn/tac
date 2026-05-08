@@ -75,7 +75,7 @@ Directing each request to the right model based on task characteristics. Done we
 
 ### Routing strategies
 
-**Complexity-based** — Classify requests as simple or complex before calling an LLM. Simple → fast cheap model (GPT-4o-mini, Gemini Flash). Complex → frontier model.
+**Complexity-based** — Classify requests as simple or complex before calling an LLM. Simple → fast cheap model (DeepSeek V4-Flash, Gemini Flash). Complex → frontier model.
 
 **Cost-capped** — Set a per-request token budget. If the request fits, use a cheap model. If not, escalate.
 

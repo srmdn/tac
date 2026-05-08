@@ -118,4 +118,4 @@ For large MoE models, the relevant memory is for the active parameters — but y
 
 **KV cache is often the binding constraint** — for long-context use cases, quantizing the KV cache (INT8 or INT4 KV) can unlock more headroom than quantizing weights. Tools like vLLM support `--kv-cache-dtype fp8` for this.
 
-**Cloud providers handle this for you** — managed API providers run their own optimized quantized models. The Sonnet 4.6 and GPT-4o you call via API are not running in FP32. This is a self-hosting concern.
+**Cloud providers handle this for you** — managed API providers run their own optimized quantized models. The Sonnet 4.6 and GPT-5.5 you call via API are not running in FP32. This is a self-hosting concern.

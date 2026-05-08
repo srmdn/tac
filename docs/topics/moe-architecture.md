@@ -97,7 +97,7 @@ In practice: unless you have substantial fine-tuning data (>100K examples) and e
 
 ## Production Reality
 
-**MoE models via managed APIs are just cheaper frontiers** — you don't need to think about the architecture. DeepSeek-V3 and R1 through the DeepSeek API, Llama 4 through Groq, Mixtral through Mistral — all deliver MoE economics without the self-hosting overhead.
+**MoE models via managed APIs are just cheaper frontiers** — you don't need to think about the architecture. DeepSeek V4 through the DeepSeek API, Llama 4 through Groq, Mixtral through Mistral — all deliver MoE economics without the self-hosting overhead.
 
 **Latency can be higher despite lower compute** — expert parallelism across GPUs introduces communication overhead. DeepSeek-V3 uses custom inter-GPU communication (IBGDR) to minimize this, but multi-GPU MoE serving has higher latency than a comparably-sized dense model on a single GPU.
 

@@ -21,10 +21,10 @@ No infrastructure to operate. You pay per token.
 
 | Provider | Models | Strength |
 |----------|--------|----------|
-| Anthropic | Claude Haiku 4.5, Sonnet 4.6, Opus 4 | Best instruction following, long context, tool use |
-| OpenAI | GPT-4o, GPT-4o mini, o3, o4-mini | Widest ecosystem, structured output, vision |
-| Google | Gemini 2.5 Pro, Gemini 2.5 Flash | Largest context window (1M), multimodal |
-| DeepSeek | DeepSeek-V3, DeepSeek-R1 | Cheapest frontier quality, strong coding |
+| Anthropic | Claude Haiku 4.5, Sonnet 4.6, Opus 4.7 | Best instruction following, long context, tool use |
+| OpenAI | GPT-5.5, o3, o4-mini | Widest ecosystem, structured output, vision |
+| Google | Gemini 3.1 Pro, Gemini 2.5 Flash | Largest context window (1M), multimodal |
+| DeepSeek | DeepSeek V4-Pro, V4-Flash | Cheapest frontier quality, strong coding |
 | Mistral | Mistral Large 3, Mistral Small | European provider, competitive pricing |
 
 ### Inference-Speed Providers
@@ -105,7 +105,7 @@ See [Latency](/topics/latency) for the full breakdown.
 
 Not a serving framework — a protocol for connecting models to tools and data sources. An MCP server exposes tools (functions), resources (data), and prompts; an MCP client (your agent or IDE) connects to it.
 
-Introduced by Anthropic in November 2024. By mid-2025, it's the de facto standard for tool integration:
+Introduced by Anthropic in November 2024. By 2026, it's the de facto standard for tool integration:
 - Supported by: Claude, OpenAI Agents SDK, Gemini tooling, GitHub Copilot, VS Code, Cursor, Zed
 - 1,000+ community MCP servers: GitHub, Slack, Postgres, filesystem, browser, and more
 
@@ -127,7 +127,7 @@ The break-even point between managed API and self-hosted depends heavily on GPU 
 
 ## Production Reality
 
-**Managed APIs have gotten significantly cheaper** — the cost argument for self-hosting has narrowed. DeepSeek-V3 at $0.56/M input is competitive with self-hosting a similarly-capable model when you account for GPU costs, engineering time, and reliability.
+**Managed APIs have gotten significantly cheaper** — the cost argument for self-hosting has narrowed. DeepSeek V4-Pro at $0.44/M input is competitive with self-hosting a similarly-capable model when you account for GPU costs, engineering time, and reliability.
 
 **GPU availability is a constraint** — H100s and A100s are still capacity-constrained. Self-hosting planning that assumes on-demand GPU availability will be disappointed.
 

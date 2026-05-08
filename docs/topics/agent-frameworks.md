@@ -17,7 +17,7 @@ Before picking a framework, decide what you're actually building:
 | Prompt optimization over labeled data | DSPy |
 | Production RAG pipeline | Haystack |
 
-The "just use LangChain" default is less correct in 2025 than it was in 2023. The landscape has specialized. Pick the framework that matches your actual problem, not the most popular one.
+The "just use LangChain" default is less correct in 2026 than it was in 2023. The landscape has specialized. Pick the framework that matches your actual problem, not the most popular one.
 
 ## Framework Reference
 
@@ -33,23 +33,31 @@ The "just use LangChain" default is less correct in 2025 than it was in 2023. Th
 
 ### Anthropic Agent SDK
 
-Lightweight, opinionated SDK for building Claude-based agents. Released 2025; Python-first.
+Lightweight, opinionated SDK for building Claude-based agents. Beta as of 2025; Python-first.
 
-- **What it gives you:** Tool definition, multi-agent handoffs, context management. Minimal ceremony.
+- **What it gives you:** Tool definition via `@beta_tool`, managed agent/session lifecycle, streaming event loop. The `tool_runner` handles the call-respond loop automatically.
 - **Sweet spot:** Production agents built on Claude where you want Anthropic-sanctioned patterns without framework overhead
 - **Sharp edges:** Claude-only. Intentionally minimal — you own more of the stack. No built-in RAG or vector store primitives.
 
 ```python
-from anthropic import Anthropic
-from anthropic.agents import Agent, tool
+from anthropic import Anthropic, beta_tool
 
-@tool
+client = Anthropic()
+
+@beta_tool
 def search_docs(query: str) -> str:
     """Search internal documentation."""
     return retriever.search(query)
 
-agent = Agent(model="claude-sonnet-4-6", tools=[search_docs])
-result = agent.run("How do I configure the auth middleware?")
+runner = client.beta.messages.tool_runner(
+    model="claude-sonnet-4-6",
+    max_tokens=4096,
+    tools=[search_docs],
+    messages=[{"role": "user", "content": "How do I configure the auth middleware?"}],
+)
+
+for message in runner:
+    print(message.content)
 ```
 
 ### LlamaIndex
@@ -83,7 +91,7 @@ print(result.data.answer, result.data.confidence)
 
 ### CrewAI
 
-~27K stars. Fast growth in 2024–2025.
+~27K stars. Fast growth in 2024–2025 and continuing.
 
 - **What it gives you:** Role-based multi-agent — Agents with roles/goals/backstories, Tasks, Crews that coordinate them
 - **Sweet spot:** Workflows that map naturally to team roles (researcher → writer → reviewer pattern); getting non-technical stakeholders to understand agent designs
@@ -123,7 +131,7 @@ print(result.data.answer, result.data.confidence)
 
 ## MCP: Model Context Protocol
 
-A protocol, not a framework. Anthropic introduced MCP in November 2024; by mid-2025, it's the de facto standard for connecting LLMs to external tools and data.
+A protocol, not a framework. Anthropic introduced MCP in November 2024; by 2026, it's the de facto standard for connecting LLMs to external tools and data.
 
 **What it defines:**
 - **Tools** — functions the LLM can call
@@ -132,7 +140,7 @@ A protocol, not a framework. Anthropic introduced MCP in November 2024; by mid-2
 
 **How it works:** An MCP server (a process or HTTP endpoint) exposes these capabilities. An MCP client (your agent, Claude Desktop, VS Code Copilot, etc.) connects to it and presents the tools to the model.
 
-**Adoption as of mid-2025:**
+**Adoption as of 2026:**
 - Claude, OpenAI Agents SDK, Gemini tooling, GitHub Copilot, VS Code, Cursor, Zed, Windsurf all support MCP as a client
 - LangGraph, AutoGen, Mastra, Pydantic AI have MCP adapters
 - 1,000+ community servers: GitHub, Slack, Postgres, filesystem, browser control, and more
