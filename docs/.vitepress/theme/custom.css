@@ -225,12 +225,22 @@ body {
    NAVIGATION
    ============================================================ */
 .VPNav {
-  background: var(--vp-c-bg-alt) !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--tac-border);
+  position: relative;
+}
+
+/* backdrop-filter on a pseudo-element avoids trapping VPNavScreen
+   (position:fixed) inside a new containing block */
+.VPNav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--vp-c-bg-alt);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--tac-border);
-  /* Use VP's own z-index var so stacking context stays correct for
-     mobile nav screen (VPNavScreen) — don't hardcode z-index here */
+  z-index: -1;
+  pointer-events: none;
 }
 
 .VPNavBar {
