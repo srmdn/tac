@@ -87,10 +87,10 @@ cached = response.usage.prompt_tokens_details.cached_tokens
 Cached input prices:
 | Model | Uncached | Cached | Savings |
 |-------|----------|--------|---------|
-| GPT-4o | $2.50/M | $1.25/M | 50% |
+| GPT-5.5 | $5.00/M | $0.50/M | 90% |
+| GPT-4.1 | $2.00/M | $0.50/M | 75% |
 | o3 | $2.00/M | $0.50/M | 75% |
 | o4-mini | $1.10/M | $0.275/M | 75% |
-| GPT-4o mini | $0.15/M | $0.075/M | 50% |
 
 Automatic caching means you get savings when they happen; you don't get the control to guarantee they happen.
 
@@ -137,13 +137,13 @@ Gemini context caching is only worthwhile at meaningful request volume.
 
 Fully automatic, no user control.
 
-| Operation | DeepSeek-V3 | DeepSeek-R1 |
-|-----------|-------------|-------------|
-| Cache hit | $0.07/M | $0.14/M |
-| Cache miss | $0.56/M | $0.55/M |
-| Savings on hit | ~87% | ~75% |
+| Operation | DeepSeek V4-Pro | DeepSeek V4-Flash |
+|-----------|----------------|-------------------|
+| Cache hit | $0.004/M | $0.003/M |
+| Cache miss | $0.44/M | $0.14/M |
+| Savings on hit | ~99% | ~98% |
 
-DeepSeek's KV cache is shared infrastructure. Common prompts benefit most; novel or private prompts may see lower hit rates.
+DeepSeek V4's cache discount is extraordinary — cache hits cost roughly 1% of cache miss rate. Legacy models `deepseek-chat` and `deepseek-reasoner` retire July 24, 2026 and are routing to V4-Flash variants now.
 
 ## What to Cache
 

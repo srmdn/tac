@@ -25,18 +25,20 @@ What drives TTFT:
 
 TTFT scales with **input length**. A 100K-token prompt can have TTFT of several seconds even on fast infrastructure, because prefill is inherently sequential per layer.
 
-**Typical TTFT ranges (managed APIs, mid-2025):**
+**Typical TTFT ranges (managed APIs, 2026) — source: [artificialanalysis.ai](https://artificialanalysis.ai):**
 
 | Provider / Model | Typical TTFT |
 |-----------------|--------------|
-| Groq (Llama 4 Scout) | 100–300ms |
-| Anthropic (Haiku 4.5) | 300–600ms |
-| OpenAI (GPT-4o mini) | 300–700ms |
-| Anthropic (Sonnet 4.6) | 400–900ms |
-| OpenAI (GPT-4o) | 500ms–1.5s |
-| Anthropic (Opus 4) | 800ms–2s |
+| Groq (fast models) | 100–300ms |
+| Gemini 2.5 Flash | ~670ms |
+| Anthropic (Haiku 4.5) | 300–700ms |
+| Anthropic (Sonnet 4.6) | ~1.4s |
+| GPT-4.1 | ~970ms |
+| Gemini 3.1 Pro Preview | ~28s (reasoning) |
+| Anthropic (Opus 4.7) | ~21s (adaptive thinking) |
+| GPT-5.5 (high effort) | ~24s (reasoning) |
 
-These vary significantly with load, prompt length, and time of day.
+TTFT varies significantly with load, prompt length, reasoning mode, and time of day. Non-reasoning variants of the same model have dramatically lower TTFT than reasoning variants.
 
 ### TPOT — Time Per Output Token
 
@@ -108,9 +110,9 @@ Available in vLLM and TGI for self-hosted deployments. Anthropic's API uses it i
 The simplest optimization. If a smaller model meets your quality bar, use it.
 
 ```
-GPT-4o mini TPOT: ~20ms/token
-GPT-4o TPOT: ~30ms/token
-→ 1.5× speed improvement, 16× cost reduction
+Gemini 2.5 Flash: ~190 tok/s (5ms/token)
+Claude Sonnet 4.6: ~43 tok/s (23ms/token)
+→ 4× speed improvement at 1/5th the cost
 ```
 
 Groq's LPU (Language Processing Unit) hardware achieves 200–500 tok/s on smaller models — the fastest option for latency-critical, quality-tolerant use cases.
@@ -149,7 +151,7 @@ For interactive features, define a budget before you build:
 | Multi-step agentic task | < 30s (with progress indication) |
 | Background job / batch | No strict limit |
 
-If your design doesn't fit the budget, change the design — not the model. Switching from GPT-4o to GPT-4o mini saves 30–50% latency; redesigning a 10-step sequential agent as 3 parallel tasks saves 70%.
+If your design doesn't fit the budget, change the design — not the model. Switching from a frontier model to an efficient model (Gemini 2.5 Flash, DeepSeek V4-Flash) saves 4–10× latency; redesigning a 10-step sequential agent as 3 parallel tasks saves 70%.
 
 ## Production Reality
 

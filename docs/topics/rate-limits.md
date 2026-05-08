@@ -9,7 +9,7 @@ Rate limits affect your architecture in two ways:
 1. **Can your system handle the traffic you're planning for?** — check whether your expected volume fits within your tier
 2. **What happens when you're throttled?** — you will get 429s in production; have a plan before you need it
 
-## Current Tier Limits (May 2025)
+## Current Tier Limits (May 2026)
 
 Limits are tier-based and increase as you spend more. These are representative tiers — verify current limits in each provider's documentation before building.
 
@@ -34,7 +34,7 @@ Anthropic tracks **input** and **output** tokens separately. Output TPM limits a
 | Tier 4 | 10,000 | 2,000,000 | $250 spend |
 | Tier 5 | 30,000 | 150,000,000 | $1,000 spend |
 
-OpenAI limits vary significantly by model. o3 and o4-mini have lower limits than GPT-4o at equivalent tiers due to higher compute cost.
+OpenAI limits vary significantly by model. o3, o4-mini, and GPT-5.5 have lower limits than GPT-4.1 at equivalent tiers due to higher compute cost.
 
 ### Google (Gemini API)
 
@@ -49,10 +49,10 @@ Gemini has generous TPM limits relative to RPM. The bottleneck is usually reques
 
 | Model | RPM | TPM |
 |-------|-----|-----|
-| DeepSeek-V3 | 1,000+ | Very high |
-| DeepSeek-R1 | 1,000+ | High |
+| DeepSeek V4-Pro | 1,000+ | Very high |
+| DeepSeek V4-Flash | 1,000+ | Very high |
 
-DeepSeek's limits are generous relative to the price point. Less documented; subject to change.
+DeepSeek's limits are generous relative to the price point. Legacy models `deepseek-chat` and `deepseek-reasoner` retire July 24, 2026 — migrate to `deepseek-v4-flash` or `deepseek-v4-pro`.
 
 ## Limit Types
 

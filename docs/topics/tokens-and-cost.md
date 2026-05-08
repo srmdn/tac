@@ -40,48 +40,53 @@ If you're building for non-English users, account for this in your cost estimate
 | PDF research paper (~8 pages) | 8,000–15,000 |
 | Support conversation (5–7 turns) | 2,000–5,000 cumulative |
 
-## Current Pricing (May 2025)
+## Current Pricing (May 2026)
 
-Input and output tokens are priced separately. Output tokens cost 3–5x more than input tokens on most models — generating verbose responses is significantly more expensive than reading long prompts.
+Input and output tokens are priced separately. Output tokens cost 3–5× more than input tokens on most models — generating verbose responses is significantly more expensive than reading long prompts.
 
-### Frontier Models
+Source: [artificialanalysis.ai](https://artificialanalysis.ai) + official provider pricing pages.
 
-| Model | Input /1M | Output /1M | Context |
-|-------|-----------|------------|---------|
-| Claude Opus 4 (`claude-opus-4-7`) | $5.00 | $25.00 | 1M |
-| Claude Sonnet 4.6 (`claude-sonnet-4-6`) | $3.00 | $15.00 | 1M |
-| GPT-4o | $2.50 | $10.00 | 128K |
-| Gemini 2.5 Pro (≤200K input) | $1.25 | $10.00 | 1M |
-| Gemini 2.5 Pro (>200K input) | $2.50 | $15.00 | 1M |
-| o3 | $2.00 | $8.00 | 200K |
+### Flagship Models
 
-### Mid-Tier Models
+| Model | Provider | Input /1M | Output /1M | Cache Read /1M | Context |
+|-------|----------|-----------|------------|---------------|---------|
+| GPT-5.5 | OpenAI | $5.00 | $30.00 | $0.50 | 922K |
+| Claude Opus 4.7 (`claude-opus-4-7`) | Anthropic | $5.00 | $25.00 | $0.50 | 1M |
+| Gemini 3.1 Pro Preview | Google | $2.00 | $12.00 | $0.20 | 1M |
+| Grok 4.3 | xAI | — | — | — | — |
 
-| Model | Input /1M | Output /1M | Context |
-|-------|-----------|------------|---------|
-| Claude Haiku 4.5 (`claude-haiku-4-5`) | $1.00 | $5.00 | 200K |
-| Gemini 2.5 Flash | $0.30 | $2.50 | 1M |
-| o4-mini | $1.10 | $4.40 | 200K |
-| Mistral Large 3 | $0.50 | $1.50 | 128K |
+### Performance Tier
 
-### Budget & Open Models
+| Model | Provider | Input /1M | Output /1M | Cache Read /1M | Context |
+|-------|----------|-----------|------------|---------------|---------|
+| Claude Sonnet 4.6 (`claude-sonnet-4-6`) | Anthropic | $3.00 | $15.00 | $0.30 | 1M |
+| o3 | OpenAI | $2.00 | $8.00 | $0.50 | 200K |
+| GPT-4.1 | OpenAI | $2.00 | $8.00 | $0.50 | 1M |
+| Gemini 2.5 Pro (≤200K) | Google | $1.25 | $10.00 | — | 1M |
+| Gemini 2.5 Pro (>200K) | Google | $2.50 | $15.00 | — | 1M |
+| o4-mini | OpenAI | $1.10 | $4.40 | $0.28 | 200K |
+| Claude Haiku 4.5 (`claude-haiku-4-5`) | Anthropic | $1.00 | $5.00 | $0.10 | 200K |
 
-| Model | Input /1M | Output /1M | Notes |
-|-------|-----------|------------|-------|
-| GPT-4o mini | $0.15 | $0.60 | |
-| Mistral Small 3.2 (24B) | $0.075 | $0.20 | |
-| Llama 4 Scout (via Groq) | $0.11 | $0.34 | 128K ctx |
-| Gemini 2.5 Flash-Lite | $0.10 | $0.40 | |
-| DeepSeek-V3 | $0.56 | $1.68 | cache miss rate |
-| DeepSeek-R1 | $0.55 | $2.19 | reasoning model |
+### Efficient / Open Models
+
+| Model | Provider | Input /1M | Output /1M | Cache Read /1M | Context | Notes |
+|-------|----------|-----------|------------|---------------|---------|-------|
+| DeepSeek V4-Pro | DeepSeek | $0.44 | $0.87 | $0.004 | 1M | 75% promo through May 31 |
+| Kimi K2 | Moonshot AI | $0.59 | $2.40 | $0.36 | 128K | Open weights |
+| Llama 4 Maverick | Meta | $0.35 | $0.85 | $0.27 | 1M | Open weights |
+| Gemini 2.5 Flash | Google | $0.30 | $2.50 | $0.03 | 1M | |
+| DeepSeek V4-Flash | DeepSeek | $0.14 | $0.28 | $0.003 | 1M | |
+| Gemini 2.5 Flash-Lite | Google | $0.10 | $0.40 | $0.01 | 1M | |
+
+Grok 4.3 pricing: check [console.x.ai](https://console.x.ai). DeepSeek V4-Pro full post-promo price: $1.74/$3.48 input/output.
 
 :::tip DeepSeek caching
-DeepSeek uses automatic KV caching. Cache hit rate: ~$0.07/M (V3) and ~$0.14/M (R1) — roughly 12–25% of the cache miss rate. No explicit user control needed.
+DeepSeek V4 uses automatic KV caching. Cache hit: $0.004/M (V4-Pro) and $0.003/M (V4-Flash) — roughly 1% of the cache miss rate. No explicit user control needed.
 :::
 
 ### Reasoning Model Cost Reality
 
-For o3 and DeepSeek-R1, the listed output price understates real cost. These models generate internal "thinking" tokens billed at output rates. A hard problem might burn 10K–30K reasoning tokens before producing the final answer.
+Reasoning models generate internal thinking tokens billed at output rates. A hard problem may burn 10K–50K thinking tokens before producing a final answer.
 
 ```
 o3 hard problem:
@@ -91,7 +96,7 @@ o3 hard problem:
   Total:                               $0.218 per request
 ```
 
-At scale, routing hard problems to reasoning models only when necessary is critical.
+This applies to o3, o4-mini, GPT-5.5, Claude with adaptive thinking, DeepSeek V4-Pro in thinking mode, and Grok 4.3. At scale, routing to reasoning models only when the task requires it is critical.
 
 ## Cost Optimization
 
@@ -106,8 +111,8 @@ See [Prompt Caching](/topics/prompt-caching) for the full breakdown.
 The biggest cost lever. Routing even half your traffic from a frontier model to a mid-tier model can cut costs 5–10x:
 
 ```
-GPT-4o mini ($0.15/M input) vs. GPT-4o ($2.50/M input) = 16x difference
-Gemini 2.5 Flash ($0.30/M) vs. Gemini 2.5 Pro ($1.25/M) = 4x difference
+DeepSeek V4-Flash ($0.14/M) vs. GPT-5.5 ($5.00/M) = 36x difference
+Gemini 2.5 Flash ($0.30/M) vs. Gemini 3.1 Pro Preview ($2.00/M) = 7x difference
 Haiku 4.5 ($1.00/M) vs. Sonnet 4.6 ($3.00/M) = 3x difference
 ```
 
@@ -174,7 +179,7 @@ The difference is $2,700/month before caching or routing optimization.
 
 **Output tokens dominate at scale** — developers obsess over prompt length but output is usually the larger cost driver in production. If your agents generate long responses, tightening output instructions pays more than trimming your system prompt.
 
-**Prices change** — model pricing has dropped significantly year-over-year across all providers. The table above reflects May 2025 rates. Build your cost estimates with a price-check step before committing to a model.
+**Prices change** — model pricing has dropped significantly year-over-year across all providers. The table above reflects May 2026 rates; verify current prices at [artificialanalysis.ai](https://artificialanalysis.ai) before committing to a model.
 
 **Measure actual token usage in production** — your estimates will be wrong. Log `usage.input_tokens` and `usage.output_tokens` from API responses from day one. Dashboards that show "requests" without token breakdowns will mislead you on costs.
 

@@ -10,23 +10,27 @@ Context window size is a capability constraint, not a design choice. The decisio
 2. **How do you handle inputs that exceed it?**
 3. **Does a larger window actually improve quality for your case?** (not always)
 
-## Current Context Window Sizes
+## Current Context Window Sizes (May 2026)
 
-| Model | Context Window | Notes |
-|-------|---------------|-------|
-| Gemini 2.5 Pro | 1M tokens | Tiered pricing above 200K |
-| Gemini 2.5 Flash | 1M tokens | |
-| Claude Opus 4 | 1M tokens | |
-| Claude Sonnet 4.6 | 1M tokens | |
-| Claude Haiku 4.5 | 200K tokens | |
-| GPT-4o | 128K tokens | |
-| o3 | 200K tokens | |
-| DeepSeek-V3 | 128K tokens | |
-| DeepSeek-R1 | 128K tokens | |
-| Llama 4 Scout | 10M tokens (claimed) | 128K practical in most deployments |
-| Llama 4 Maverick | 1M tokens | |
+| Model | Provider | Context Window | Notes |
+|-------|----------|---------------|-------|
+| GPT-5.5 | OpenAI | 922K tokens | |
+| Claude Opus 4.7 | Anthropic | 1M tokens | New tokenizer; may use up to 35% more tokens vs prior models |
+| Claude Sonnet 4.6 | Anthropic | 1M tokens | |
+| Gemini 3.1 Pro Preview | Google | 1M tokens | Tiered pricing above 200K |
+| Gemini 2.5 Pro | Google | 1M tokens | Tiered pricing above 200K |
+| Gemini 2.5 Flash | Google | 1M tokens | |
+| DeepSeek V4-Pro | DeepSeek | 1M tokens | 384K max output |
+| DeepSeek V4-Flash | DeepSeek | 1M tokens | 384K max output |
+| Llama 4 Maverick | Meta | 1M tokens | Open weights |
+| GPT-4.1 | OpenAI | 1M tokens | |
+| Grok 4.3 | xAI | — | Check console.x.ai |
+| o3 / o4-mini | OpenAI | 200K tokens | Reasoning models |
+| Claude Haiku 4.5 | Anthropic | 200K tokens | |
+| Kimi K2 | Moonshot AI | 128K tokens | 1T param MoE, 32B active |
+| Llama 4 Scout | Meta | 10M tokens (claimed) | 128K practical in most serving deployments |
 
-Window sizes have grown dramatically in 2024–2025. A 1M token window fits roughly 750 novels or the entire codebase of a large project.
+Window sizes have grown dramatically. A 1M token window fits roughly 750 novels or the entire codebase of a large project. Note that Claude Opus 4.7 uses a new tokenizer — the same text uses more tokens than on older Claude models.
 
 ## What Fills a Context Window
 

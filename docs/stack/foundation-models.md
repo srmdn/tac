@@ -11,21 +11,43 @@ Choosing a foundation model is not a benchmark question. It is a cost-latency-ca
 - Will the model be called millions of times per day, or hundreds?
 - Does your use case require reasoning traces, or fast single-pass output?
 
-## Model Families (2025)
+## Top Models by Provider (2026)
 
-| Family | Provider | Context | Strengths | Best for |
-|--------|----------|---------|-----------|----------|
-| GPT-4o | OpenAI | 128K | Tool use, multimodal, speed | Broad production workloads |
-| o3 / o4-mini | OpenAI | 200K | Deep reasoning, math, code | Hard problems where quality > cost |
-| Claude Sonnet 4 | Anthropic | 200K | Instruction following, coding | Coding agents, long-context tasks |
-| Claude Opus 4 | Anthropic | 200K | Frontier reasoning, extended thinking | Tasks where quality dominates cost |
-| Gemini 2.5 Pro | Google | 1M | Massive context, multimodal | Document analysis, video understanding |
-| Gemini 2.5 Flash | Google | 1M | Fast + cheap at 1M context | High-volume, cost-sensitive workloads |
-| DeepSeek-V3 | DeepSeek | 128K | MoE efficiency, strong coding | Cost-efficient and self-hostable |
-| DeepSeek-R1 | DeepSeek | 128K | Open-weight reasoning | On-premise reasoning, audit requirements |
-| Llama 4 Scout/Maverick | Meta | 128K–1M | Open weights, widely deployed | On-premise, fine-tuning, compliance |
-| Kimi K2 | Moonshot AI | 128K | Tool use, agentic benchmarks | Agentic tasks, open-weight preference |
-| Mistral Large | Mistral | 128K | European data sovereignty | EU compliance workloads |
+Data from [artificialanalysis.ai](https://artificialanalysis.ai) and official provider pricing pages. Pricing in USD per 1M tokens.
+
+### Frontier / Flagship
+
+| Model | Provider | Input | Output | Cache Read | Context |
+|-------|----------|-------|--------|------------|---------|
+| GPT-5.5 | OpenAI | $5.00 | $30.00 | $0.50 | 922K |
+| Claude Opus 4.7 | Anthropic | $5.00 | $25.00 | $0.50 | 1M |
+| Gemini 3.1 Pro Preview | Google | $2.00 | $12.00 | $0.20 | 1M |
+| Grok 4.3 | xAI | — | — | — | — |
+
+### Performance
+
+| Model | Provider | Input | Output | Cache Read | Context |
+|-------|----------|-------|--------|------------|---------|
+| Claude Sonnet 4.6 | Anthropic | $3.00 | $15.00 | $0.30 | 1M |
+| o3 | OpenAI | $2.00 | $8.00 | $0.50 | 200K |
+| GPT-4.1 | OpenAI | $2.00 | $8.00 | $0.50 | 1M |
+| Gemini 2.5 Pro | Google | $1.25 | $10.00 | — | 1M |
+| o4-mini | OpenAI | $1.10 | $4.40 | $0.28 | 200K |
+| Claude Haiku 4.5 | Anthropic | $1.00 | $5.00 | $0.10 | 200K |
+
+### Efficient / Budget
+
+| Model | Provider | Input | Output | Cache Read | Context | Notes |
+|-------|----------|-------|--------|------------|---------|-------|
+| DeepSeek V4-Pro | DeepSeek | $0.44 | $0.87 | $0.004 | 1M | 75% promo discount active |
+| Kimi K2 | Moonshot AI | $0.59 | $2.40 | $0.36 | 128K | 1T params, 32B active |
+| Llama 4 Maverick | Meta | $0.35 | $0.85 | $0.27 | 1M | Open weights |
+| Gemini 2.5 Flash | Google | $0.30 | $2.50 | $0.03 | 1M | |
+| DeepSeek V4-Flash | DeepSeek | $0.14 | $0.28 | $0.003 | 1M | |
+| Gemini 2.5 Flash-Lite | Google | $0.10 | $0.40 | $0.01 | 1M | |
+| Mistral Large | Mistral | — | — | — | 128K | EU data sovereignty |
+
+Grok 4.3 pricing requires [xAI Console](https://console.x.ai). DeepSeek V4-Pro full (post-promo) price: $1.74/$3.48 input/output. Mistral pricing at [mistral.ai](https://mistral.ai/technology).
 
 ## Core Concepts That Matter
 
@@ -88,8 +110,8 @@ Token pricing dominates foundation model costs at scale:
 
 - Input is cheaper than output (typically 3–5×)
 - Cache hits are much cheaper than cache misses (10× for Anthropic, ~2× for OpenAI)
-- MoE models (DeepSeek-V3, Mixtral) cost less per token because they activate a fraction of parameters per forward pass
-- Reasoning models (o3, DeepSeek-R1) generate hidden thinking tokens — they consume far more tokens than their outputs suggest
+- MoE models (DeepSeek V4, Kimi K2, Llama 4 Maverick) cost less per token because they activate a fraction of parameters per forward pass
+- Reasoning models (o3, o4-mini, DeepSeek R1, Claude with adaptive thinking) generate hidden thinking tokens — they consume far more tokens than their outputs suggest
 
 A production agent that makes 10 LLM calls per user session at 4K tokens each spends 40K tokens per session. At $3/M input tokens, that is $0.12 per session before output cost. Model selection and caching strategy directly determine whether unit economics work.
 
