@@ -4,47 +4,51 @@ layout: home
 hero:
   name: Tac
   text: The Agent Stack
-  tagline: Technical compendium for Agentic AI. From token economics to multi-agent orchestration.
+  tagline: A technical reference for Agentic AI. Learn how the stack fits together, or jump straight to the production problem you're solving.
   actions:
     - theme: brand
-      text: Explore the Stack
+      text: Learning the stack
       link: /stack/
     - theme: alt
-      text: Browse Topics
+      text: I'm building something
       link: /topics/tokens-and-cost
 
 features:
-  - title: Foundations
-    details: Tokens, context windows, sampling. Understand the primitives that power every LLM call.
+  - title: New to the stack
+    details: Work up from foundation models to agent applications. Each layer builds on the one below. For engineers who want to understand how everything fits together before they build.
+    link: /stack/
+    linkText: Start at the foundation
+  - title: Already building
+    details: Jump to the decision you're facing right now. Cost control, context limits, tool design, rate limits — each topic is framed around a production problem, not a definition.
     link: /topics/tokens-and-cost
-  - title: Infrastructure
-    details: Serving, caching, latency, quantization. The systems that make inference economical at scale.
-    link: /topics/llm-serving
-  - title: Agents
-    details: Frameworks, runtimes, orchestration. How single agents become compound systems.
-    link: /topics/agent-frameworks
+    linkText: Browse by problem
 ---
 
-## What is Tac?
+## Topics by Problem
 
-**Tac** is a structured knowledge base that maps the full stack of Agentic AI, from the lowest-level token economics up to multi-agent orchestration.
+Each topic answers a decision a builder actually faces.
 
-It is not a tutorial. It is a **reference** for builders who want to understand how the pieces fit together: what a context window actually is, how prompt caching saves money, why model routing matters, and what separates a coding agent from a personal AI assistant.
+| You're dealing with… | Topic |
+|----------------------|-------|
+| Unpredictable LLM costs | [Tokens & Cost](/topics/tokens-and-cost) |
+| Agent breaking at long context | [Context Windows](/topics/context-windows) |
+| Wanting to cut input costs significantly | [Prompt Caching](/topics/prompt-caching) |
+| Inconsistent or unreliable outputs | [Sampling](/topics/sampling) |
+| Response time too slow | [Latency](/topics/latency) |
+| Rate limits hitting in production | [Rate Limits & Concurrency](/topics/rate-limits) |
+| Long context eating VRAM | [KV Cache & Quantization](/topics/kv-cache-quantization) |
+| Choosing a serving solution | [LLM Serving](/topics/llm-serving) |
+| Wondering why MoE models are cheap | [MoE Architecture](/topics/moe-architecture) |
+| Picking or building an agent framework | [Agent Frameworks](/topics/agent-frameworks) |
+| Single agent not enough | [Orchestration](/topics/orchestration) |
 
 ## The Stack
 
-| Layer | Examples |
-|-------|---------|
-| Agent Applications | coding agents, personal AI, support bots |
-| Agent Runtime | Hermes Agent, OpenClaw, MCP, function calling |
-| Agent Infrastructure | model serving, caching, routing, observability |
-| Foundation Models | DeepSeek, GPT, Claude, Kimi, LLaMA |
+Four layers. Each has its own economics, failure modes, and decisions. Understanding all four is what separates a demo from a production system.
 
-## Topics
-
-| Category | Topics |
-|----------|--------|
-| **Foundations** | [Tokens & Cost](/topics/tokens-and-cost), [Context Windows](/topics/context-windows), [Sampling](/topics/sampling) |
-| **Infrastructure** | [LLM Serving](/topics/llm-serving), [Prompt Caching](/topics/prompt-caching), [Latency](/topics/latency), [KV Cache & Quantization](/topics/kv-cache-quantization), [Rate Limits](/topics/rate-limits) |
-| **Architecture** | [MoE](/topics/moe-architecture) |
-| **Agents** | [Frameworks](/topics/agent-frameworks), [Orchestration](/topics/orchestration) |
+| Layer | What it provides |
+|-------|-----------------|
+| Agent Applications | The user-facing layer — coding agents, assistants, support bots |
+| Agent Runtime | Frameworks and protocols that turn LLM output into action |
+| Agent Infrastructure | Serving, caching, routing — makes inference economical at scale |
+| Foundation Models | Transformers, weights, tokenizers — where every constraint originates |
