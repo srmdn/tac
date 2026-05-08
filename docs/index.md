@@ -47,5 +47,6 @@ Each topic answers a decision a builder actually faces.
 | Tools called incorrectly or unreliably | [Tool Use & Function Calling](/topics/tool-use) |
 | Agent losing track in long conversations | [Context Management](/topics/context-management) |
 | Standard model failing on hard problems | [Reasoning Models](/topics/reasoning-models) |
+| Agent needs access to knowledge it wasn't trained on | [Embeddings & Vector Stores](/topics/embeddings) |
 | Prompting isn't reliable enough; need consistent behavior | [Fine-Tuning](/topics/fine-tuning) |
 

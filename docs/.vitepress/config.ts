@@ -86,6 +86,12 @@ export default defineConfig({
           ]
         },
         {
+          text: 'Retrieval',
+          items: [
+            { text: 'Embeddings & Vector Stores', link: '/topics/embeddings' },
+          ]
+        },
+        {
           text: 'Optimization',
           items: [
             { text: 'Fine-Tuning', link: '/topics/fine-tuning' },
