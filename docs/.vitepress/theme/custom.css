@@ -421,6 +421,8 @@ html.dark .VPDoc a:hover {
   background: var(--tac-code-bg) !important;
   border-radius: 8px;
   border: 1px solid var(--tac-border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 div[class*='language-'] {
@@ -428,6 +430,8 @@ div[class*='language-'] {
   border-radius: 8px;
   border: 1px solid var(--tac-border);
   position: relative;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 html.dark div[class*='language-']::before {
