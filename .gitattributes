@@ -1,0 +1,8 @@
+# Force Linguist to detect VitePress source files
+# (Linguist excludes docs/ paths by default)
+docs/.vitepress/config.ts linguist-detectable=true
+docs/.vitepress/theme/*.ts linguist-detectable=true
+docs/.vitepress/theme/*.css linguist-detectable=true
+
+# Mark generated files
+package-lock.json linguist-generated=true

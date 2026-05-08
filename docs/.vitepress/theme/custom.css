@@ -667,6 +667,11 @@ html.dark .VPHomeHero::before {
   z-index: 1;
 }
 
+/* Extra breathing room between hero and feature cards */
+.VPHomeFeatures {
+  padding-top: 3rem;
+}
+
 /* Feature cards on home */
 .VPHome .VPFeature {
   border-radius: 10px;

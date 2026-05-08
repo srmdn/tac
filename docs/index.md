@@ -47,13 +47,3 @@ Each topic answers a decision a builder actually faces.
 | Agent losing track in long conversations | [Context Management](/topics/context-management) |
 | Standard model failing on hard problems | [Reasoning Models](/topics/reasoning-models) |
 
-## The Stack
-
-Four layers. Each has its own economics, failure modes, and decisions. Understanding all four is what separates a demo from a production system.
-
-| Layer | What it provides |
-|-------|-----------------|
-| Agent Applications | The user-facing layer — coding agents, assistants, support bots |
-| Agent Runtime | Frameworks and protocols that turn LLM output into action |
-| Agent Infrastructure | Serving, caching, routing — makes inference economical at scale |
-| Foundation Models | Transformers, weights, tokenizers — where every constraint originates |

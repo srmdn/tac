@@ -1,26 +1,106 @@
 # Foundation Models
 
-The base of the Agent Stack. Everything else is built on top of transformers, tokenizers, and weights.
+The bottom of the stack. Every constraint you hit above — context limits, token costs, latency, quantization quality — originates here. Decisions at this layer ripple through everything else.
 
-## Key Concepts
+## The Production Decision
 
-- **Context Windows** — How much text a model can "remember" in a single forward pass. Not a hard limit, but a soft cliff.
-- **KV Cache** — The hidden state that makes autoregressive generation fast. Also the reason long conversations cost VRAM.
-- **Sampling** — Temperature, top-p, top-k. The knobs that control creativity vs determinism.
-- **Quantization** — Trading precision for speed. FP16 → INT8 → INT4.
+Choosing a foundation model is not a benchmark question. It is a cost-latency-capability tradeoff with hard engineering consequences:
 
-## Major Model Families
+- Which context window do you actually need — and can you afford to fill it?
+- Do you need reliable structured output, or is free-form acceptable?
+- Will the model be called millions of times per day, or hundreds?
+- Does your use case require reasoning traces, or fast single-pass output?
 
-| Family | Maker | Notes |
-|--------|-------|-------|
-| GPT-4o / o1 / o3 | OpenAI | Broad capabilities, strong tool use |
-| Claude 3.5 / 4 | Anthropic | Long context, strong reasoning |
-| DeepSeek-V3 / R1 | DeepSeek | MoE architecture, cost-efficient |
-| Kimi K2 | Moonshot AI | 2M context window |
-| LLaMA 3 | Meta | Open weights, widely deployed |
+## Model Families (2025)
+
+| Family | Provider | Context | Strengths | Best for |
+|--------|----------|---------|-----------|----------|
+| GPT-4o | OpenAI | 128K | Tool use, multimodal, speed | Broad production workloads |
+| o3 / o4-mini | OpenAI | 200K | Deep reasoning, math, code | Hard problems where quality > cost |
+| Claude Sonnet 4 | Anthropic | 200K | Instruction following, coding | Coding agents, long-context tasks |
+| Claude Opus 4 | Anthropic | 200K | Frontier reasoning, extended thinking | Tasks where quality dominates cost |
+| Gemini 2.5 Pro | Google | 1M | Massive context, multimodal | Document analysis, video understanding |
+| Gemini 2.5 Flash | Google | 1M | Fast + cheap at 1M context | High-volume, cost-sensitive workloads |
+| DeepSeek-V3 | DeepSeek | 128K | MoE efficiency, strong coding | Cost-efficient and self-hostable |
+| DeepSeek-R1 | DeepSeek | 128K | Open-weight reasoning | On-premise reasoning, audit requirements |
+| Llama 4 Scout/Maverick | Meta | 128K–1M | Open weights, widely deployed | On-premise, fine-tuning, compliance |
+| Kimi K2 | Moonshot AI | 128K | Tool use, agentic benchmarks | Agentic tasks, open-weight preference |
+| Mistral Large | Mistral | 128K | European data sovereignty | EU compliance workloads |
+
+## Core Concepts That Matter
+
+### Tokenization
+
+Models read tokens, not text. The token-to-word ratio varies by language and content type:
+
+| Content | Tokens per word (approx) |
+|---------|--------------------------|
+| English | 0.75 |
+| Spanish / French | 0.9–1.1 |
+| German | 1.1–1.3 |
+| Arabic / Hebrew | 1.5–2.5 |
+| Chinese / Japanese | 1.5–2.0 |
+| Dense code | 1.3–2.0 |
+
+If your application handles non-English content, budget 2–3× more tokens than your English estimates. Use `tiktoken` (OpenAI) or provider SDKs to count exactly before pricing your product.
+
+### Context Windows
+
+Large context is not free. Three things happen as you fill the window:
+
+1. **Cost scales linearly** — 1M tokens in means 1M tokens billed
+2. **Latency increases** — time to first token grows with input length
+3. **Retrieval quality degrades** — models lose track of relevant information buried in the middle of long contexts ("lost in the middle")
+
+The practical ceiling for reliable retrieval is roughly 32K–64K tokens for most models. Beyond that, use RAG or structured chunking unless the task genuinely requires the full window.
+
+[Context Windows →](/topics/context-windows) | [Context Management →](/topics/context-management)
+
+### Sampling Parameters
+
+The defaults are rarely optimal for production:
+
+- **Temperature 0** is not truly deterministic. Different batch sizes, hardware, or quantization levels produce different outputs even at temp=0.
+- **Top-p and temperature together** interact in ways that are hard to reason about. Pick one to tune and fix the other.
+- **Structured output APIs** enforce JSON schema at the decoding level — not just through prompting. Use them. They eliminate a class of parsing failures.
+
+[Sampling →](/topics/sampling)
+
+### Quantization
+
+Self-hosted models trade parameter precision for speed and VRAM:
+
+| Format | Precision | VRAM savings vs FP16 | Quality impact |
+|--------|-----------|----------------------|----------------|
+| BF16 | Full | baseline | None |
+| GPTQ INT8 | 8-bit | ~50% | Minimal (<1% on most benchmarks) |
+| GPTQ INT4 | 4-bit | ~75% | Noticeable on complex tasks |
+| GGUF Q4_K_M | 4-bit | ~75% | Similar to GPTQ INT4 |
+| GGUF Q2_K | 2-bit | ~87% | Significant degradation |
+
+INT8 is the practical floor for production quality. INT4 is acceptable for latency-sensitive tasks where the task is simple. 2-bit is for research, not production.
+
+[KV Cache & Quantization →](/topics/kv-cache-quantization)
 
 ## Economics
 
-Foundation models are priced by the token. Input tokens are cheaper than output tokens. Cache hits are cheaper than cache misses. Understanding these economics is essential for building profitable agent systems.
+Token pricing dominates foundation model costs at scale:
 
-[Tokens & Cost →](/topics/tokens-and-cost)
+- Input is cheaper than output (typically 3–5×)
+- Cache hits are much cheaper than cache misses (10× for Anthropic, ~2× for OpenAI)
+- MoE models (DeepSeek-V3, Mixtral) cost less per token because they activate a fraction of parameters per forward pass
+- Reasoning models (o3, DeepSeek-R1) generate hidden thinking tokens — they consume far more tokens than their outputs suggest
+
+A production agent that makes 10 LLM calls per user session at 4K tokens each spends 40K tokens per session. At $3/M input tokens, that is $0.12 per session before output cost. Model selection and caching strategy directly determine whether unit economics work.
+
+[Tokens & Cost →](/topics/tokens-and-cost) | [Prompt Caching →](/topics/prompt-caching)
+
+## Production Reality
+
+**Benchmarks do not predict production performance.** A model that tops MMLU may underperform on your specific task. Always evaluate on representative samples from your actual workload before committing.
+
+**Models get deprecated on short notice.** GPT-4 (original), Claude 2, Llama 2 — all retired. Design with a routing layer and abstracted model identifiers. You will swap models at least once during the product's lifetime.
+
+**Context windows are marketing, not architecture.** A 1M-token context window does not mean reliable retrieval from 1M tokens. Test retrieval accuracy at the lengths you actually intend to use.
+
+**Prompt sensitivity is underestimated.** Changing a system prompt by one sentence can shift output distributions measurably. Build eval coverage before any prompt change ships to production. [Evaluations →](/topics/evals)

@@ -1,29 +1,37 @@
 # The Stack
 
-Agentic AI is not a single technology. It is a stack of layers, each with its own constraints, economics, and failure modes. Understanding the stack is the difference between building a demo and building a system that works in production.
+Agentic AI is not a single technology. It is four layers, each with its own economics, failure modes, and engineering decisions. The gap between a demo and a production system is almost always a gap in one of these layers — not the model.
 
 ## Four Layers
 
 ### 1. Foundation Models
 
-The base layer: transformers, weights, tokenizers. This is where context windows, KV caches, and sampling parameters live. Every decision here ripples upward.
+Transformers, weights, tokenizers, and sampling parameters. Context windows, KV caches, and token pricing originate here. Every constraint above is a consequence of a decision made at this layer.
 
-[Learn more →](/stack/foundation-models)
+The key production decisions: which model family, what context window, managed or self-hosted, what quantization tier.
+
+[Foundation Models →](/stack/foundation-models)
 
 ### 2. Agent Infrastructure
 
-The systems that make inference economical at scale: serving platforms, prompt caching, model routing, observability. Without this layer, agents are too slow and too expensive to deploy.
+The systems that make inference economical at scale: serving platforms, prompt caching, model routing, and observability. Without this layer, agents are too slow and too expensive to run at real volume.
 
-[Learn more →](/stack/infrastructure)
+The key production decisions: managed API vs self-hosted, when to cache, how to route, what to instrument.
+
+[Agent Infrastructure →](/stack/infrastructure)
 
 ### 3. Agent Runtime
 
-The frameworks and protocols that turn LLM outputs into action: function calling, MCP, memory, planning loops. This is where "agent" becomes more than a chatbot.
+The frameworks and protocols that turn LLM outputs into action: tool loops, function calling, MCP, memory, and planning patterns. This is where a chatbot becomes an agent — and where most reliability failures happen.
 
-[Learn more →](/stack/agent-runtime)
+The key production decisions: framework vs raw loop, tool design, memory architecture, failure handling.
+
+[Agent Runtime →](/stack/agent-runtime)
 
 ### 4. Agent Applications
 
-The user-facing layer: coding agents, personal AI assistants, support bots. The visible part of the iceberg, built on everything below.
+The user-facing layer: coding agents, assistants, support bots, research agents. The visible part of the iceberg, built on everything below. The decisions here are primarily about what you own versus what you buy, and how you maintain quality once users are in the loop.
 
-[Learn more →](/stack/applications)
+The key production decisions: build vs buy across layers, eval strategy, latency budget, safety boundaries.
+
+[Agent Applications →](/stack/applications)
