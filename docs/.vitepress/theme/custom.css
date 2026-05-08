@@ -55,11 +55,17 @@
   --tac-hero-grad-start: #faf8f3;
   --tac-hero-grad-end: #f5f0e8;
 
-  /* ---- VitePress indigo palette override (light) ---- */
+  /* ---- VitePress indigo + purple palette override (light) ---- */
   --vp-c-indigo-1: #b45309;
   --vp-c-indigo-2: #d97706;
   --vp-c-indigo-3: #92400e;
   --vp-c-indigo-soft: rgba(180, 83, 9, 0.08);
+  --vp-c-purple-1: #b45309;
+  --vp-c-purple-2: #d97706;
+  --vp-c-purple-3: #92400e;
+  --vp-c-purple-soft: rgba(180, 83, 9, 0.08);
+  --docsearch-primary-color: #b45309;
+  --docsearch-logo-color: #b45309;
 
   /* ---- VitePress internal overrides (light) ---- */
   --vp-c-bg: var(--tac-bg);
@@ -151,11 +157,17 @@ html.dark {
   --tac-hero-grad-start: #1a1714;
   --tac-hero-grad-end: #12110e;
 
-  /* ---- VitePress indigo palette override (dark) ---- */
+  /* ---- VitePress indigo + purple palette override (dark) ---- */
   --vp-c-indigo-1: #f59e0b;
   --vp-c-indigo-2: #fbbf24;
   --vp-c-indigo-3: #d97706;
   --vp-c-indigo-soft: rgba(245, 158, 11, 0.15);
+  --vp-c-purple-1: #f59e0b;
+  --vp-c-purple-2: #fbbf24;
+  --vp-c-purple-3: #d97706;
+  --vp-c-purple-soft: rgba(245, 158, 11, 0.15);
+  --docsearch-primary-color: #f59e0b;
+  --docsearch-logo-color: #f59e0b;
 
   /* ---- VitePress internal overrides (dark) ---- */
   --vp-c-bg: var(--tac-bg);
