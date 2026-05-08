@@ -1,27 +1,181 @@
 # Tokens & Cost
 
-The fundamental unit of LLM economics.
+The fundamental unit of LLM economics. Every design decision — model choice, prompt length, output verbosity, caching strategy — is a cost decision.
 
-## What is a Token?
+## What Is a Token?
 
-A token is a piece of text — roughly 0.75 words in English, or 1-2 characters in some languages. Models do not see text; they see token IDs.
+A token is the smallest unit a model processes. In English, one token is roughly 4 characters or 0.75 words. The tokenizer converts your text into a sequence of integer IDs before the model ever sees it.
 
-## Pricing Models
+```
+"The quick brown fox" → [464, 2068, 7586, 21831] → 4 tokens
+```
 
-| Provider | Input (per 1M tokens) | Output (per 1M tokens) | Notes |
-|----------|----------------------|------------------------|-------|
-| GPT-4o | $2.50 | $10.00 | Standard tier |
-| Claude 3.5 Sonnet | $3.00 | $15.00 | Strong reasoning |
-| DeepSeek-V3 | $0.14 | $0.28 | Cost-efficient MoE |
-| Kimi K2 | $0.50 | $2.00 | 2M context |
+Tokens are not words. Word boundaries, punctuation, and capitalization all affect how text tokenizes. The same word tokenizes differently depending on whether it appears at the start of a sentence, mid-sentence, or in code.
+
+### Non-English Languages Cost More
+
+Tokenizers are trained predominantly on English text. Non-English text tokenizes at worse ratios, which directly inflates cost:
+
+| Language | Tokens per word (approx) | vs. English |
+|----------|-------------------------|-------------|
+| English | ~1.3 | baseline |
+| Spanish / French / German | ~1.4–1.6 | 1.1–1.2x |
+| Russian | ~2.0–3.0 | 1.5–2.3x |
+| Arabic | ~3.0–4.0 | 2.3–3.1x |
+| Chinese | ~1.5–2.0 per character | 2–4x by byte |
+| Japanese | ~2.0–3.0 per character | 2–4x by byte |
+| Hebrew | ~4.0–5.0 | up to 4x |
+
+If you're building for non-English users, account for this in your cost estimates. A system prompt that's 2K tokens in English can be 6K+ tokens in Arabic.
+
+### Token Counts for Common Content
+
+| Content type | Approximate tokens |
+|---|---|
+| Short chat message (1–2 sentences) | 20–80 |
+| Typical paragraph (~100 words) | 150–200 |
+| Standard page (~750 words) | ~1,000 |
+| Python function (~50 lines) | 400–800 |
+| Code file (~1,000 lines) | 10,000+ |
+| PDF research paper (~8 pages) | 8,000–15,000 |
+| Support conversation (5–7 turns) | 2,000–5,000 cumulative |
+
+## Current Pricing (May 2025)
+
+Input and output tokens are priced separately. Output tokens cost 3–5x more than input tokens on most models — generating verbose responses is significantly more expensive than reading long prompts.
+
+### Frontier Models
+
+| Model | Input /1M | Output /1M | Context |
+|-------|-----------|------------|---------|
+| Claude Opus 4 (`claude-opus-4-7`) | $5.00 | $25.00 | 1M |
+| Claude Sonnet 4.6 (`claude-sonnet-4-6`) | $3.00 | $15.00 | 1M |
+| GPT-4o | $2.50 | $10.00 | 128K |
+| Gemini 2.5 Pro (≤200K input) | $1.25 | $10.00 | 1M |
+| Gemini 2.5 Pro (>200K input) | $2.50 | $15.00 | 1M |
+| o3 | $2.00 | $8.00 | 200K |
+
+### Mid-Tier Models
+
+| Model | Input /1M | Output /1M | Context |
+|-------|-----------|------------|---------|
+| Claude Haiku 4.5 (`claude-haiku-4-5`) | $1.00 | $5.00 | 200K |
+| Gemini 2.5 Flash | $0.30 | $2.50 | 1M |
+| o4-mini | $1.10 | $4.40 | 200K |
+| Mistral Large 3 | $0.50 | $1.50 | 128K |
+
+### Budget & Open Models
+
+| Model | Input /1M | Output /1M | Notes |
+|-------|-----------|------------|-------|
+| GPT-4o mini | $0.15 | $0.60 | |
+| Mistral Small 3.2 (24B) | $0.075 | $0.20 | |
+| Llama 4 Scout (via Groq) | $0.11 | $0.34 | 128K ctx |
+| Gemini 2.5 Flash-Lite | $0.10 | $0.40 | |
+| DeepSeek-V3 | $0.56 | $1.68 | cache miss rate |
+| DeepSeek-R1 | $0.55 | $2.19 | reasoning model |
+
+:::tip DeepSeek caching
+DeepSeek uses automatic KV caching. Cache hit rate: ~$0.07/M (V3) and ~$0.14/M (R1) — roughly 12–25% of the cache miss rate. No explicit user control needed.
+:::
+
+### Reasoning Model Cost Reality
+
+For o3 and DeepSeek-R1, the listed output price understates real cost. These models generate internal "thinking" tokens billed at output rates. A hard problem might burn 10K–30K reasoning tokens before producing the final answer.
+
+```
+o3 hard problem:
+  Input:    5,000 tokens × $2.00/M   =  $0.010
+  Thinking: 25,000 tokens × $8.00/M  =  $0.200  ← the real cost
+  Output:   1,000 tokens × $8.00/M   =  $0.008
+  Total:                               $0.218 per request
+```
+
+At scale, routing hard problems to reasoning models only when necessary is critical.
 
 ## Cost Optimization
 
-- **Prompt caching** — Reuse KV cache for repeated prefixes. Can reduce cost by 90%.
-- **Shorter prompts** — Remove unnecessary context. Every token costs money.
-- **Cheaper models for easy tasks** — Route simple queries to smaller/cheaper models.
-- **Batching** — Process multiple requests together when latency allows.
+### 1. Prompt Caching — up to 90% savings
 
-:::tip Cache Math
-If your prompt prefix is 10K tokens and you make 100 requests, caching saves you from paying for 1M input tokens at full price. At GPT-4o rates, that is $2.50 saved per 100 calls.
-:::
+Reuse expensive context across requests. If your system prompt is 5K tokens and you handle 1,000 requests/day, you're paying for 5M tokens of identical input. Cache it and pay 10% of that on every cache hit.
+
+See [Prompt Caching](/topics/prompt-caching) for the full breakdown.
+
+### 2. Model Routing — match model to task difficulty
+
+The biggest cost lever. Routing even half your traffic from a frontier model to a mid-tier model can cut costs 5–10x:
+
+```
+GPT-4o mini ($0.15/M input) vs. GPT-4o ($2.50/M input) = 16x difference
+Gemini 2.5 Flash ($0.30/M) vs. Gemini 2.5 Pro ($1.25/M) = 4x difference
+Haiku 4.5 ($1.00/M) vs. Sonnet 4.6 ($3.00/M) = 3x difference
+```
+
+Route by signal:
+- Classification, extraction, simple Q&A → small model
+- Reasoning, code generation, complex instructions → frontier
+- Nightly batch jobs with loose latency → batch API (50% discount on Anthropic)
+
+### 3. Output Length Control
+
+Output tokens cost more than input. Long outputs are expensive. Explicit instructions reduce waste:
+
+```
+❌ "Explain how X works"          → model decides length
+✅ "In 2-3 sentences, explain X" → bounded
+✅ "Return JSON only, no prose"  → eliminates filler
+```
+
+A model that adds preamble ("Great question! Let me explain...") before every answer costs you money on every request. Suppress it with explicit instructions.
+
+### 4. Context Pruning
+
+Every token you send costs money. Audit your prompts regularly:
+- Remove few-shot examples once the model demonstrates consistent behavior
+- Summarize old conversation history rather than appending indefinitely
+- Truncate tool results to only the fields the model actually needs
+- Eliminate redundant instructions repeated across system and user prompts
+
+### 5. Batch Processing
+
+When latency isn't a constraint, use batch APIs:
+
+| Provider | Discount |
+|---|---|
+| Anthropic | 50% off (all Claude models) |
+| OpenAI | 50% off |
+| Google | Pricing varies by model |
+
+Nightly analytics, classification pipelines, eval runs — these don't need real-time response. Move them to batch.
+
+## Estimating Costs
+
+Before building, run the math:
+
+```
+Daily requests: 10,000
+Avg input tokens: 2,000  (system prompt + history + user message)
+Avg output tokens: 500
+
+Using Claude Sonnet 4.6:
+  Input:  10,000 × 2,000 × $3.00/M  = $60.00/day
+  Output: 10,000 × 500 × $15.00/M   = $75.00/day
+  Total:                               $135.00/day → $4,050/month
+
+Same traffic with Haiku 4.5:
+  Input:  10,000 × 2,000 × $1.00/M  = $20.00/day
+  Output: 10,000 × 500 × $5.00/M    = $25.00/day
+  Total:                               $45.00/day → $1,350/month
+```
+
+The difference is $2,700/month before caching or routing optimization.
+
+## Production Reality
+
+**Output tokens dominate at scale** — developers obsess over prompt length but output is usually the larger cost driver in production. If your agents generate long responses, tightening output instructions pays more than trimming your system prompt.
+
+**Prices change** — model pricing has dropped significantly year-over-year across all providers. The table above reflects May 2025 rates. Build your cost estimates with a price-check step before committing to a model.
+
+**Measure actual token usage in production** — your estimates will be wrong. Log `usage.input_tokens` and `usage.output_tokens` from API responses from day one. Dashboards that show "requests" without token breakdowns will mislead you on costs.
+
+**Non-English amplifies everything** — if your product serves non-English users and you estimated costs in English, multiply by 2–4x as a starting point, then measure.
