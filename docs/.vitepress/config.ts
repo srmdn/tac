@@ -72,6 +72,7 @@ export default defineConfig({
           text: 'Agents',
           items: [
             { text: 'Agent Frameworks', link: '/topics/agent-frameworks' },
+            { text: 'Autonomous Agent Systems', link: '/topics/autonomous-agents' },
             { text: 'Orchestration', link: '/topics/orchestration' },
             { text: 'Tool Use & Function Calling', link: '/topics/tool-use' },
             { text: 'Context Management', link: '/topics/context-management' },

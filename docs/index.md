@@ -40,6 +40,7 @@ Each topic answers a decision a builder actually faces.
 | Choosing a serving solution | [LLM Serving](/topics/llm-serving) |
 | Wondering why MoE models are cheap | [MoE Architecture](/topics/moe-architecture) |
 | Picking or building an agent framework | [Agent Frameworks](/topics/agent-frameworks) |
+| Deploying a ready-made autonomous agent | [Autonomous Agent Systems](/topics/autonomous-agents) |
 | Single agent not enough | [Orchestration](/topics/orchestration) |
 | Agent output quality is unpredictable | [Evaluations](/topics/evals) |
 | Agent misbehaving on untrusted content | [Prompt Injection & Security](/topics/prompt-injection) |
