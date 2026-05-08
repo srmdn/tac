@@ -65,6 +65,7 @@ export default defineConfig({
           text: 'Architecture',
           items: [
             { text: 'MoE Architecture', link: '/topics/moe-architecture' },
+            { text: 'Reasoning Models', link: '/topics/reasoning-models' },
           ]
         },
         {
@@ -72,6 +73,15 @@ export default defineConfig({
           items: [
             { text: 'Agent Frameworks', link: '/topics/agent-frameworks' },
             { text: 'Orchestration', link: '/topics/orchestration' },
+            { text: 'Tool Use & Function Calling', link: '/topics/tool-use' },
+            { text: 'Context Management', link: '/topics/context-management' },
+          ]
+        },
+        {
+          text: 'Quality & Safety',
+          items: [
+            { text: 'Evaluations', link: '/topics/evals' },
+            { text: 'Prompt Injection & Security', link: '/topics/prompt-injection' },
           ]
         }
       ]

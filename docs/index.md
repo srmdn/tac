@@ -41,6 +41,11 @@ Each topic answers a decision a builder actually faces.
 | Wondering why MoE models are cheap | [MoE Architecture](/topics/moe-architecture) |
 | Picking or building an agent framework | [Agent Frameworks](/topics/agent-frameworks) |
 | Single agent not enough | [Orchestration](/topics/orchestration) |
+| Agent output quality is unpredictable | [Evaluations](/topics/evals) |
+| Agent misbehaving on untrusted content | [Prompt Injection & Security](/topics/prompt-injection) |
+| Tools called incorrectly or unreliably | [Tool Use & Function Calling](/topics/tool-use) |
+| Agent losing track in long conversations | [Context Management](/topics/context-management) |
+| Standard model failing on hard problems | [Reasoning Models](/topics/reasoning-models) |
 
 ## The Stack
 
