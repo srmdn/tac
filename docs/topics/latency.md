@@ -1,25 +1,60 @@
 # Latency
 
-The time between request and response.
+The gap between sending a request and receiving a complete response. For most user-facing applications, latency determines whether the product feels usable. For agentic pipelines, it determines whether multi-step workflows complete in seconds or minutes.
+
+## The Decision
+
+Before optimizing, identify which metric you actually care about:
+
+- **Perceived latency** (how fast does it feel?) → optimize TTFT, enable streaming
+- **Total wall time** (how long until the task is done?) → optimize TPOT, reduce output length, parallelize
+- **Pipeline throughput** (how many tasks per hour?) → batching, async execution
+
+These require different interventions. Chasing the wrong metric wastes effort.
 
 ## Key Metrics
 
-### TTFT (Time to First Token)
+### TTFT — Time to First Token
 
-The delay before the model starts generating. Dominated by:
+The delay from sending the request until the first output token arrives. This is what determines whether an interface feels "responsive" to a user.
 
-- Network round-trip
-- Tokenization
-- Forward pass on the full prompt
-- KV cache loading
+What drives TTFT:
+- **Network round-trip** to the API endpoint (typically 20–150ms depending on region)
+- **Prefill computation** — the model's forward pass over the entire input prompt. Long prompts = slower TTFT.
+- **Queue wait** — at high load, requests wait behind other requests
 
-### TPOT (Time Per Output Token)
+TTFT scales with **input length**. A 100K-token prompt can have TTFT of several seconds even on fast infrastructure, because prefill is inherently sequential per layer.
 
-The time to generate each subsequent token. Dominated by:
+**Typical TTFT ranges (managed APIs, mid-2025):**
 
-- Autoregressive generation (one token at a time)
-- KV cache memory bandwidth
-- Model size and quantization
+| Provider / Model | Typical TTFT |
+|-----------------|--------------|
+| Groq (Llama 4 Scout) | 100–300ms |
+| Anthropic (Haiku 4.5) | 300–600ms |
+| OpenAI (GPT-4o mini) | 300–700ms |
+| Anthropic (Sonnet 4.6) | 400–900ms |
+| OpenAI (GPT-4o) | 500ms–1.5s |
+| Anthropic (Opus 4) | 800ms–2s |
+
+These vary significantly with load, prompt length, and time of day.
+
+### TPOT — Time Per Output Token
+
+Time to generate each token after the first. Determines how fast a long response streams in.
+
+What drives TPOT:
+- **Model size** — larger models need more memory bandwidth per forward pass
+- **KV cache size** — grows with every token generated, increasing memory bandwidth demands
+- **Batch size** — at serving layer, more concurrent requests in a batch increase TPOT
+
+**Typical TPOT ranges:**
+
+| Model class | Typical TPOT |
+|-------------|-------------|
+| Fast inference providers (Groq) | 5–15ms/token (~65–200 tok/s) |
+| Hosted frontier models | 15–40ms/token (~25–65 tok/s) |
+| Self-hosted (A100, vLLM) | 20–50ms/token (~20–50 tok/s) |
+| Edge/local (llama.cpp, M-series) | 50–200ms/token (~5–20 tok/s) |
 
 ### Total Latency
 
@@ -27,19 +62,103 @@ The time to generate each subsequent token. Dominated by:
 Total = TTFT + (TPOT × output_token_count)
 ```
 
+A 500-token response at 30ms/token adds 15 seconds of generation time after the first token. Total response time depends heavily on how much you're asking the model to write.
+
 ## Optimization Strategies
 
-- **Streaming** — Send tokens as they are generated. Improves perceived latency.
-- **Speculative Decoding** — Draft tokens with a small model, verify with the large model.
-- **Quantization** — Smaller weights = faster memory access.
-- **Batching** — Process multiple requests together. Better throughput, worse single-request latency.
+### Streaming
 
-## The Latency-Cost Tradeoff
+Stream tokens to the client as they're generated instead of waiting for completion. Eliminates the perception of "waiting for the full response" — users see text appearing immediately.
 
-| Strategy | Latency | Cost | Complexity |
-|----------|---------|------|------------|
-| Streaming | Better (perceived) | Same | Low |
-| Speculative decoding | Better | Same | High |
-| Quantization (INT8) | Better | Same | Medium |
-| Batching | Worse (single) | Better | Medium |
-| Larger GPU | Better | Worse | Low |
+Streaming doesn't reduce total latency; it reduces *perceived* latency. Use it for every interactive application.
+
+```python
+with client.messages.stream(model="claude-sonnet-4-6", ...) as stream:
+    for text in stream.text_stream:
+        print(text, end="", flush=True)
+```
+
+### Reduce Input Length
+
+Shorter prompts = lower TTFT. Expensive in agentic systems where tool results accumulate.
+
+Tactics:
+- Truncate tool results to only what the model needs
+- Summarize old conversation history
+- Remove redundant instructions
+
+### Reduce Output Length
+
+Output length directly multiplies TPOT. If your model generates 2× longer responses than needed, your total latency doubles.
+
+```
+"Explain this code"     → verbose response, higher latency
+"Summarize in 2 lines"  → bounded output, lower latency
+"Return JSON only"      → eliminates prose preamble
+```
+
+### Speculative Decoding
+
+A small "draft" model generates several tokens speculatively; the large model verifies them in a single forward pass. When the draft is correct, you get multiple tokens for the cost of one large model pass. Typical speedup: 2–3× TPOT.
+
+Available in vLLM and TGI for self-hosted deployments. Anthropic's API uses it internally.
+
+### Smaller / Faster Models
+
+The simplest optimization. If a smaller model meets your quality bar, use it.
+
+```
+GPT-4o mini TPOT: ~20ms/token
+GPT-4o TPOT: ~30ms/token
+→ 1.5× speed improvement, 16× cost reduction
+```
+
+Groq's LPU (Language Processing Unit) hardware achieves 200–500 tok/s on smaller models — the fastest option for latency-critical, quality-tolerant use cases.
+
+### Parallelization
+
+In multi-step pipelines, run independent steps concurrently:
+
+```python
+# Sequential: 3 × 2s = 6s
+result_a = await call_model(prompt_a)
+result_b = await call_model(prompt_b)
+result_c = await call_model(prompt_c)
+
+# Parallel: max(2s, 2s, 2s) = 2s
+results = await asyncio.gather(
+    call_model(prompt_a),
+    call_model(prompt_b),
+    call_model(prompt_c)
+)
+```
+
+### Prompt Caching
+
+Caching eliminates prefill computation for repeated prefixes. Large system prompts that would normally drive TTFT up are served from cache with near-zero computation cost. See [Prompt Caching](/topics/prompt-caching).
+
+## Latency Budget
+
+For interactive features, define a budget before you build:
+
+| Feature type | Acceptable total latency |
+|---|---|
+| Autocomplete / inline suggestion | < 500ms |
+| Chatbot first token | < 1s |
+| Single-step task completion | < 5s |
+| Multi-step agentic task | < 30s (with progress indication) |
+| Background job / batch | No strict limit |
+
+If your design doesn't fit the budget, change the design — not the model. Switching from GPT-4o to GPT-4o mini saves 30–50% latency; redesigning a 10-step sequential agent as 3 parallel tasks saves 70%.
+
+## Production Reality
+
+**TTFT dominates perception** — users tolerate a slow stream far better than a long blank pause before text appears. If you can only optimize one metric for interactive use, optimize TTFT.
+
+**Agentic loops compound latency** — every tool call round-trip adds latency. A 5-step agent loop with 1.5s per step takes 7.5 seconds before responding to the user. Profile each step; parallelize what you can.
+
+**Rate limits impose latency floors** — when you're throttled, added latency comes from queue wait, not model speed. Monitor `x-ratelimit-*` headers and distinguish rate-limit latency from model latency in your metrics.
+
+**Cold starts on serverless deployments** — if your inference server is deployed on serverless infrastructure, the first request after idle may trigger a cold start. Warm your infrastructure with periodic keep-alive requests or use reserved capacity.
+
+**Network geography matters** — routing requests to an endpoint in the same region as your users saves 50–200ms in round-trip. For latency-sensitive products, pick providers with regional endpoints.
