@@ -84,6 +84,12 @@ export default defineConfig({
             { text: 'Evaluations', link: '/topics/evals' },
             { text: 'Prompt Injection & Security', link: '/topics/prompt-injection' },
           ]
+        },
+        {
+          text: 'Optimization',
+          items: [
+            { text: 'Fine-Tuning', link: '/topics/fine-tuning' },
+          ]
         }
       ]
     },
