@@ -33,17 +33,12 @@ It is not a tutorial. It is a **reference** for builders who want to understand 
 
 ## The Stack
 
-```
-┌─────────────────────────────────────────────────┐
-│  Agent Applications            │  ← coding agents, personal AI, support bots
-├─────────────────────────────────────────────────┤
-│  Agent Runtime                 │  ← Hermes Agent, OpenClaw, MCP, function calling
-├─────────────────────────────────────────────────┤
-│  Agent Infrastructure          │  ← model serving, caching, routing, observability
-├─────────────────────────────────────────────────┤
-│  Foundation Models               │  ← DeepSeek, GPT, Claude, Kimi, LLaMA
-└─────────────────────────────────────────────────┘
-```
+| Layer | Examples |
+|-------|---------|
+| Agent Applications | coding agents, personal AI, support bots |
+| Agent Runtime | Hermes Agent, OpenClaw, MCP, function calling |
+| Agent Infrastructure | model serving, caching, routing, observability |
+| Foundation Models | DeepSeek, GPT, Claude, Kimi, LLaMA |
 
 ## Topics
 

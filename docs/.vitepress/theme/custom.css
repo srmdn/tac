@@ -55,6 +55,12 @@
   --tac-hero-grad-start: #faf8f3;
   --tac-hero-grad-end: #f5f0e8;
 
+  /* ---- VitePress indigo palette override (light) ---- */
+  --vp-c-indigo-1: #b45309;
+  --vp-c-indigo-2: #d97706;
+  --vp-c-indigo-3: #92400e;
+  --vp-c-indigo-soft: rgba(180, 83, 9, 0.08);
+
   /* ---- VitePress internal overrides (light) ---- */
   --vp-c-bg: var(--tac-bg);
   --vp-c-bg-soft: var(--tac-surface);
@@ -144,6 +150,12 @@ html.dark {
   /* Hero */
   --tac-hero-grad-start: #1a1714;
   --tac-hero-grad-end: #12110e;
+
+  /* ---- VitePress indigo palette override (dark) ---- */
+  --vp-c-indigo-1: #f59e0b;
+  --vp-c-indigo-2: #fbbf24;
+  --vp-c-indigo-3: #d97706;
+  --vp-c-indigo-soft: rgba(245, 158, 11, 0.15);
 
   /* ---- VitePress internal overrides (dark) ---- */
   --vp-c-bg: var(--tac-bg);
