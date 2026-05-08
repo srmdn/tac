@@ -65,7 +65,7 @@ for message in runner:
 ~37K stars. Data framework, not primarily an agent framework.
 
 - **What it gives you:** Connectors, indexes, query engines, retrievers over documents and data sources. Agents built on top.
-- **Sweet spot:** RAG-heavy applications, document Q&A, knowledge bases, data ingestion into vector stores
+- **Sweet spot:** [RAG](/topics/embeddings)-heavy applications, document Q&A, knowledge bases, data ingestion into [vector stores](/topics/embeddings)
 - **Sharp edges:** Agent capabilities are secondary to retrieval. Less suited for complex multi-agent orchestration or stateful agent loops.
 
 ### Pydantic AI
@@ -118,14 +118,14 @@ print(result.data.answer, result.data.confidence)
 ~17K stars. From deepset.
 
 - **What it gives you:** Pipeline-based components (retrievers, generators, routers) connected in a DAG. Strong production focus and testing primitives.
-- **Sweet spot:** Production RAG systems, document processing, enterprise search
+- **Sweet spot:** Production [RAG](/topics/embeddings) systems, document processing, enterprise search
 - **Sharp edges:** Agent capabilities are add-ons, not first-class. Less community momentum than LangChain for raw mindshare.
 
 ### Mastra
 
 ~9K stars. TypeScript-first. Released 2024.
 
-- **What it gives you:** Workflows (durable, step-based), agents with memory and tools, RAG primitives, integrations catalog — all in TypeScript
+- **What it gives you:** Workflows (durable, step-based), agents with memory and tools, [RAG](/topics/embeddings) primitives, integrations catalog — all in TypeScript
 - **Sweet spot:** TypeScript/Node.js backend teams; Next.js full-stack apps; teams wanting type-safe agents without Python
 - **Sharp edges:** Younger than Python competitors. Smaller ecosystem. Less battle-tested at scale.
 

@@ -90,7 +90,7 @@ For extraction tasks (pull these fields from this document), structured output i
 
 ## Production Reality
 
-**Tool call reliability varies by model** — smaller or older models hallucinate tool names, pass arguments in the wrong format, or call tools when they shouldn't. If reliability matters, test each model against your tool set explicitly — don't assume.
+**Tool call reliability varies by model** — smaller or older models hallucinate tool names, pass arguments in the wrong format, or call tools when they shouldn't. If reliability matters, test each model against your tool set explicitly — don't assume. For small models where reliability is structurally poor, [fine-tuning on tool-calling examples](/topics/fine-tuning#fine-tuning-for-agents) is the most direct fix.
 
 **Schema drift breaks silently** — if you change a tool's parameter names or types without updating every call site, the model will generate calls that parse against the old schema. Version your tools.
 

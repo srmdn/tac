@@ -74,7 +74,7 @@ Large context is not free. Three things happen as you fill the window:
 2. **Latency increases** — time to first token grows with input length
 3. **Retrieval quality degrades** — models lose track of relevant information buried in the middle of long contexts ("lost in the middle")
 
-The practical ceiling for reliable retrieval is roughly 32K–64K tokens for most models. Beyond that, use RAG or structured chunking unless the task genuinely requires the full window.
+The practical ceiling for reliable retrieval is roughly 32K–64K tokens for most models. Beyond that, use [RAG](/topics/embeddings) or structured chunking unless the task genuinely requires the full window.
 
 [Context Windows →](/topics/context-windows) | [Context Management →](/topics/context-management)
 

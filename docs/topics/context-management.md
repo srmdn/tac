@@ -11,7 +11,7 @@ Before your agent goes to production, decide: what is the maximum conversation l
 | Short, single-turn tasks | No management needed |
 | Multi-turn chat (<20 turns) | Sliding window |
 | Long-running agents (>20 turns or long tool outputs) | Summarization + sliding window |
-| Retrieval over large corpora | RAG — never stuff everything in context |
+| Retrieval over large corpora | [RAG](/topics/embeddings) — never stuff everything in context |
 | Cross-session continuity | External memory store |
 
 ## What Fills Your Context Window
@@ -66,6 +66,8 @@ Key design choices:
 
 Tradeoff: retrieval adds latency (~100–500ms). The model can't reason across information it didn't retrieve.
 
+For embedding models, vector store options, chunking strategies, and hybrid retrieval patterns, see [Embeddings & Vector Stores](/topics/embeddings).
+
 ### External Memory
 
 Persist important information outside the context window and inject it selectively:
@@ -74,7 +76,7 @@ Persist important information outside the context window and inject it selective
 - **Semantic memory** — distilled facts ("user prefers concise answers")
 - **Working memory** — current task state ("step 3 of 5 complete, pending: X")
 
-Libraries like MemGPT/Letta implement this pattern; you can also build it directly with a vector store.
+Libraries like MemGPT/Letta implement this pattern; you can also build it directly with a [vector store](/topics/embeddings).
 
 ## Token Budget Management
 

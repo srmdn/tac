@@ -1,6 +1,6 @@
 # Prompt Caching
 
-Reusing the KV cache from a previous request instead of recomputing it. For workloads with large repeated context — system prompts, few-shot examples, RAG documents — caching is the single highest-ROI cost optimization available.
+Reusing the KV cache from a previous request instead of recomputing it. For workloads with large repeated context — system prompts, few-shot examples, [RAG](/topics/embeddings) documents — caching is the single highest-ROI cost optimization available.
 
 ## The Decision
 

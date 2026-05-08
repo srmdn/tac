@@ -137,7 +137,7 @@ Instrument each agent's inputs/outputs independently. Debugging a multi-agent fa
 
 ## Production Reality
 
-**Single-agent with good tools beats multi-agent 80% of the time** — most "multi-agent" use cases in the wild are single-agent use cases with poor tooling. Before adding a second agent, ask: would better tool definitions or a more capable model solve this?
+**Single-agent with good tools beats multi-agent 80% of the time** — most "multi-agent" use cases in the wild are single-agent use cases with poor tooling. Before adding a second agent, ask: would better tool definitions or a more capable model solve this? And before building a custom agent at all, consider whether a pre-built [autonomous agent system](/topics/autonomous-agents) already handles your use case.
 
 **Latency multiplies** — every agent hop adds latency. A 4-stage sequential pipeline at 2s per stage is 8s minimum. Model that into your product design before committing to the architecture.
 

@@ -8,7 +8,7 @@ Should you fine-tune, or is a better prompt enough? Fine-tuning is the right ans
 |-----------|-----------|
 | Model doesn't reliably produce the right output format | Try structured output APIs first. Fine-tune if still unreliable. |
 | System prompt is huge and costing too much | Yes — distill the behavior into a smaller fine-tuned model |
-| Model lacks domain-specific knowledge | No — use RAG. Fine-tuning teaches behavior, not facts. |
+| Model lacks domain-specific knowledge | No — use [RAG](/topics/embeddings). Fine-tuning teaches behavior, not facts. |
 | Need a specific tone or writing style consistently | Yes — style is hard to prompt reliably at scale |
 | Task is narrow, well-defined, and high-volume | Yes — fine-tuning a smaller model beats calling a frontier model |
 | Task changes frequently | No — fine-tuning is a maintenance burden; prompts are easier to update |
@@ -45,7 +45,7 @@ LoRA on a quantized (INT4) base model. Cuts VRAM requirements by ~4× vs full pr
 
 ### Instruction Tuning
 
-Fine-tuning on instruction-response pairs to improve general instruction following, tool use, or output format adherence. This is how models like NousResearch's Hermes series are produced from base models.
+Fine-tuning on instruction-response pairs to improve general instruction following, tool use, or output format adherence. This is how models like NousResearch's [Hermes](/topics/autonomous-agents#hermes-agent) series are produced from base models.
 
 - Small dataset of high-quality instruction pairs (500–5K) can meaningfully shift model behavior
 - Particularly effective for tool calling, JSON output, and format consistency

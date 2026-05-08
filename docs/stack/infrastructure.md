@@ -53,7 +53,7 @@ Reusing the KV cache from previous requests. The highest-leverage infrastructure
 
 - **System prompts** — Same instructions sent with every request. Cache them.
 - **Few-shot examples** — Static examples in every prompt. Cache them.
-- **RAG context** — Documents retrieved for a query. Cache if the retrieved docs are stable across requests.
+- **[RAG](/topics/embeddings) context** — Documents retrieved for a query. Cache if the retrieved docs are stable across requests.
 - **Long conversation history** — As history grows, older turns can be cached.
 
 ### Savings by provider

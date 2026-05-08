@@ -60,7 +60,7 @@ Common strategies to stay within the limit:
 
 **Summarization** — compress old context into a summary before it's dropped. Preserves key facts at reduced token cost. The summary quality determines how much is actually retained.
 
-**RAG** — instead of keeping all possible context in the window, retrieve only relevant chunks at query time. Scales to arbitrarily large knowledge bases. Doesn't help for sequential conversation history.
+**[RAG](/topics/embeddings)** — instead of keeping all possible context in the window, retrieve only relevant chunks at query time. Scales to arbitrarily large knowledge bases. Doesn't help for sequential conversation history.
 
 See [Context Management](/topics/context-management) for implementation patterns.
 
@@ -80,7 +80,7 @@ In a retrieval experiment: if the answer is in the first 10% or last 10% of a 10
 
 ## Long Context vs. RAG: When to Use Each
 
-A common question: "Should I stuff everything into a large context window or use RAG?"
+A common question: "Should I stuff everything into a large context window or use [RAG](/topics/embeddings)?"
 
 **Use large context when:**
 - You need the model to reason across the entire document (cross-reference, synthesize)
