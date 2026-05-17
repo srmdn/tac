@@ -78,17 +78,17 @@ Source: [artificialanalysis.ai](https://artificialanalysis.ai), [OpenAI pricing]
 
 | Model | Provider | Input /1M | Output /1M | Cache Read /1M | Context | Notes |
 |-------|----------|-----------|------------|---------------|---------|-------|
-| DeepSeek V4-Pro | DeepSeek | $0.44 | $0.87 | $0.004 | 1M | 75% promo through May 31 |
+| DeepSeek V4-Pro | DeepSeek | $0.435 | $0.87 | $0.003625 | 1M | 75% promo through May 31, 2026 |
 | Kimi K2 | Moonshot AI | $0.59 | $2.40 | $0.36 | 128K | Open weights |
 | Llama 4 Maverick | Meta | $0.35 | $0.85 | $0.27 | 1M | Open weights |
 | Gemini 2.5 Flash | Google | $0.30 | $2.50 | $0.03 | 1M | |
-| DeepSeek V4-Flash | DeepSeek | $0.14 | $0.28 | $0.003 | 1M | |
+| DeepSeek V4-Flash | DeepSeek | $0.14 | $0.28 | $0.0028 | 1M | |
 | Gemini 2.5 Flash-Lite | Google | $0.10 | $0.40 | $0.01 | 1M | |
 
-Grok 4.3 pricing: check [console.x.ai](https://console.x.ai). DeepSeek V4-Pro full post-promo price: $1.74/$3.48 input/output.
+Grok 4.3 pricing: check [console.x.ai](https://console.x.ai). DeepSeek V4-Pro full post-promo price is currently listed as $1.74/$3.48 input/output after the May 31, 2026 promotional window.
 
 :::tip DeepSeek caching
-DeepSeek V4 uses automatic KV caching. Cache hit: $0.004/M (V4-Pro) and $0.003/M (V4-Flash) — roughly 1% of the cache miss rate. No explicit user control needed.
+DeepSeek V4 uses automatic KV caching. Current cache-hit pricing is roughly one order of magnitude cheaper than cache-miss pricing. No explicit user control needed.
 :::
 
 ### Reasoning Model Cost Reality
