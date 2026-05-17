@@ -1,5 +1,7 @@
 # Latency
 
+_Last updated: May 17, 2026_
+
 The gap between sending a request and receiving a complete response. For most user-facing applications, latency determines whether the product feels usable. For agentic pipelines, it determines whether multi-step workflows complete in seconds or minutes.
 
 ## The Decision
@@ -25,6 +27,8 @@ What drives TTFT:
 
 TTFT scales with **input length**. A 100K-token prompt can have TTFT of several seconds even on fast infrastructure, because prefill is inherently sequential per layer.
 
+> Current as of May 2026. The latency snapshots below are representative benchmark numbers, not SLOs. They move with provider load, prompt length, reasoning mode, and region.
+
 **Typical TTFT ranges (managed APIs, 2026) — source: [artificialanalysis.ai](https://artificialanalysis.ai):**
 
 | Provider / Model | Typical TTFT |
@@ -38,7 +42,7 @@ TTFT scales with **input length**. A 100K-token prompt can have TTFT of several 
 | Anthropic (Opus 4.7) | ~21s (adaptive thinking) |
 | GPT-5.5 (high effort) | ~24s (reasoning) |
 
-TTFT varies significantly with load, prompt length, reasoning mode, and time of day. Non-reasoning variants of the same model have dramatically lower TTFT than reasoning variants.
+TTFT varies significantly with load, prompt length, reasoning mode, region, and time of day. Non-reasoning variants of the same model have dramatically lower TTFT than reasoning variants.
 
 ### TPOT — Time Per Output Token
 
@@ -164,3 +168,5 @@ If your design doesn't fit the budget, change the design — not the model. Swit
 **Cold starts on serverless deployments** — if your inference server is deployed on serverless infrastructure, the first request after idle may trigger a cold start. Warm your infrastructure with periodic keep-alive requests or use reserved capacity.
 
 **Network geography matters** — routing requests to an endpoint in the same region as your users saves 50–200ms in round-trip. For latency-sensitive products, pick providers with regional endpoints.
+
+**Benchmark pages age fast** — latency rankings are among the least stable facts in the stack. Use public benchmarks to form hypotheses, then measure under your own prompt shape and user geography.

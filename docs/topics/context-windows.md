@@ -1,5 +1,7 @@
 # Context Windows
 
+_Last updated: May 17, 2026_
+
 How much text a model can process in a single forward pass. The window determines what the model can "see" — everything outside it doesn't exist to the model.
 
 ## The Decision
@@ -12,9 +14,11 @@ Context window size is a capability constraint, not a design choice. The decisio
 
 ## Current Context Window Sizes (May 2026)
 
+> Current as of May 2026. Treat this as a working comparison table. Verify exact context limits, tokenizer behavior, and long-context availability on provider docs before designing around them.
+
 | Model | Provider | Context Window | Notes |
 |-------|----------|---------------|-------|
-| GPT-5.5 | OpenAI | 922K tokens | |
+| GPT-5.5 | OpenAI | 1.05M tokens | |
 | Claude Opus 4.7 | Anthropic | 1M tokens | New tokenizer; may use up to 35% more tokens vs prior models |
 | Claude Sonnet 4.6 | Anthropic | 1M tokens | |
 | Gemini 3.1 Pro Preview | Google | 1M tokens | Tiered pricing above 200K |
@@ -30,7 +34,7 @@ Context window size is a capability constraint, not a design choice. The decisio
 | Kimi K2 | Moonshot AI | 128K tokens | 1T param MoE, 32B active |
 | Llama 4 Scout | Meta | 10M tokens (claimed) | 128K practical in most serving deployments |
 
-Window sizes have grown dramatically. A 1M token window fits roughly 750 novels or the entire codebase of a large project. Note that Claude Opus 4.7 uses a new tokenizer — the same text uses more tokens than on older Claude models.
+Window sizes have grown dramatically. A 1M token window fits hundreds of books or a large codebase. But availability, pricing tiers, and real retrieval quality matter more than the headline number alone. Note that Claude Opus 4.7 uses a new tokenizer — the same text uses more tokens than on older Claude models.
 
 ## What Fills a Context Window
 

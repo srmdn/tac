@@ -1,5 +1,7 @@
 # Autonomous Agent Systems
 
+_Last updated: May 17, 2026_
+
 Complete, deployable agent systems — not frameworks for building agents. You run them, point them at your accounts, files, or codebase, and they execute tasks autonomously. The decision here is different from picking an SDK: you're choosing a system to operate, not a library to build on.
 
 ## The Decision
@@ -27,7 +29,7 @@ Open source. Built by [@steipete](https://github.com/steipete). Mac / Windows / 
 
 ### Open Interpreter
 
-Open source + commercial ($20/mo Pro, $60/mo Business). Available on GitHub.
+Open source with commercial plans. Available on GitHub.
 
 - **What it does:** A desktop agent focused on document and file work — PDF form filling, Excel pivot tables and formulas, Word document editing with tracked changes, batch file operations, data extraction across multiple documents.
 - **Models:** OpenAI, Anthropic, Groq, OpenRouter, or local models via Ollama. Free tier available via ChatGPT account.
@@ -36,7 +38,7 @@ Open source + commercial ($20/mo Pro, $60/mo Business). Available on GitHub.
 
 ### Goose
 
-Apache 2.0. Governed by the Agentic AI Foundation (AAIF) at the Linux Foundation. Originally built by Block. 38K+ GitHub stars.
+Apache 2.0. Governed by the Agentic AI Foundation (AAIF) at the Linux Foundation. Originally built by Block.
 
 - **What it does:** General-purpose local agent available as a desktop app, CLI, and API. Handles coding, research, writing, automation, and data analysis.
 - **Architecture:** Built in Rust. MCP-first — 70+ Model Context Protocol extensions connect it to GitHub, Google Drive, databases, APIs, and more. Recipes (portable YAML configs) make workflows shareable across teams. Supports subagents for parallel task execution.
@@ -59,7 +61,7 @@ MIT license. Built by [Nous Research](https://nousresearch.com). v0.13.0.
 
 ### OpenHands
 
-Fully open source. Formerly OpenDevin. 65K+ GitHub stars.
+Fully open source. Formerly OpenDevin.
 
 - **What it does:** Autonomous software engineering — plans, writes, and applies code changes across entire codebases. Handles vulnerability scanning, PR review, legacy code migration, and incident triage end-to-end.
 - **Architecture:** Docker or Kubernetes sandboxed execution. Model-agnostic. Web GUI, CLI, and SDK interfaces. Integrates with GitHub, GitLab, Slack, and CI/CD systems. Enterprise deployment (on-premises, private cloud, managed cloud).
@@ -68,10 +70,10 @@ Fully open source. Formerly OpenDevin. 65K+ GitHub stars.
 
 ### Aider
 
-Open source. 44K+ GitHub stars. 6.8M pip installs.
+Open source.
 
 - **What it does:** Terminal-based AI pair programmer. You describe a change; Aider edits your files and creates a git commit with a sensible message. Understands the full codebase via a repository map, not just the file you're looking at.
-- **Models:** Best performance with Claude Sonnet 4.6 and DeepSeek V4-Pro. Also supports o1, o3-mini, GPT-4o, and most local models. Maintains a public leaderboard of model coding performance.
+- **Models:** Works best with strong coding models such as Claude Sonnet 4.6 and DeepSeek V4-Pro. Also supports o-series, GPT models, and most local models. Maintains a public leaderboard of model coding performance.
 - **Sweet spot:** Developers who live in the terminal and want an agent that respects their existing git workflow. Strong on refactors, bug fixes, and feature additions where you can describe the change clearly.
 - **Sharp edges:** Works best when you can articulate what you want precisely — it's less autonomous than OpenHands. Large repos with poor code organization hit the context limit quickly despite the repo map. Multi-file architectural changes are harder than single-file edits.
 
