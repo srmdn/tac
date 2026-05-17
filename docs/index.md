@@ -30,8 +30,10 @@ Each topic answers a decision a builder actually faces.
 
 | You're dealing with… | Topic |
 |----------------------|-------|
+| Choosing a model family or provider | [Foundation Models](/stack/foundation-models) |
 | Unpredictable LLM costs | [Tokens & Cost](/topics/tokens-and-cost) |
 | Agent breaking at long context | [Context Windows](/topics/context-windows) |
+| Deciding between managed APIs and self-hosting | [LLM Serving](/topics/llm-serving) |
 | Wanting to cut input costs significantly | [Prompt Caching](/topics/prompt-caching) |
 | Inconsistent or unreliable outputs | [Sampling](/topics/sampling) |
 | Response time too slow | [Latency](/topics/latency) |
@@ -49,4 +51,3 @@ Each topic answers a decision a builder actually faces.
 | Standard model failing on hard problems | [Reasoning Models](/topics/reasoning-models) |
 | Agent needs access to knowledge it wasn't trained on | [Embeddings & Vector Stores](/topics/embeddings) |
 | Prompting isn't reliable enough; need consistent behavior | [Fine-Tuning](/topics/fine-tuning) |
-

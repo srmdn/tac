@@ -1,5 +1,7 @@
 # Foundation Models
 
+_Last updated: May 17, 2026_
+
 The bottom of the stack. Every constraint you hit above — context limits, token costs, latency, quantization quality — originates here. Decisions at this layer ripple through everything else.
 
 ## The Production Decision
@@ -13,13 +15,15 @@ Choosing a foundation model is not a benchmark question. It is a cost-latency-ca
 
 ## Top Models by Provider (2026)
 
-Data from [artificialanalysis.ai](https://artificialanalysis.ai) and official provider pricing pages. Pricing in USD per 1M tokens.
+> Current as of May 2026. Pricing and context availability move quickly; verify exact model IDs, cached-input pricing, and context limits against provider docs before committing to a model.
+
+Data from [artificialanalysis.ai](https://artificialanalysis.ai) plus official provider pricing and model pages. Pricing in USD per 1M tokens.
 
 ### Frontier / Flagship
 
 | Model | Provider | Input | Output | Cache Read | Context |
 |-------|----------|-------|--------|------------|---------|
-| GPT-5.5 | OpenAI | $5.00 | $30.00 | $0.50 | 922K |
+| GPT-5.5 | OpenAI | $5.00 | $30.00 | $0.50 | 1.05M |
 | Claude Opus 4.7 | Anthropic | $5.00 | $25.00 | $0.50 | 1M |
 | Gemini 3.1 Pro Preview | Google | $2.00 | $12.00 | $0.20 | 1M |
 | Grok 4.3 | xAI | — | — | — | — |
@@ -76,6 +80,8 @@ Large context is not free. Three things happen as you fill the window:
 
 The practical ceiling for reliable retrieval is roughly 32K–64K tokens for most models. Beyond that, use [RAG](/topics/embeddings) or structured chunking unless the task genuinely requires the full window.
 
+Anthropic's 1M-token context is not a universal default across the Claude line. Current official docs scope it to Sonnet 4 and note beta and tier requirements. Treat headline context numbers as availability claims, not guaranteed defaults.
+
 [Context Windows →](/topics/context-windows) | [Context Management →](/topics/context-management)
 
 ### Sampling Parameters
@@ -124,5 +130,7 @@ A production agent that makes 10 LLM calls per user session at 4K tokens each sp
 **Models get deprecated on short notice.** GPT-4 (original), Claude 2, Llama 2 — all retired. Design with a routing layer and abstracted model identifiers. You will swap models at least once during the product's lifetime.
 
 **Context windows are marketing, not architecture.** A 1M-token context window does not mean reliable retrieval from 1M tokens. Test retrieval accuracy at the lengths you actually intend to use.
+
+**Availability matters as much as the headline spec.** A provider can advertise a 1M-token window while gating it by model, tier, region, or beta header. Check the exact rollout state before you design around it.
 
 **Prompt sensitivity is underestimated.** Changing a system prompt by one sentence can shift output distributions measurably. Build eval coverage before any prompt change ships to production. [Evaluations →](/topics/evals)

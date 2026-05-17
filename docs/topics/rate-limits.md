@@ -1,5 +1,7 @@
 # Rate Limits & Concurrency
 
+_Last updated: May 17, 2026_
+
 API quotas that cap how much you can send per unit of time. Hitting them in production causes request failures, cascading queue buildup, and degraded user experience. Design for them from the start.
 
 ## The Decision
@@ -12,6 +14,8 @@ Rate limits affect your architecture in two ways:
 ## Current Tier Limits (May 2026)
 
 Limits are tier-based and increase as you spend more. These are representative tiers — verify current limits in each provider's documentation before building.
+
+> Current as of May 2026. Exact limits are model-specific and often differ by project, organization, usage tier, and long-context mode.
 
 ### Anthropic
 
@@ -34,7 +38,7 @@ Anthropic tracks **input** and **output** tokens separately. Output TPM limits a
 | Tier 4 | 10,000 | 2,000,000 | $250 spend |
 | Tier 5 | 30,000 | 150,000,000 | $1,000 spend |
 
-OpenAI limits vary significantly by model. o3, o4-mini, and GPT-5.5 have lower limits than GPT-4.1 at equivalent tiers due to higher compute cost.
+OpenAI limits vary significantly by model. Limits are defined at both organization and project level, and long-context requests can have separate buckets from standard requests.
 
 ### Google (Gemini API)
 

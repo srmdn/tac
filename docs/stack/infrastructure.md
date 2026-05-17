@@ -1,5 +1,7 @@
 # Agent Infrastructure
 
+_Last updated: May 17, 2026_
+
 The systems that make inference economical at scale. A model that works in a notebook will not work in production without this layer: serving, caching, routing, and observability each carry their own tradeoffs.
 
 ## The Production Decision
@@ -21,9 +23,9 @@ Pay per token, zero ops burden. The right default for most products:
 
 | Provider | Strengths | Weaknesses |
 |----------|-----------|------------|
-| OpenAI | Largest ecosystem, fastest iteration | Expensive at scale, US-only data residency |
-| Anthropic | Strong instruction following, 200K context | Smaller model selection |
-| Google Vertex | GCP integration, 1M context | Slower API iteration |
+| OpenAI | Largest ecosystem, fast model/tool iteration, strong enterprise controls | Premium frontier pricing, regional processing depends on project eligibility and region support |
+| Anthropic | Strong instruction following, explicit prompt caching, long-context options | Smaller model selection, some long-context options are tier-gated or beta |
+| Google Vertex | GCP integration, strong multimodal and long-context options | Product surface split across Vertex and Gemini API, model-specific quotas vary |
 | Together AI | Open-weight model catalog | Less predictable availability |
 | Fireworks AI | Fast open-weight inference | Smaller model selection |
 | Groq | Extremely fast TTFT (LPU hardware) | Limited models, no fine-tuning |
@@ -58,10 +60,12 @@ Reusing the KV cache from previous requests. The highest-leverage infrastructure
 
 ### Savings by provider
 
+> Current as of May 2026. Verify cache pricing and availability against provider docs before committing to a platform.
+
 | Provider | Cache pricing | Min cacheable tokens |
 |----------|--------------|---------------------|
 | Anthropic | Write: 1.25× input; Read: 0.1× input | 1,024 |
-| OpenAI | Automatic; Read: ~0.5× input | 1,024 |
+| OpenAI | Automatic; cached input pricing is model-specific (for example, 0.1× on GPT-5.5 and 0.25× on GPT-4.1) | 1,024 |
 | Google | Explicit cache API; Read: 0.25× input | 2,048 |
 | DeepSeek | Read: 0.1× input | 64 |
 

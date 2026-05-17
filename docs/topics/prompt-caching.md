@@ -1,5 +1,7 @@
 # Prompt Caching
 
+_Last updated: May 17, 2026_
+
 Reusing the KV cache from a previous request instead of recomputing it. For workloads with large repeated context — system prompts, few-shot examples, [RAG](/topics/embeddings) documents — caching is the single highest-ROI cost optimization available.
 
 ## The Decision
@@ -72,10 +74,12 @@ Minimum cacheable prefix: 1,024 tokens (Haiku); 2,048 tokens (Sonnet and Opus mo
 
 Automatic — no code changes required.
 
+> Current as of May 2026. OpenAI cache retention and cached-input pricing are model-specific; verify exact values on the pricing and prompt-caching docs before locking in assumptions.
+
 | Operation | Cost vs. base input |
 |-----------|---------------------|
 | Cache write | No extra charge |
-| Cache read (hit) | 0.5× (50% savings) |
+| Cache read (hit) | Model-specific. GPT-5.5 is 0.1× input price; GPT-4.1 is 0.25× input price. |
 
 OpenAI caches any prompt prefix longer than 1,024 tokens automatically. The cache uses a sliding window with a TTL of roughly 5–10 minutes. You don't mark anything; the API returns a `cached_tokens` field in the usage object showing how many tokens were served from cache.
 

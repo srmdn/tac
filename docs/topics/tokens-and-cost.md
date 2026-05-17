@@ -1,5 +1,7 @@
 # Tokens & Cost
 
+_Last updated: May 17, 2026_
+
 The fundamental unit of LLM economics. Every design decision — model choice, prompt length, output verbosity, caching strategy — is a cost decision.
 
 ## What Is a Token?
@@ -44,6 +46,8 @@ If you're building for non-English users, account for this in your cost estimate
 ## Current Pricing (May 2026)
 
 Input and output tokens are priced separately. Output tokens cost 3–5× more than input tokens on most models — generating verbose responses is significantly more expensive than reading long prompts.
+
+> Current as of May 2026. Treat this as a working snapshot, not a durable source of truth. Verify final prices on official provider pages before committing to a model.
 
 Source: [artificialanalysis.ai](https://artificialanalysis.ai) + official provider pricing pages.
 

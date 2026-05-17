@@ -1,5 +1,7 @@
 # Agent Frameworks
 
+_Last updated: May 17, 2026_
+
 Libraries and platforms that handle the agent loop so you don't have to. They give you tool definition, execution, state management, and multi-agent coordination — at the cost of an abstraction layer over the raw API.
 
 ## The Decision
@@ -23,9 +25,9 @@ The "just use LangChain" default is less correct in 2026 than it was in 2023. Th
 
 ### LangChain / LangGraph
 
-**LangChain** (~92K GitHub stars) — the original "everything" framework. Chains, tools, memory, retrievers, callbacks.
+**LangChain** — the original "everything" framework. Chains, tools, memory, retrievers, callbacks.
 
-**LangGraph** (~7K stars) — the modern follow-up. Stateful graph of nodes and edges; explicit state machine for agents. A better choice than LangChain for new agent work.
+**LangGraph** — the modern follow-up. Stateful graph of nodes and edges; explicit state machine for agents. A better choice than LangChain for new agent work.
 
 - **What it gives you:** Explicit control flow (nodes + edges), persistent state, human-in-the-loop checkpoints, built-in streaming and debugging via LangSmith
 - **Sweet spot:** Production agents that need precise control flow, retry logic, and auditability; complex multi-step workflows
@@ -62,7 +64,7 @@ for message in runner:
 
 ### LlamaIndex
 
-~37K stars. Data framework, not primarily an agent framework.
+Data framework, not primarily an agent framework.
 
 - **What it gives you:** Connectors, indexes, query engines, retrievers over documents and data sources. Agents built on top.
 - **Sweet spot:** [RAG](/topics/embeddings)-heavy applications, document Q&A, knowledge bases, data ingestion into [vector stores](/topics/embeddings)
@@ -70,7 +72,7 @@ for message in runner:
 
 ### Pydantic AI
 
-~8K stars. From the Pydantic team. Released late 2024.
+From the Pydantic team. Released late 2024.
 
 - **What it gives you:** Type-safe agents — I/O defined with Pydantic models, dependency injection for tools, multi-provider support (OpenAI, Anthropic, Gemini, Groq, and others)
 - **Sweet spot:** Python teams who want type safety, testability, and clean interfaces in production agent code
@@ -91,7 +93,7 @@ print(result.data.answer, result.data.confidence)
 
 ### CrewAI
 
-~27K stars. Fast growth in 2024–2025 and continuing.
+Fast growth in 2024–2025 and continuing.
 
 - **What it gives you:** Role-based multi-agent — Agents with roles/goals/backstories, Tasks, Crews that coordinate them
 - **Sweet spot:** Workflows that map naturally to team roles (researcher → writer → reviewer pattern); getting non-technical stakeholders to understand agent designs
@@ -99,7 +101,7 @@ print(result.data.answer, result.data.confidence)
 
 ### AutoGen (Microsoft)
 
-~37K stars. Version 0.4 (released late 2024) is a significant rewrite of v0.2 with breaking API changes.
+Version 0.4 (released late 2024) is a significant rewrite of v0.2 with breaking API changes.
 
 - **What it gives you:** Conversational multi-agent — agents communicate via message passing; both low-level (AutoGen Core) and high-level (AgentChat) interfaces
 - **Sweet spot:** Multi-agent debate and collaboration patterns, code execution agents, research automation
@@ -107,7 +109,7 @@ print(result.data.answer, result.data.confidence)
 
 ### DSPy
 
-~20K stars. From Stanford NLP.
+From Stanford NLP.
 
 - **What it gives you:** A programming model — instead of writing prompts, you define modules with input/output signatures and use optimizers to auto-tune prompts and few-shot examples against your labeled data
 - **Sweet spot:** Tasks where you have evaluation data and want to systematically optimize prompts; production pipelines where manual prompt engineering is expensive
@@ -115,7 +117,7 @@ print(result.data.answer, result.data.confidence)
 
 ### Haystack
 
-~17K stars. From deepset.
+From deepset.
 
 - **What it gives you:** Pipeline-based components (retrievers, generators, routers) connected in a DAG. Strong production focus and testing primitives.
 - **Sweet spot:** Production [RAG](/topics/embeddings) systems, document processing, enterprise search
@@ -123,7 +125,7 @@ print(result.data.answer, result.data.confidence)
 
 ### Mastra
 
-~9K stars. TypeScript-first. Released 2024.
+TypeScript-first. Released 2024.
 
 - **What it gives you:** Workflows (durable, step-based), agents with memory and tools, [RAG](/topics/embeddings) primitives, integrations catalog — all in TypeScript
 - **Sweet spot:** TypeScript/Node.js backend teams; Next.js full-stack apps; teams wanting type-safe agents without Python
@@ -131,7 +133,9 @@ print(result.data.answer, result.data.confidence)
 
 ## MCP: Model Context Protocol
 
-A protocol, not a framework. Anthropic introduced MCP in November 2024; by 2026, it's the de facto standard for connecting LLMs to external tools and data.
+A protocol, not a framework. Anthropic introduced MCP in November 2024. As of May 2026, MCP is becoming the default interoperability layer for tools and external context across the agent ecosystem, but support still varies by client, framework, and feature surface.
+
+> Current as of May 2026. Verify specific MCP client support before committing to a framework or product architecture.
 
 **What it defines:**
 - **Tools** — functions the LLM can call
@@ -140,14 +144,15 @@ A protocol, not a framework. Anthropic introduced MCP in November 2024; by 2026,
 
 **How it works:** An MCP server (a process or HTTP endpoint) exposes these capabilities. An MCP client (your agent, Claude Desktop, VS Code Copilot, etc.) connects to it and presents the tools to the model.
 
-**Adoption as of 2026:**
-- Claude, OpenAI Agents SDK, Gemini tooling, GitHub Copilot, VS Code, Cursor, Zed, Windsurf all support MCP as a client
-- LangGraph, AutoGen, Mastra, Pydantic AI have MCP adapters
-- 1,000+ community servers: GitHub, Slack, Postgres, filesystem, browser control, and more
+**Adoption as of May 2026:**
+- Claude and the OpenAI Agents SDK have first-party MCP stories
+- ChatGPT developer mode and custom connectors are rolling out MCP support in beta
+- IDE and agent clients such as VS Code Agent mode and Cursor have visible MCP support
+- Framework support is uneven: some expose MCP adapters directly, others rely on community integrations
 
-**Why it matters:** Before MCP, every agent framework had its own tool format. MCP means you can write a tool once (as an MCP server) and use it from any MCP-compatible client. The ecosystem is converging around it.
+**Why it matters:** Before MCP, every agent framework had its own tool format. MCP lowers tool-integration switching cost and makes it more realistic to reuse the same tool surface across editors, agent frameworks, and hosted clients. The ecosystem is converging, but not yet fully interoperable.
 
-**Sharp edges:** The spec is still evolving — authentication, streaming, and multi-modal resources are immature. Remote MCP (HTTP/SSE) security model lacks established best practices.
+**Sharp edges:** The spec is still evolving. Authentication, approvals, remote transport security, and extension support vary by client. "Supports MCP" often means only a subset of the protocol or a specific transport.
 
 ## Building Without a Framework
 
