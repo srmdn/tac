@@ -28,6 +28,8 @@ With prompt caching, the server stores these KV tensors and reuses them if the s
 
 Explicit cache control with configurable TTL.
 
+> Current as of May 2026. Anthropic exposes prompt caching directly in the API; verify exact model support and current multipliers on the prompt-caching and pricing docs.
+
 | Operation | Cost multiplier (vs. base input) | Effective price (Sonnet 4.6) |
 |-----------|----------------------------------|------------------------------|
 | Cache write (5 min TTL) | 1.25× | $3.75/M |
@@ -68,7 +70,7 @@ messages = [
   Break-even: achieved on request #2
 ```
 
-Minimum cacheable prefix: 1,024 tokens (Haiku); 2,048 tokens (Sonnet and Opus models).
+Minimum cacheable prefix: 1,024 tokens for Claude Opus 4 and Claude Sonnet 4 models; 2,048 tokens for Claude Haiku models.
 
 ### OpenAI
 
@@ -88,25 +90,37 @@ response = client.chat.completions.create(...)
 cached = response.usage.prompt_tokens_details.cached_tokens
 ```
 
-Cached input prices:
-| Model | Uncached | Cached | Savings |
-|-------|----------|--------|---------|
-| GPT-5.5 | $5.00/M | $0.50/M | 90% |
-| GPT-4.1 | $2.00/M | $0.50/M | 75% |
-| o3 | $2.00/M | $0.50/M | 75% |
-| o4-mini | $1.10/M | $0.275/M | 75% |
+Important current details:
+- In-memory retention is available broadly and usually lasts 5-10 minutes of inactivity, up to 1 hour.
+- Extended 24-hour retention is available only on some models.
+- Cached-input pricing varies by model family. On the current pricing page, examples range from 0.1x input price on GPT-5.5 to 0.25x on GPT-4.1.
+- `prompt_cache_key` can improve routing consistency for repeated long prefixes.
 
 Automatic caching means you get savings when they happen; you don't get the control to guarantee they happen.
 
 ### Google (Gemini)
 
-Explicit context caching with a storage fee.
+Gemini now has both implicit and explicit caching.
+
+> Current as of May 2026. Gemini cache behavior differs between implicit and explicit modes, and minimum sizes depend on the model family.
+
+**Implicit caching** is automatic on most Gemini models. You do not manage the cache directly, and Google only passes through savings if a request hits the cache.
+
+Current minimum prompt sizes for implicit caching:
+
+| Model family | Minimum input tokens |
+|--------------|----------------------|
+| Gemini 2.5 Flash | 1,024 |
+| Gemini 2.5 Pro | 4,096 |
+| Gemini 3 Flash Preview | 1,024 |
+| Gemini 3 Pro Preview | 4,096 |
+
+**Explicit caching** gives you predictable reuse and explicit TTL control, but it adds storage cost.
 
 | Operation | Cost |
 |-----------|------|
-| Cache read | ~10% of base input rate |
-| Storage | $1.00/M tokens per hour |
-| Minimum cache size | 32,768 tokens |
+| Cache read | Model-specific; often ~10% of base input rate |
+| Storage | Typically $1.00/M tokens per hour on text/image/video caches |
 | Minimum TTL | 1 hour |
 
 ```python
@@ -135,19 +149,21 @@ Cache read savings per hit: 100K × ($0.30 − $0.03)/M = $0.027/hit
 Break-even: ~4 hits per hour just to cover storage
 ```
 
-Gemini context caching is only worthwhile at meaningful request volume.
+Gemini explicit caching is only worthwhile at meaningful request volume. If you just want opportunistic savings on repeated prefixes, implicit caching is the lower-friction default.
 
 ### DeepSeek
 
 Fully automatic, no user control.
 
+> Current as of May 2026. DeepSeek pricing is volatile because promotional pricing and cache-hit discounts change frequently; verify exact values on the pricing page.
+
 | Operation | DeepSeek V4-Pro | DeepSeek V4-Flash |
 |-----------|----------------|-------------------|
-| Cache hit | $0.004/M | $0.003/M |
-| Cache miss | $0.44/M | $0.14/M |
-| Savings on hit | ~99% | ~98% |
+| Cache hit | Roughly one order of magnitude cheaper than cache miss pricing | Roughly one order of magnitude cheaper than cache miss pricing |
+| Cache miss | Promotional pricing may apply | Promotional pricing may apply |
+| Savings on hit | Very high | Very high |
 
-DeepSeek V4's cache discount is extraordinary — cache hits cost roughly 1% of cache miss rate. Legacy models `deepseek-chat` and `deepseek-reasoner` retire July 24, 2026 and are routing to V4-Flash variants now.
+DeepSeek V4's cache discount is aggressive enough that repeated long prefixes can materially change unit economics. Legacy models `deepseek-chat` and `deepseek-reasoner` retire July 24, 2026 and are routing to V4-Flash variants now.
 
 ## What to Cache
 

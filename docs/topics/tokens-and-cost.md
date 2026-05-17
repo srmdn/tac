@@ -49,13 +49,15 @@ Input and output tokens are priced separately. Output tokens cost 3–5× more t
 
 > Current as of May 2026. Treat this as a working snapshot, not a durable source of truth. Verify final prices on official provider pages before committing to a model.
 
-Source: [artificialanalysis.ai](https://artificialanalysis.ai) + official provider pricing pages.
+This table is intentionally selective. It focuses on commonly evaluated API models, not every preview, region-specific, batch, or long-context pricing variant.
+
+Source: [artificialanalysis.ai](https://artificialanalysis.ai), [OpenAI pricing](https://openai.com/api/pricing/), [Anthropic pricing](https://docs.anthropic.com/en/docs/about-claude/pricing), [Gemini pricing](https://ai.google.dev/gemini-api/docs/pricing), and [DeepSeek pricing](https://api-docs.deepseek.com/quick_start/pricing).
 
 ### Flagship Models
 
 | Model | Provider | Input /1M | Output /1M | Cache Read /1M | Context |
 |-------|----------|-----------|------------|---------------|---------|
-| GPT-5.5 | OpenAI | $5.00 | $30.00 | $0.50 | 922K |
+| GPT-5.5 | OpenAI | $5.00 | $30.00 | $0.50 | 1.05M |
 | Claude Opus 4.7 (`claude-opus-4-7`) | Anthropic | $5.00 | $25.00 | $0.50 | 1M |
 | Gemini 3.1 Pro Preview | Google | $2.00 | $12.00 | $0.20 | 1M |
 | Grok 4.3 | xAI | — | — | — | — |
@@ -185,6 +187,8 @@ The difference is $2,700/month before caching or routing optimization.
 **Output tokens dominate at scale** — developers obsess over prompt length but output is usually the larger cost driver in production. If your agents generate long responses, tightening output instructions pays more than trimming your system prompt.
 
 **Prices change** — model pricing has dropped significantly year-over-year across all providers. The table above reflects May 2026 rates; verify current prices at [artificialanalysis.ai](https://artificialanalysis.ai) before committing to a model.
+
+**Pricing surfaces are more fragmented than they look** — the same provider can have different rates for standard, batch, flex, regional processing, or long-context requests. The headline table is useful for rough comparison, not final procurement.
 
 **Measure actual token usage in production** — your estimates will be wrong. Log `usage.input_tokens` and `usage.output_tokens` from API responses from day one. Dashboards that show "requests" without token breakdowns will mislead you on costs.
 
