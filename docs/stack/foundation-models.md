@@ -19,6 +19,8 @@ Choosing a foundation model is not a benchmark question. It is a cost-latency-ca
 
 Data from [artificialanalysis.ai](https://artificialanalysis.ai) plus official provider pricing and model pages. Pricing in USD per 1M tokens.
 
+This summary table is intentionally selective. It is useful for rough positioning, not for final procurement or vendor lock-in decisions.
+
 ### Frontier / Flagship
 
 | Model | Provider | Input | Output | Cache Read | Context |
@@ -43,15 +45,15 @@ Data from [artificialanalysis.ai](https://artificialanalysis.ai) plus official p
 
 | Model | Provider | Input | Output | Cache Read | Context | Notes |
 |-------|----------|-------|--------|------------|---------|-------|
-| DeepSeek V4-Pro | DeepSeek | $0.44 | $0.87 | $0.004 | 1M | 75% promo discount active |
+| DeepSeek V4-Pro | DeepSeek | $0.435 | $0.87 | $0.003625 | 1M | 75% promo discount active through May 31, 2026 |
 | Kimi K2 | Moonshot AI | $0.59 | $2.40 | $0.36 | 128K | 1T params, 32B active |
 | Llama 4 Maverick | Meta | $0.35 | $0.85 | $0.27 | 1M | Open weights |
 | Gemini 2.5 Flash | Google | $0.30 | $2.50 | $0.03 | 1M | |
-| DeepSeek V4-Flash | DeepSeek | $0.14 | $0.28 | $0.003 | 1M | |
+| DeepSeek V4-Flash | DeepSeek | $0.14 | $0.28 | $0.0028 | 1M | |
 | Gemini 2.5 Flash-Lite | Google | $0.10 | $0.40 | $0.01 | 1M | |
 | Mistral Large | Mistral | — | — | — | 128K | EU data sovereignty |
 
-Grok 4.3 pricing requires [xAI Console](https://console.x.ai). DeepSeek V4-Pro full (post-promo) price: $1.74/$3.48 input/output. Mistral pricing at [mistral.ai](https://mistral.ai/technology).
+Grok 4.3 pricing requires [xAI Console](https://console.x.ai). DeepSeek V4-Pro full (post-promo) price is currently listed as $1.74/$3.48 input/output after the May 31, 2026 promotional window. Mistral pricing at [mistral.ai](https://mistral.ai/technology).
 
 ## Core Concepts That Matter
 
@@ -132,5 +134,7 @@ A production agent that makes 10 LLM calls per user session at 4K tokens each sp
 **Context windows are marketing, not architecture.** A 1M-token context window does not mean reliable retrieval from 1M tokens. Test retrieval accuracy at the lengths you actually intend to use.
 
 **Availability matters as much as the headline spec.** A provider can advertise a 1M-token window while gating it by model, tier, region, or beta header. Check the exact rollout state before you design around it.
+
+**Promo pricing distorts model rankings.** A model that looks cheapest in a comparison table may only be cheapest because a temporary discount is active. Check the full-rate price and the promo end date before you design routing around it.
 
 **Prompt sensitivity is underestimated.** Changing a system prompt by one sentence can shift output distributions measurably. Build eval coverage before any prompt change ships to production. [Evaluations →](/topics/evals)

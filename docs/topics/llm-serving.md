@@ -1,5 +1,7 @@
 # LLM Serving
 
+_Last updated: May 17, 2026_
+
 How to turn a model into a reliable API endpoint. The right choice depends on whether you need control, cost optimization, data privacy, or just the fastest path to production.
 
 ## The Decision
@@ -19,12 +21,14 @@ No infrastructure to operate. You pay per token.
 
 ### Foundation Model APIs
 
+> Current as of May 2026. Provider strengths and price/performance positioning shift quickly; verify the exact model lineup, pricing mode, and enterprise controls before choosing a serving provider.
+
 | Provider | Models | Strength |
 |----------|--------|----------|
 | Anthropic | Claude Haiku 4.5, Sonnet 4.6, Opus 4.7 | Best instruction following, long context, tool use |
 | OpenAI | GPT-5.5, o3, o4-mini | Widest ecosystem, structured output, vision |
 | Google | Gemini 3.1 Pro, Gemini 2.5 Flash | Largest context window (1M), multimodal |
-| DeepSeek | DeepSeek V4-Pro, V4-Flash | Cheapest frontier quality, strong coding |
+| DeepSeek | DeepSeek V4-Pro, V4-Flash | Aggressive pricing, strong coding, OpenAI/Anthropic-compatible API surface |
 | Mistral | Mistral Large 3, Mistral Small | European provider, competitive pricing |
 
 ### Inference-Speed Providers
@@ -105,9 +109,10 @@ See [Latency](/topics/latency) for the full breakdown.
 
 Not a serving framework — a protocol for connecting models to tools and data sources. An MCP server exposes tools (functions), resources (data), and prompts; an MCP client (your agent or IDE) connects to it.
 
-Introduced by Anthropic in November 2024. By 2026, it's the de facto standard for tool integration:
-- Supported by: Claude, OpenAI Agents SDK, Gemini tooling, GitHub Copilot, VS Code, Cursor, Zed
-- 1,000+ community MCP servers: GitHub, Slack, Postgres, filesystem, browser, and more
+Introduced by Anthropic in November 2024. As of May 2026, MCP is the main interoperability direction for tool integration, but support depth still varies by client:
+- supported in first-party or visible form across Claude and the OpenAI Agents SDK
+- visible in major editor and agent clients such as VS Code Agent mode and Cursor
+- broad community server ecosystem for GitHub, Slack, Postgres, filesystem, browser control, and more
 
 For self-hosted serving, you can expose your model as an MCP-compatible server or connect it to MCP tool servers — decoupling model serving from tool integration.
 
@@ -127,7 +132,7 @@ The break-even point between managed API and self-hosted depends heavily on GPU 
 
 ## Production Reality
 
-**Managed APIs have gotten significantly cheaper** — the cost argument for self-hosting has narrowed. DeepSeek V4-Pro at $0.44/M input is competitive with self-hosting a similarly-capable model when you account for GPU costs, engineering time, and reliability.
+**Managed APIs have gotten significantly cheaper** — the cost argument for self-hosting has narrowed. But do not anchor on a temporary promo price when making a build-vs-buy decision. Use full-rate pricing and expected request shape, not launch discounts.
 
 **GPU availability is a constraint** — H100s and A100s are still capacity-constrained. Self-hosting planning that assumes on-demand GPU availability will be disappointed.
 
