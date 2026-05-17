@@ -1,7 +1,5 @@
 # Tokens & Cost
 
-_Last updated: May 17, 2026_
-
 The fundamental unit of LLM economics. Every design decision — model choice, prompt length, output verbosity, caching strategy — is a cost decision.
 
 ## What Is a Token?
@@ -193,3 +191,9 @@ The difference is $2,700/month before caching or routing optimization.
 **Measure actual token usage in production** — your estimates will be wrong. Log `usage.input_tokens` and `usage.output_tokens` from API responses from day one. Dashboards that show "requests" without token breakdowns will mislead you on costs.
 
 **Non-English amplifies everything** — if your product serves non-English users and you estimated costs in English, multiply by 2–4x as a starting point, then measure.
+
+## Related Topics
+
+- [Prompt Caching](/topics/prompt-caching) — for the fastest way to reduce repeated input cost
+- [Rate Limits & Concurrency](/topics/rate-limits) — for the token-bucket ceilings that cost-heavy prompts also trigger
+- [Reasoning Models](/topics/reasoning-models) — for the thinking-token behavior that makes some tasks unexpectedly expensive

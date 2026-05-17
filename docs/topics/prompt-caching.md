@@ -1,7 +1,5 @@
 # Prompt Caching
 
-_Last updated: May 17, 2026_
-
 Reusing the KV cache from a previous request instead of recomputing it. For workloads with large repeated context — system prompts, few-shot examples, [RAG](/topics/embeddings) documents — caching is the single highest-ROI cost optimization available.
 
 ## The Decision
@@ -235,3 +233,9 @@ At low request rates (fewer than one request per TTL), you pay write cost withou
 **Parallel requests fight for the same cache slot** — if two requests arrive simultaneously with the same prefix, only one populates the cache. The other pays full compute cost. At high concurrency, realized hit rates are lower than theoretical.
 
 **Test before assuming savings** — cache hit rates vary by traffic patterns, prompt structure, and provider infrastructure. The only reliable way to know your actual savings is to measure in production.
+
+## Related Topics
+
+- [Tokens & Cost](/topics/tokens-and-cost) — for the unit-economics reason caching matters in the first place
+- [Latency](/topics/latency) — for the TTFT savings from avoiding repeat prefill
+- [Context Management](/topics/context-management) — for keeping cacheable prefixes stable while dynamic context grows

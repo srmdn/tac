@@ -116,3 +116,9 @@ Practical mitigations:
 **Summarization quality degrades under pressure** — if you summarize too aggressively (compressing 50 turns into 200 tokens), the summary becomes useless. Test summarization quality explicitly as part of your evals.
 
 **Context poisoning** — if incorrect information enters context early (wrong tool result, hallucinated fact), it can anchor the model's subsequent reasoning. Models are bad at self-correcting against their own earlier context. Clean up known-bad context explicitly rather than expecting the model to override it.
+
+## Related Topics
+
+- [Context Windows](/topics/context-windows) — for the hard model limits behind your token budget
+- [Embeddings & Vector Stores](/topics/embeddings) — for retrieval patterns that reduce context pressure
+- [Tool Use & Function Calling](/topics/tool-use) — for keeping tool outputs structured and smaller before they hit context

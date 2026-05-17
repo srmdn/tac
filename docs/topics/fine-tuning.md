@@ -147,3 +147,9 @@ Fine-tuning MoE models (DeepSeek V4, Llama 4 Maverick) carries specific risks no
 **Start with the smallest model that could possibly work** — fine-tuning a 7B model is 10× cheaper and faster than fine-tuning a 70B model. If a fine-tuned 7B meets your quality bar on eval, ship it. Scale up only if it doesn't.
 
 **Structured output APIs reduce the need for format fine-tuning** — before reaching for fine-tuning to fix output format issues, try Anthropic's structured output mode, OpenAI's JSON mode, or constrained decoding in SGLang/Fireworks. These enforce grammar-level constraints at inference time without any training data.
+
+## Related Topics
+
+- [Embeddings & Vector Stores](/topics/embeddings) — for factual knowledge problems that training will not solve
+- [Tool Use & Function Calling](/topics/tool-use) — for the highest-ROI fine-tuning target on smaller models
+- [Evaluations](/topics/evals) — for measuring whether a fine-tuned model actually beats the base model

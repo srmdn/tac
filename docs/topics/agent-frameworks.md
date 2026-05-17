@@ -1,7 +1,5 @@
 # Agent Frameworks
 
-_Last updated: May 17, 2026_
-
 Libraries and platforms that handle the agent loop so you don't have to. They give you tool definition, execution, state management, and multi-agent coordination — at the cost of an abstraction layer over the raw API.
 
 ## The Decision
@@ -197,3 +195,9 @@ No framework needed. You own the loop, you understand every line, and there's no
 **Small agents don't need big frameworks** — if your "agent" calls 2–3 tools and returns an answer, a framework adds more complexity than it removes. Reach for frameworks when you genuinely need the features: stateful loops, multi-agent coordination, persistence, human-in-the-loop.
 
 **Test without the framework abstraction** — write unit tests that call the raw API directly, not just through your framework adapter. Frameworks can mask model behavior changes that your tests would otherwise catch.
+
+## Related Topics
+
+- [Tool Use & Function Calling](/topics/tool-use) — for the runtime mechanics frameworks are abstracting
+- [Orchestration](/topics/orchestration) — for the cases where framework complexity is actually earned
+- [Evaluations](/topics/evals) — for measuring whether framework adoption improves or hurts outcomes

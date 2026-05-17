@@ -1,7 +1,5 @@
 # LLM Serving
 
-_Last updated: May 17, 2026_
-
 How to turn a model into a reliable API endpoint. The right choice depends on whether you need control, cost optimization, data privacy, or just the fastest path to production.
 
 ## The Decision
@@ -139,3 +137,9 @@ The break-even point between managed API and self-hosted depends heavily on GPU 
 **Cold start latency on serverless** — if you deploy a self-hosted model on serverless GPU infrastructure (Modal, Replicate, RunPod serverless), the first request after idle triggers a model load. This can be 30–120 seconds. Keep the model warm with periodic requests or use reserved capacity for latency-sensitive workloads.
 
 **Benchmark your serving stack** — published throughput numbers for vLLM, SGLang, and TGI are measured under specific conditions (batch size, sequence length, model size, GPU type) that may not match your workload. Benchmark under your actual traffic shape before choosing a framework.
+
+## Related Topics
+
+- [KV Cache & Quantization](/topics/kv-cache-quantization) — for the memory constraints that drive serving design
+- [Latency](/topics/latency) — for the user-facing effect of serving stack choices
+- [Rate Limits & Concurrency](/topics/rate-limits) — for the throughput ceilings you still hit even with a fast serving layer

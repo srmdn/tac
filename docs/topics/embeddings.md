@@ -176,3 +176,9 @@ def search_knowledge_base(query: str) -> str:
 **Chunking strategy is the highest-leverage tuning knob** — before changing embedding models or vector stores, experiment with chunk size and chunking method. Most retrieval quality issues trace to poor chunking, not the wrong vector database.
 
 **Costs at scale:** at 100M vectors with 1536-dimensional float32 embeddings, storage alone is ~600GB. Use scalar quantization (int8) to reduce to ~150GB with minimal quality loss. Qdrant's built-in quantization handles this without changing your application code.
+
+## Related Topics
+
+- [Context Management](/topics/context-management) — for deciding when retrieval beats stuffing more text into context
+- [Prompt Injection & Security](/topics/prompt-injection) — for the security risks of retrieved untrusted content
+- [Fine-Tuning](/topics/fine-tuning) — for the boundary between teaching behavior and retrieving facts

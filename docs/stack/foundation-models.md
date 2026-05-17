@@ -1,7 +1,5 @@
 # Foundation Models
 
-_Last updated: May 17, 2026_
-
 The bottom of the stack. Every constraint you hit above — context limits, token costs, latency, quantization quality — originates here. Decisions at this layer ripple through everything else.
 
 ## The Production Decision

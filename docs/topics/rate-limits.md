@@ -1,7 +1,5 @@
 # Rate Limits & Concurrency
 
-_Last updated: May 17, 2026_
-
 API quotas that cap how much you can send per unit of time. Hitting them in production causes request failures, cascading queue buildup, and degraded user experience. Design for them from the start.
 
 ## The Decision
@@ -203,3 +201,9 @@ Good candidates: eval runs, nightly processing jobs, data enrichment pipelines.
 **Cascading failures are the real risk** — a spike in traffic that triggers rate limiting can cause request timeouts, which causes retries, which amplifies the spike, which causes more rate limiting. Circuit-breaker patterns prevent this from spiraling. Fail fast and return an error to the user rather than queuing unlimited retries.
 
 **Build observability first** — you cannot debug rate limit issues in production without metrics on: tokens per request (input/output), requests per minute, 429 error rate, and retry counts. Set these up before your first production deployment, not after the first incident.
+
+## Related Topics
+
+- [Tokens & Cost](/topics/tokens-and-cost) — for why long prompts make token buckets bind early
+- [Latency](/topics/latency) — for the queueing delays that rate limiting creates before users see output
+- [LLM Serving](/topics/llm-serving) — for routing and infrastructure tactics that reduce pressure on a single bucket

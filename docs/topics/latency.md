@@ -1,7 +1,5 @@
 # Latency
 
-_Last updated: May 17, 2026_
-
 The gap between sending a request and receiving a complete response. For most user-facing applications, latency determines whether the product feels usable. For agentic pipelines, it determines whether multi-step workflows complete in seconds or minutes.
 
 ## The Decision
@@ -170,3 +168,9 @@ If your design doesn't fit the budget, change the design — not the model. Swit
 **Network geography matters** — routing requests to an endpoint in the same region as your users saves 50–200ms in round-trip. For latency-sensitive products, pick providers with regional endpoints.
 
 **Benchmark pages age fast** — latency rankings are among the least stable facts in the stack. Use public benchmarks to form hypotheses, then measure under your own prompt shape and user geography.
+
+## Related Topics
+
+- [LLM Serving](/topics/llm-serving) — for infrastructure choices that shape throughput and cold-start behavior
+- [Prompt Caching](/topics/prompt-caching) — for one of the biggest TTFT reductions available on repeated prompts
+- [Orchestration](/topics/orchestration) — for the multi-step agent patterns that multiply latency

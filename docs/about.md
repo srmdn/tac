@@ -8,15 +8,15 @@ The Agent Stack is complex. Tokens, KV caches, model routing, agent loops — ea
 
 ## Principles
 
-- **Reference, not tutorial** — Quick answers, not step-by-step guides.
-- **Technical, not promotional** — No vendor fluff. Just how things work.
-- **Living document** — Updated as the stack evolves.
+- **Reference, not tutorial** — Quick answers and decision framing, not step-by-step walkthroughs.
+- **Technical, not promotional** — No vendor fluff. Just mechanics, tradeoffs, and production constraints.
+- **Living document** — Updated as the stack evolves and older guidance drifts.
 
-## Related Projects
+## How to Use Tac
 
-- [rig](https://github.com/srmdn/rig) — Community wiki for OpenCode & oMO
-- [oh-my-openagent](https://gist.github.com/srmdn/448d142a122208c47e586a0d78323b3e) — Configuration layer and skill ecosystem
-- [landkit](https://github.com/srmdn/landkit) — Landing page template collection
+- Start with [The Stack](/stack/) if you want the system-level mental model first.
+- Jump straight to `docs/topics/` pages if you're solving a production decision right now.
+- Treat pricing, rate limits, context windows, and provider feature support as volatile. Verify exact values before committing to a model, provider, or architecture.
 
 ## License
 

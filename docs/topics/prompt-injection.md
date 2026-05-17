@@ -71,3 +71,9 @@ Practical stance:
 **Log what the agent does, not just what it says** — to detect injections in production, instrument tool calls, not text responses. An anomalous tool call sequence (read document → immediately exfiltrate to external URL) is detectable; a manipulated text response is not.
 
 **Don't rely on model refusals as a security boundary** — refusals are a UX feature, not a security guarantee. A sufficiently adversarial prompt will eventually bypass them. Enforce limits in the application layer, not in the prompt.
+
+## Related Topics
+
+- [Tool Use & Function Calling](/topics/tool-use) — for tool-schema design and validation at the action boundary
+- [Context Management](/topics/context-management) — for controlling how untrusted content enters and persists in context
+- [Autonomous Agent Systems](/topics/autonomous-agents) — for higher-risk packaged agents that combine many capabilities

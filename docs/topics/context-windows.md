@@ -1,7 +1,5 @@
 # Context Windows
 
-_Last updated: May 17, 2026_
-
 How much text a model can process in a single forward pass. The window determines what the model can "see" — everything outside it doesn't exist to the model.
 
 ## The Decision
@@ -119,3 +117,9 @@ Prompt caching mitigates the repeat cost for stable prefixes. See [Prompt Cachin
 **Long-context benchmarks can mislead** — "needle in a haystack" tests (find a specific fact in a long document) are necessary but not sufficient. Test with your actual task. Cross-document reasoning, multi-hop deduction, and instruction-following all degrade differently than simple retrieval.
 
 **Context pollution is a real failure mode** — incorrect information that enters context early (a hallucinated tool result, a user-provided wrong fact) can anchor the model's subsequent reasoning. Models are poor at self-correcting against their own prior context. Cleaning up known-bad context explicitly is more reliable than hoping the model overrides it.
+
+## Related Topics
+
+- [Context Management](/topics/context-management) — for deciding what actually belongs inside the available window
+- [Embeddings & Vector Stores](/topics/embeddings) — for the retrieval alternative when window size stops helping
+- [KV Cache & Quantization](/topics/kv-cache-quantization) — for the memory cost of long context in self-hosted systems

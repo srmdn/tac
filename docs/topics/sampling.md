@@ -130,3 +130,9 @@ Typical values: 1.1–1.3. Higher values can distort output quality, so test car
 **Structured output + high temperature = mostly fine** — when using JSON schema mode, temperature affects choices within valid JSON paths. You can keep a moderate temperature without losing parse reliability, since constrained decoding enforces validity.
 
 **Eval your sampling config after changes** — a setting that feels better in interactive testing can silently regress on edge cases. Re-run your eval suite after any significant sampling parameter change.
+
+## Related Topics
+
+- [Tool Use & Function Calling](/topics/tool-use) — for structured outputs, argument reliability, and schema-constrained generation
+- [Evaluations](/topics/evals) — for testing whether sampling changes improve or regress real tasks
+- [Reasoning Models](/topics/reasoning-models) — for cases where model choice matters more than sampling settings

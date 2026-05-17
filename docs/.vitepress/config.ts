@@ -5,6 +5,7 @@ export default defineConfig({
   description: 'The Agent Stack — technical compendium for Agentic AI',
   lang: 'en-US',
   base: '/tac/',
+  lastUpdated: true,
 
   appearance: true, // show light/dark toggle
 
@@ -120,6 +121,14 @@ export default defineConfig({
 
     editLink: {
       pattern: 'https://github.com/srmdn/tac/edit/main/docs/:path'
+    },
+
+    lastUpdated: {
+      text: 'Last updated',
+      formatOptions: {
+        dateStyle: 'long',
+        forceLocale: true
+      }
     }
   },
 

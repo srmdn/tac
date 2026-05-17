@@ -1,7 +1,5 @@
 # Autonomous Agent Systems
 
-_Last updated: May 17, 2026_
-
 Complete, deployable agent systems — not frameworks for building agents. You run them, point them at your accounts, files, or codebase, and they execute tasks autonomously. The decision here is different from picking an SDK: you're choosing a system to operate, not a library to build on.
 
 ## The Decision
@@ -88,3 +86,9 @@ Open source.
 **Persistent memory is still experimental** — Hermes's auto-generated skills and OpenClaw's preference memory are compelling features, but memory systems across all these tools are less than two years old. Test that accumulated memory improves rather than degrades behavior over time on your specific workload.
 
 **The "build vs use" question is real** — these systems are designed for common patterns. If your agent workflow is highly domain-specific, a custom agent loop (see [Agent Frameworks](/topics/agent-frameworks)) may serve you better than shaping your workflow to fit a pre-built system.
+
+## Related Topics
+
+- [Agent Frameworks](/topics/agent-frameworks) — for building your own loop instead of adopting a packaged system
+- [Prompt Injection & Security](/topics/prompt-injection) — for the security boundary problems these products amplify
+- [Evaluations](/topics/evals) — for testing whether autonomous behavior is acceptable before broad rollout

@@ -94,3 +94,9 @@ If you're benchmarking a reasoning model, compare on your actual task distributi
 **Thinking tokens can exceed your context budget** — on complex problems, the model may want more thinking space than your context window allows. Monitor for truncated thinking in production.
 
 **Extended thinking is not magic** — reasoning models still hallucinate, still make arithmetic errors, still miss things. They're better at hard multi-step problems, not at eliminating errors entirely. Evals are still required.
+
+## Related Topics
+
+- [Tokens & Cost](/topics/tokens-and-cost) — for the output-token economics that make reasoning expensive
+- [Latency](/topics/latency) — for user-facing tradeoffs when thinking time stretches responses
+- [Sampling](/topics/sampling) — for the cases where decoding settings matter less than choosing a different model class

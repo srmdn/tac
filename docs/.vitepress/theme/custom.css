@@ -608,6 +608,22 @@ html.dark .VPButton.brand:hover {
   overflow: hidden;
 }
 
+.VPHomeHero .VPHero {
+  padding-bottom: 5.5rem;
+}
+
+.VPHomeHero .container {
+  max-width: 1200px;
+}
+
+.VPHomeHero .main {
+  max-width: 700px;
+}
+
+.VPHomeHero .heading {
+  gap: 0.4rem;
+}
+
 /* Dark mode: warm amber radial glow */
 html.dark .VPHomeHero::before {
   content: '';
@@ -663,13 +679,37 @@ html.dark .VPHomeHero::before {
   color: var(--tac-text-muted) !important;
   font-size: 1.25rem;
   line-height: 1.6;
+  max-width: 42rem;
   position: relative;
   z-index: 1;
 }
 
+.VPHomeHero .actions {
+  padding-top: 2rem;
+  gap: 0.35rem;
+}
+
+.VPHomeHero .action {
+  padding: 0.4rem;
+}
+
 /* Extra breathing room between hero and feature cards */
 .VPHomeFeatures {
-  padding-top: 3rem;
+  margin-top: 2.5rem;
+  padding-top: 4.5rem;
+  padding-bottom: 1rem;
+}
+
+.VPHomeFeatures .container {
+  max-width: 1200px;
+}
+
+.VPHomeFeatures .items {
+  margin: -12px;
+}
+
+.VPHomeFeatures .item {
+  padding: 12px;
 }
 
 /* Feature cards on home */
@@ -678,6 +718,10 @@ html.dark .VPHomeHero::before {
   border: 1px solid var(--tac-border);
   background: var(--tac-surface);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.VPHome .VPFeature .box {
+  padding: 30px 28px;
 }
 
 .VPHome .VPFeature:hover {
@@ -820,6 +864,27 @@ html.dark .VPHomeHero::before {
     opacity: 0.5;
   }
 
+  .VPHomeHero .VPHero {
+    padding-bottom: 4.25rem;
+  }
+
+  .VPHomeFeatures {
+    margin-top: 1.75rem;
+    padding-top: 3.25rem;
+  }
+
+  .VPHomeFeatures .items {
+    margin: -10px;
+  }
+
+  .VPHomeFeatures .item {
+    padding: 10px;
+  }
+
+  .VPHome .VPFeature .box {
+    padding: 26px 22px;
+  }
+
   /* Tables scroll horizontally */
   .VPDoc table {
     display: block;
@@ -841,6 +906,19 @@ html.dark .VPHomeHero::before {
 
   .VPDoc h2 {
     font-size: 1.2rem;
+  }
+
+  .VPHomeHero .VPHero {
+    padding-bottom: 3.5rem;
+  }
+
+  .VPHomeHero .tagline {
+    font-size: 1.08rem;
+  }
+
+  .VPHomeFeatures {
+    margin-top: 1.25rem;
+    padding-top: 2.75rem;
   }
 }
 

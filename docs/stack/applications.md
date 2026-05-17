@@ -115,3 +115,10 @@ For multi-step agents, show progress — "Searching documentation...", "Writing 
 **Agentic actions compound errors.** A single-turn LLM that is wrong 5% of the time is usually acceptable. An agent that makes 10 sequential decisions with a 5% error rate per step fails the full task ~40% of the time. Plan for graceful failure, human escalation, and undo paths from the start.
 
 **Users do not read the limitations.** No matter what you write in the documentation, users will ask your coding agent about their health, ask your support bot for legal advice, and ask your research agent to write their thesis. Design for the gap between intended use and actual use.
+
+## Related Topics
+
+- [Evaluations](/topics/evals) — for measuring application quality on real user tasks
+- [Latency](/topics/latency) — for the UX cliff users feel before they read any output
+- [Autonomous Agent Systems](/topics/autonomous-agents) — for packaged products you run instead of building from scratch
+- [Prompt Injection & Security](/topics/prompt-injection) — for application-layer safety boundaries

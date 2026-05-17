@@ -35,3 +35,13 @@ The user-facing layer: coding agents, assistants, support bots, research agents.
 The key production decisions: build vs buy across layers, eval strategy, latency budget, safety boundaries.
 
 [Agent Applications →](/stack/applications)
+
+## Browse by Problem
+
+If you already know the production issue, jump straight to the topic:
+
+- Cost pressure → [Tokens & Cost](/topics/tokens-and-cost), [Prompt Caching](/topics/prompt-caching)
+- Long context failures → [Context Windows](/topics/context-windows), [Context Management](/topics/context-management)
+- Serving and latency tradeoffs → [LLM Serving](/topics/llm-serving), [Latency](/topics/latency), [Rate Limits & Concurrency](/topics/rate-limits)
+- Agent reliability → [Tool Use & Function Calling](/topics/tool-use), [Agent Frameworks](/topics/agent-frameworks), [Evaluations](/topics/evals)
+- Safety boundaries → [Prompt Injection & Security](/topics/prompt-injection)

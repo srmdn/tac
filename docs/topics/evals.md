@@ -71,3 +71,9 @@ Mitigations: use a different, stronger model as the judge; randomize order in pa
 **Overfitting your evals** — if you tune prompts by hand against the same 20 examples you use for testing, you're just memorizing the test set. Hold out a validation set and only look at it before a major release.
 
 **Speed matters** — an eval suite that takes 30 minutes kills iteration velocity. Keep unit evals under 60 seconds by caching model calls and using deterministic checks wherever possible. Run slow task-completion evals in a separate overnight job.
+
+## Related Topics
+
+- [Sampling](/topics/sampling) — for validating decoding changes instead of tuning by feel
+- [Agent Frameworks](/topics/agent-frameworks) — for framework-specific failure modes that need coverage
+- [Orchestration](/topics/orchestration) — for end-to-end and coordination eval design in multi-agent systems

@@ -1,7 +1,5 @@
 # Agent Infrastructure
 
-_Last updated: May 17, 2026_
-
 The systems that make inference economical at scale. A model that works in a notebook will not work in production without this layer: serving, caching, routing, and observability each carry their own tradeoffs.
 
 ## The Production Decision

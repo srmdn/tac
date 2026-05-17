@@ -106,3 +106,10 @@ For most production agents, ReAct is the right starting pattern. Add planning st
 **Max steps is not a safety net.** An agent that hits max steps has likely already taken irreversible actions. Design tasks so each step is independently auditable and reversible where possible. Add step-level logging before you need to debug a runaway agent in production.
 
 **Tool hallucination is a real failure mode.** Models will occasionally call tools with fabricated arguments or call tools that do not exist in the current tool list. Validate all tool call arguments at the runtime layer before execution.
+
+## Related Topics
+
+- [Tool Use & Function Calling](/topics/tool-use) — for schemas, validation, and reliable action boundaries
+- [Context Management](/topics/context-management) — for keeping runtime state inside token budgets
+- [Orchestration](/topics/orchestration) — for when one agent loop is no longer enough
+- [Prompt Injection & Security](/topics/prompt-injection) — for securing tool-connected runtimes
