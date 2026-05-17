@@ -11,52 +11,69 @@ Rate limits affect your architecture in two ways:
 1. **Can your system handle the traffic you're planning for?** — check whether your expected volume fits within your tier
 2. **What happens when you're throttled?** — you will get 429s in production; have a plan before you need it
 
-## Current Tier Limits (May 2026)
+## Current Provider Patterns (May 2026)
 
-Limits are tier-based and increase as you spend more. These are representative tiers — verify current limits in each provider's documentation before building.
+Limits usually increase as you spend more, but the important engineering detail is not the exact headline table. It is how each provider scopes the bucket, which dimensions they meter, and whether long-context or batch traffic has separate handling.
 
-> Current as of May 2026. Exact limits are model-specific and often differ by project, organization, usage tier, and long-context mode.
+> Current as of May 2026. Treat the notes below as architecture guidance plus representative examples. Verify exact limits in the provider dashboard and docs before sizing production traffic.
 
 ### Anthropic
 
-| Tier | RPM | Input TPM | Output TPM | Requirement |
-|------|-----|-----------|------------|-------------|
-| Tier 1 | 50 | 40,000 | 8,000 | $5 spend |
-| Tier 2 | 1,000 | 80,000 | 16,000 | $40 spend |
-| Tier 3 | 2,000 | 160,000 | 32,000 | $200 spend |
-| Tier 4 | 4,000 | 400,000 | 80,000 | $400 spend |
+Anthropic meters the Messages API in:
+- RPM
+- input tokens per minute (ITPM)
+- output tokens per minute (OTPM)
 
-Anthropic tracks **input** and **output** tokens separately. Output TPM limits are stricter. At high output:input ratios (verbose agent responses), output TPM is usually the bottleneck.
+Key behaviors:
+- limits are enforced at the organization level
+- limits are model-class specific
+- some models count cache-read tokens toward ITPM and others do not
+- long-context Sonnet 4 requests over 200K tokens can have separate limits from standard requests
+
+Representative example:
+- entry-tier Claude Sonnet 4 / Opus 4 limits are currently much tighter on tokens than many builders expect, with 50 RPM and 30K ITPM / 8K OTPM being the official standard starting point
+
+Anthropic tracks **input** and **output** tokens separately. Output TPM limits are often the bottleneck for verbose agents.
 
 ### OpenAI
 
-| Tier | RPM | TPM | Notes |
-|------|-----|-----|-------|
-| Tier 1 | 500 | 30,000 | After first purchase |
-| Tier 2 | 5,000 | 450,000 | $50 spend |
-| Tier 3 | 5,000 | 800,000 | $100 spend |
-| Tier 4 | 10,000 | 2,000,000 | $250 spend |
-| Tier 5 | 30,000 | 150,000,000 | $1,000 spend |
+OpenAI exposes a broader set of buckets:
+- RPM
+- TPM
+- RPD
+- TPD
+- IPM for image endpoints
 
-OpenAI limits vary significantly by model. Limits are defined at both organization and project level, and long-context requests can have separate buckets from standard requests.
+Key behaviors:
+- limits are defined at both organization and project level
+- limits vary by model family
+- some models share a rate-limit bucket with sibling models
+- long-context requests can have separate limits from standard requests
+- batch queue limits are separate from synchronous request limits
+
+OpenAI limits vary significantly by model. Check the Limits page for the exact model group you plan to ship, not just your account tier.
 
 ### Google (Gemini API)
 
-| Plan | RPM | TPM |
-|------|-----|-----|
-| Free | 15 | 1,000,000 |
-| Pay-as-you-go | 2,000 | 4,000,000 |
+Gemini rate limits are highly model-specific and usually documented in RPM, TPM, and daily request caps.
 
-Gemini has generous TPM limits relative to RPM. The bottleneck is usually requests-per-minute.
+Key behaviors:
+- free and paid plans have materially different limits
+- Gemini tends to be more generous on token volume than on request count
+- grounding, live API usage, and some multimodal paths can have separate caps
+
+For many Gemini workloads, the bottleneck is requests-per-minute rather than tokens-per-minute.
 
 ### DeepSeek
 
-| Model | RPM | TPM |
-|-------|-----|-----|
-| DeepSeek V4-Pro | 1,000+ | Very high |
-| DeepSeek V4-Flash | 1,000+ | Very high |
+DeepSeek documents rate limiting more in terms of dynamic concurrency and current server load than stable public tier tables.
 
-DeepSeek's limits are generous relative to the price point. Legacy models `deepseek-chat` and `deepseek-reasoner` retire July 24, 2026 — migrate to `deepseek-v4-flash` or `deepseek-v4-pro`.
+Key behaviors:
+- concurrency can be reduced dynamically during load spikes
+- published pricing is easier to rely on than published throughput ceilings
+- migrations between legacy and current model families can change the practical limit surface
+
+Legacy models `deepseek-chat` and `deepseek-reasoner` retire July 24, 2026. If you still depend on them, migrate to `deepseek-v4-flash` or `deepseek-v4-pro`.
 
 ## Limit Types
 
@@ -97,7 +114,7 @@ Proactively limit your request rate before hitting the API, rather than reacting
 from ratelimit import limits, sleep_and_retry
 
 @sleep_and_retry
-@limits(calls=50, period=60)  # Anthropic Tier 1: 50 RPM
+@limits(calls=50, period=60)  # Example limiter: tune to your actual bucket
 def call_api(prompt):
     return client.messages.create(...)
 ```
@@ -160,11 +177,11 @@ Required input TPM: 100 × 3,000 = 300,000
 Required output TPM: 100 × 500 = 50,000
 Required RPM: 100
 
-Anthropic Tier 3 limits:
+Example provider limits:
   RPM: 2,000 ✅ (100 needed)
   Input TPM: 160,000 ❌ (300,000 needed)
   Output TPM: 32,000 ❌ (50,000 needed)
-→ Need Tier 4 or reduce prompt length
+→ Need a higher token bucket or shorter prompts
 ```
 
 If your prompts include large context (retrieved docs, conversation history), token limits bind long before request limits.
@@ -179,7 +196,7 @@ Good candidates: eval runs, nightly processing jobs, data enrichment pipelines.
 
 **TPM is almost always the binding limit** — developers think about RPM (requests) and forget that each request can be thousands of tokens. Monitor your TPM utilization, not just your error rate.
 
-**Rate limits are per-API-key, not per-account** — if you have multiple services sharing one API key, they compete for the same limit bucket. Separate production keys from dev/test keys and give each service its own key.
+**Bucket scope varies by provider** — do not assume rate limits are per key. OpenAI scopes limits at organization and project level; Anthropic scopes them at organization level and allows workspace controls. Multiple services can still interfere with each other if they share the same upstream bucket.
 
 **Limits increase automatically as you spend** — providers advance you to higher tiers based on historical spend. If you're routinely hitting limits, spending more may unlock higher tiers. Check your provider dashboard for current tier and advancement thresholds.
 

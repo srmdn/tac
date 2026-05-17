@@ -66,7 +66,7 @@ Reusing the KV cache from previous requests. The highest-leverage infrastructure
 |----------|--------------|---------------------|
 | Anthropic | Write: 1.25× input; Read: 0.1× input | 1,024 |
 | OpenAI | Automatic; cached input pricing is model-specific (for example, 0.1× on GPT-5.5 and 0.25× on GPT-4.1) | 1,024 |
-| Google | Explicit cache API; Read: 0.25× input | 2,048 |
+| Google | Implicit caching on supported models; explicit caching adds storage cost | Model-specific; commonly 1,024-4,096 |
 | DeepSeek | Read: 0.1× input | 64 |
 
 The break-even on Anthropic caching: if a cached prefix is reused more than ~1.2 times, you save money. For production agents with stable system prompts, the first request pays for all subsequent ones.
